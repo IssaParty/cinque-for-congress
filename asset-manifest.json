@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/cinque-for-congress/static/css/main.ab2ff11b.css",
-    "main.js": "/cinque-for-congress/static/js/main.6f92cfc4.js",
+    "main.js": "/cinque-for-congress/static/js/main.deb58ae9.js",
     "index.html": "/cinque-for-congress/index.html",
     "main.ab2ff11b.css.map": "/cinque-for-congress/static/css/main.ab2ff11b.css.map",
-    "main.6f92cfc4.js.map": "/cinque-for-congress/static/js/main.6f92cfc4.js.map"
+    "main.deb58ae9.js.map": "/cinque-for-congress/static/js/main.deb58ae9.js.map"
   },
   "entrypoints": [
     "static/css/main.ab2ff11b.css",
-    "static/js/main.6f92cfc4.js"
+    "static/js/main.deb58ae9.js"
   ]
 }
