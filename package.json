@@ -2,10 +2,10 @@
   "name": "cinque-for-congress",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://IssaParty.github.io/cinque-for-congress",
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^7.9.3",
     "react-scripts": "5.0.1"
   },
   "scripts": {
