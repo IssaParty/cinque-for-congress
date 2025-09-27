@@ -15,7 +15,7 @@ import RoadToCongressPage from './pages/RoadToCongressPage';
 
 const App = () => {
   return (
-    <Router>
+    <Router basename="/cinque-for-congress">
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
