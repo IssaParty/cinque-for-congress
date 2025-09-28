@@ -5,7 +5,6 @@ const MyPlanPage = () => {
   const [selectedNode, setSelectedNode] = useState(null);
   const [hoveredNode, setHoveredNode] = useState(null);
   const [dimensions, setDimensions] = useState({ width: 1400, height: 800 });
-  const [showVisualization, setShowVisualization] = useState(false);
 
   // Update dimensions on window resize
   useEffect(() => {
@@ -195,106 +194,6 @@ const MyPlanPage = () => {
       x: dimensions.width * 0.75,
       y: dimensions.height * 0.75,
       description: 'Support family farms over industrial agriculture and enable direct farmer-to-consumer sales.'
-    },
-    {
-      id: 'init-education',
-      type: 'initiative',
-      name: 'Education Reform',
-      category: 'social',
-      color: colors.initiatives.social,
-      x: dimensions.width * 0.15,
-      y: dimensions.height * 0.5,
-      description: 'Comprehensive education reform including after-school care and student debt relief.'
-    },
-    {
-      id: 'init-childcare',
-      type: 'initiative',
-      name: 'Universal Childcare',
-      category: 'social',
-      color: colors.initiatives.social,
-      x: dimensions.width * 0.25,
-      y: dimensions.height * 0.25,
-      description: 'Provide universal childcare and after-school programs for working families.'
-    },
-    {
-      id: 'init-medicare',
-      type: 'initiative',
-      name: 'Medicare Expansion',
-      category: 'health',
-      color: colors.initiatives.health,
-      x: dimensions.width * 0.5,
-      y: dimensions.height * 0.85,
-      description: 'Expand Medicare coverage and integrate VA services for comprehensive healthcare.'
-    },
-    {
-      id: 'init-pharma',
-      type: 'initiative',
-      name: 'Pharmaceutical Reform',
-      category: 'health',
-      color: colors.initiatives.health,
-      x: dimensions.width * 0.7,
-      y: dimensions.height * 0.8,
-      description: 'Break pharmaceutical monopolies and make publicly-funded research patents open-source.'
-    },
-    {
-      id: 'init-rail',
-      type: 'initiative',
-      name: 'High-Speed Rail',
-      category: 'infrastructure',
-      color: colors.initiatives.infrastructure,
-      x: dimensions.width * 0.1,
-      y: dimensions.height * 0.8,
-      description: 'Build a national high-speed rail network to connect communities and reduce emissions.'
-    },
-    {
-      id: 'init-broadband',
-      type: 'initiative',
-      name: 'Public Broadband',
-      category: 'infrastructure',
-      color: colors.initiatives.infrastructure,
-      x: dimensions.width * 0.05,
-      y: dimensions.height * 0.6,
-      description: 'Provide universal broadband access as a public utility and human right.'
-    },
-    {
-      id: 'init-tribal',
-      type: 'initiative',
-      name: 'Tribal Sovereignty Act',
-      category: 'rights',
-      color: colors.initiatives.rights,
-      x: dimensions.width * 0.3,
-      y: dimensions.height * 0.9,
-      description: 'Strengthen tribal nation sovereignty and representation in federal government.'
-    },
-    {
-      id: 'init-criminal',
-      type: 'initiative',
-      name: 'Criminal Justice Reform',
-      category: 'rights',
-      color: colors.initiatives.rights,
-      x: dimensions.width * 0.45,
-      y: dimensions.height * 0.95,
-      description: 'Treat crime as a public health issue and reform the criminal justice system.'
-    },
-    {
-      id: 'init-patents',
-      type: 'initiative',
-      name: 'Patent Reform',
-      category: 'innovation',
-      color: colors.initiatives.innovation,
-      x: dimensions.width * 0.9,
-      y: dimensions.height * 0.1,
-      description: 'Reform patent system to prevent monopolization and encourage true innovation.'
-    },
-    {
-      id: 'init-privacy',
-      type: 'initiative',
-      name: 'Digital Privacy Rights',
-      category: 'innovation',
-      color: colors.initiatives.innovation,
-      x: dimensions.width * 0.85,
-      y: dimensions.height * 0.05,
-      description: 'Protect digital privacy and regulate big tech data collection practices.'
     }
   ];
 
@@ -317,27 +216,7 @@ const MyPlanPage = () => {
     { from: 'init-cabinet', to: 'thematic-governance' },
     { from: 'init-democracy', to: 'thematic-governance' },
     { from: 'init-waste', to: 'thematic-environment' },
-    { from: 'init-agriculture', to: 'thematic-environment' },
-    { from: 'init-education', to: 'thematic-social' },
-    { from: 'init-childcare', to: 'thematic-social' },
-    { from: 'init-medicare', to: 'thematic-health' },
-    { from: 'init-pharma', to: 'thematic-health' },
-    { from: 'init-rail', to: 'thematic-infrastructure' },
-    { from: 'init-broadband', to: 'thematic-infrastructure' },
-    { from: 'init-tribal', to: 'thematic-rights' },
-    { from: 'init-criminal', to: 'thematic-rights' },
-    { from: 'init-patents', to: 'thematic-innovation' },
-    { from: 'init-privacy', to: 'thematic-innovation' },
-
-    // Cross-initiative connections
-    { from: 'init-antitrust', to: 'init-pharma' },
-    { from: 'init-housing', to: 'init-education' },
-    { from: 'init-cabinet', to: 'init-democracy' },
-    { from: 'init-waste', to: 'init-agriculture' },
-    { from: 'init-rail', to: 'init-broadband' },
-    { from: 'init-tribal', to: 'init-criminal' },
-    { from: 'init-patents', to: 'init-privacy' },
-    { from: 'init-medicare', to: 'init-childcare' }
+    { from: 'init-agriculture', to: 'thematic-environment' }
   ];
 
   const handleNodeClick = (node) => {
@@ -378,22 +257,8 @@ const MyPlanPage = () => {
         <div style={styles.pageContainer}>
           <h1 style={styles.pageTitle}>My Plan for Colorado's 2nd District</h1>
           <p style={styles.pageSubtitle}>
-            A comprehensive policy agenda that puts people over profit and democracy over corporate power
+            To liberate this country from corporate greed we must take a multi-industry approach not just targeting Big Tech in Colorado. My plan cracks down on monopolies, reins in executive power, and resets the playing field so individuals have the freedom to make decisions about their own lives. True freedom means a high quality of decision-making, and that leads to a high quality of life.
           </p>
-
-          <section style={styles.contentSection}>
-            <h2 style={styles.contentSubtitle}>Free Palestine</h2>
-            <p style={styles.contentText}>
-              The United States must end its unconditional military aid to Israel and stop supporting policies that violate Palestinian human rights. I support:
-            </p>
-            <ul style={styles.contentList}>
-              <li>Immediate cessation of all military aid to Israel until they comply with international law</li>
-              <li>Recognition of Palestinian statehood and the right to self-determination</li>
-              <li>Support for the Boycott, Divestment, and Sanctions (BDS) movement</li>
-              <li>Investigations into war crimes and holding all perpetrators accountable</li>
-              <li>Humanitarian aid to Gaza and the West Bank without conditions</li>
-            </ul>
-          </section>
 
           <section style={styles.contentSection}>
             <h2 style={styles.contentSubtitle}>Corporate Accountability</h2>
@@ -425,151 +290,23 @@ const MyPlanPage = () => {
             </ul>
           </section>
 
-          <section style={styles.contentSection}>
-            <h2 style={styles.contentSubtitle}>Medicare for All</h2>
-            <p style={styles.contentText}>
-              Healthcare is a human right, not a commodity. We need a single-payer system that covers everyone:
-            </p>
-            <ul style={styles.contentList}>
-              <li>Eliminate private insurance companies and create a universal healthcare system</li>
-              <li>Include dental, vision, mental health, and prescription drugs</li>
-              <li>Lower costs by eliminating profit motive and administrative waste</li>
-              <li>Negotiate prescription drug prices and allow Medicare to manufacture generic drugs</li>
-              <li>Expand community health centers and invest in preventive care</li>
-              <li>Support healthcare workers with debt forgiveness and better working conditions</li>
-            </ul>
-          </section>
-
-          <section style={styles.contentSection}>
-            <h2 style={styles.contentSubtitle}>Climate Action</h2>
-            <p style={styles.contentText}>
-              The climate crisis requires immediate, transformational action to transition away from fossil fuels:
-            </p>
-            <ul style={styles.contentList}>
-              <li>Transition to 100% renewable energy by 2030 through massive federal investment</li>
-              <li>Create millions of good-paying green jobs in solar, wind, and battery technology</li>
-              <li>End all fossil fuel subsidies and ban new drilling permits</li>
-              <li>Invest in public transportation, electric vehicle infrastructure, and energy efficiency</li>
-              <li>Support a just transition for fossil fuel workers with retraining and guaranteed employment</li>
-              <li>Rejoin the Paris Climate Agreement and lead international climate action</li>
-            </ul>
-          </section>
-
-          <section style={styles.contentSection}>
-            <h2 style={styles.contentSubtitle}>Workers' Rights</h2>
-            <p style={styles.contentText}>
-              Working people built this country and deserve dignity, fair wages, and power in the workplace:
-            </p>
-            <ul style={styles.contentList}>
-              <li>Raise the federal minimum wage to $20/hour and index it to inflation</li>
-              <li>Strengthen unions by passing the PRO Act and eliminating right-to-work laws</li>
-              <li>Guarantee paid family and medical leave for all workers</li>
-              <li>Create a federal jobs guarantee for infrastructure and green energy projects</li>
-              <li>End employment at-will and require just cause for termination</li>
-              <li>Reduce the standard work week to 32 hours with no loss in pay</li>
-            </ul>
-          </section>
-
-          <section style={styles.contentSection}>
-            <h2 style={styles.contentSubtitle}>Housing Justice</h2>
-            <p style={styles.contentText}>
-              Housing is a human right. We need bold action to end the housing crisis and ensure everyone has a safe, affordable home:
-            </p>
-            <ul style={styles.contentList}>
-              <li>Build 12 million units of public housing over 10 years</li>
-              <li>Implement national rent control to cap increases at 3% annually</li>
-              <li>Tax vacant properties and foreign speculation to discourage speculation</li>
-              <li>Provide down payment assistance and low-interest loans for first-time homebuyers</li>
-              <li>End homelessness through Housing First programs and supportive services</li>
-              <li>Protect tenants from eviction and guarantee right to counsel in housing court</li>
-            </ul>
-          </section>
-
-          <section style={styles.contentSection}>
-            <h2 style={styles.contentSubtitle}>Education</h2>
-            <p style={styles.contentText}>
-              Education should be accessible to all, from pre-K through college, without putting families into debt:
-            </p>
-            <ul style={styles.contentList}>
-              <li>Make public college and trade schools tuition-free for all students</li>
-              <li>Cancel all existing student debt through federal action</li>
-              <li>Invest in universal pre-K and after-school programs</li>
-              <li>Increase teacher pay and reduce class sizes in public schools</li>
-              <li>Expand funding for school meal programs and mental health support</li>
-              <li>End the school-to-prison pipeline and eliminate zero-tolerance policies</li>
-            </ul>
-          </section>
-
-          <section style={styles.contentSection}>
-            <h2 style={styles.contentSubtitle}>Criminal Justice Reform</h2>
-            <p style={styles.contentText}>
-              Our criminal justice system perpetuates inequality and fails to create safety. We need comprehensive reform:
-            </p>
-            <ul style={styles.contentList}>
-              <li>End the war on drugs and decriminalize all drug use</li>
-              <li>Close private prisons and reduce the prison population by 50%</li>
-              <li>Eliminate cash bail and end mandatory minimum sentences</li>
-              <li>Legalize marijuana federally and expunge all related convictions</li>
-              <li>Invest in community-based violence prevention and restorative justice</li>
-              <li>Demilitarize police and redirect funding to education, healthcare, and social services</li>
-            </ul>
-          </section>
-
-          <section style={styles.contentSection}>
-            <h2 style={styles.contentSubtitle}>Immigration Justice</h2>
-            <p style={styles.contentText}>
-              America should welcome immigrants and refugees with dignity while addressing the root causes of migration:
-            </p>
-            <ul style={styles.contentList}>
-              <li>Provide a path to citizenship for all undocumented immigrants</li>
-              <li>End family separation and close detention centers</li>
-              <li>Increase refugee admissions and eliminate country caps</li>
-              <li>Stop funding military interventions that create refugee crises</li>
-              <li>Protect DACA recipients and their families</li>
-              <li>End workplace raids and protect immigrant workers' rights</li>
-            </ul>
-          </section>
-
-          <section style={styles.contentSection}>
-            <h2 style={styles.contentSubtitle}>Anti-War and Foreign Policy</h2>
-            <p style={styles.contentText}>
-              America must end its endless wars and focus on diplomacy, human rights, and international cooperation:
-            </p>
-            <ul style={styles.contentList}>
-              <li>Cut the military budget by 50% and redirect funds to domestic priorities</li>
-              <li>Close overseas military bases and end regime change operations</li>
-              <li>Withdraw from NATO and other military alliances that fuel conflict</li>
-              <li>End arms sales to human rights violators</li>
-              <li>Support international law and the International Criminal Court</li>
-              <li>Invest in diplomacy and conflict prevention rather than military solutions</li>
-            </ul>
-          </section>
-
-          <button
-            onClick={() => setShowVisualization(!showVisualization)}
-            style={styles.visualizationButton}
-          >
-            {showVisualization ? 'Hide' : 'Show'} Policy Network Visualization
-          </button>
         </div>
       </div>
 
-      {showVisualization && (
-        <div>
-          <div style={styles.pageHeader}>
-            <h2 style={styles.pageTitle}>Policy Network Visualization</h2>
-            <p style={styles.pageSubtitle}>
-              An interconnected approach to transforming Colorado's 2nd District and America
-            </p>
-          </div>
+      <div style={styles.pageHeader}>
+        <h2 style={styles.pageTitle}>Policy Network Visualization</h2>
+        <p style={styles.pageSubtitle}>
+          An interconnected approach to transforming Colorado's 2nd District and America
+        </p>
+      </div>
 
-          <div style={styles.networkContainer}>
-            <svg
-              width="100%"
-              height={dimensions.height}
-              viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
-              style={styles.svg}
-            >
+      <div style={styles.networkContainer}>
+        <svg
+          width="100%"
+          height={dimensions.height}
+          viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
+          style={styles.svg}
+        >
           {/* Connection lines */}
           {connections.map((conn, index) => {
             const fromNode = policyNodes.find(n => n.id === conn.from);
@@ -674,37 +411,6 @@ const MyPlanPage = () => {
         )}
       </div>
 
-      {/* Policy Categories Summary */}
-      <div style={styles.policySummary}>
-        <h2 style={styles.summaryTitle}>Policy Framework Overview</h2>
-        <div style={styles.categoryGrid}>
-          {Object.entries(colors.thematic).map(([category, color]) => {
-            const categoryNodes = policyNodes.filter(node => node.category === category);
-            const thematicNode = categoryNodes.find(node => node.type === 'thematic');
-            const initiatives = categoryNodes.filter(node => node.type === 'initiative');
-
-            if (!thematicNode) return null;
-
-            return (
-              <div key={category} style={styles.categoryCard}>
-                <div style={{...styles.categoryHeader, borderColor: color}}>
-                  <div style={{...styles.categoryDot, backgroundColor: color}}></div>
-                  <h3 style={styles.categoryTitle}>{thematicNode.name}</h3>
-                </div>
-                <p style={styles.categoryDescription}>{thematicNode.description}</p>
-                <ul style={styles.initiativeList}>
-                  {initiatives.map(initiative => (
-                    <li key={initiative.id} style={styles.initiativeItem}>
-                      {initiative.name}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
       <div style={styles.ctaSection}>
         <h2 style={styles.ctaTitle}>Join the Movement</h2>
         <p style={styles.ctaText}>
@@ -714,8 +420,6 @@ const MyPlanPage = () => {
           Get Involved
         </Link>
       </div>
-        </div>
-      )}
     </div>
   );
 };
@@ -795,68 +499,6 @@ const styles = {
     color: '#718096',
     fontStyle: 'italic'
   },
-  policySummary: {
-    maxWidth: '1200px',
-    margin: '0 auto 3rem'
-  },
-  summaryTitle: {
-    fontSize: '2rem',
-    fontWeight: 'bold',
-    color: '#2d5016',
-    textAlign: 'center',
-    marginBottom: '2rem',
-    fontFamily: 'Arial, sans-serif'
-  },
-  categoryGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-    gap: '1.5rem'
-  },
-  categoryCard: {
-    backgroundColor: '#ffffff',
-    padding: '1.5rem',
-    borderRadius: '12px',
-    boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
-    border: '1px solid #e2e8f0'
-  },
-  categoryHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    marginBottom: '1rem',
-    paddingBottom: '0.5rem',
-    borderBottom: '2px solid'
-  },
-  categoryDot: {
-    width: '12px',
-    height: '12px',
-    borderRadius: '50%',
-    marginRight: '0.75rem'
-  },
-  categoryTitle: {
-    margin: 0,
-    fontSize: '1.2rem',
-    fontWeight: 'bold',
-    color: '#2d3748'
-  },
-  categoryDescription: {
-    margin: '0 0 1rem 0',
-    fontSize: '14px',
-    lineHeight: '1.5',
-    color: '#4a5568'
-  },
-  initiativeList: {
-    listStyle: 'none',
-    padding: 0,
-    margin: 0
-  },
-  initiativeItem: {
-    padding: '0.25rem 0',
-    fontSize: '13px',
-    color: '#4a5568',
-    borderLeft: '3px solid #e2e8f0',
-    paddingLeft: '0.75rem',
-    marginBottom: '0.25rem'
-  },
   ctaSection: {
     textAlign: 'center',
     padding: '3rem 2rem',
@@ -920,19 +562,6 @@ const styles = {
     marginBottom: '1rem',
     paddingLeft: '2rem',
     fontSize: '1rem'
-  },
-  visualizationButton: {
-    padding: '1rem 2rem',
-    backgroundColor: '#2d5016',
-    color: '#ffffff',
-    border: 'none',
-    borderRadius: '8px',
-    fontSize: '1.1rem',
-    fontWeight: 'bold',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease',
-    margin: '2rem auto',
-    display: 'block'
   }
 };
 

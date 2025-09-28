@@ -43,32 +43,32 @@ const HomePage = () => {
           <div style={styles.platformOverview}>
             <h2 style={styles.platformTitle}>Platform Overview</h2>
             <p style={styles.platformIntro}>
-              Real change starts with breaking corporate control and putting people first. We reject special interest money and fight for policies that serve working families, not Wall Street.
+              No corporate donations. No special interests. Just Colorado's donations and Colorado interests.
             </p>
             <div style={styles.platformGrid}>
               <article style={styles.platformCard}>
-                <h3 style={styles.platformCardTitle}>Free Palestine</h3>
-                <p style={styles.platformCardText}>End unconditional military aid to Israel and advocate for Palestinian rights and self-determination.</p>
+                <h3 style={styles.platformCardTitle}>Corporate Reform</h3>
+                <p style={styles.platformCardText}>Crack down on corporate abuse: enact and enforce strong antitrust laws, break up monopolies, and eliminate corporate influence in elections. No more corporate dominance over our economy, our politics, or our communities.</p>
               </article>
               <article style={styles.platformCard}>
-                <h3 style={styles.platformCardTitle}>Corporate Accountability</h3>
-                <p style={styles.platformCardText}>Break up monopolies, cap CEO salaries, and eliminate corporate influence in our elections.</p>
+                <h3 style={styles.platformCardTitle}>Economic Justice</h3>
+                <p style={styles.platformCardText}>Innovate beyond failed measures of wealth and GDP: raise quality of life through affordable housing, universal healthcare access, and fair wages. Invest in people, not profits, to build a society where well-being is the true measure of success.</p>
               </article>
               <article style={styles.platformCard}>
-                <h3 style={styles.platformCardTitle}>Democratic Reform</h3>
-                <p style={styles.platformCardText}>Implement ranked choice voting, end gerrymandering, and expand voting access for all citizens.</p>
+                <h3 style={styles.platformCardTitle}>Democratic Governance</h3>
+                <p style={styles.platformCardText}>Return power to the people: reduce executive overreach, implement transparent budgets, democratize the executive cabinet, and explore direct democracy initiatives. Recognize Native American tribes with legislative representation in Congress and protect their right to self-governance.</p>
               </article>
               <article style={styles.platformCard}>
-                <h3 style={styles.platformCardTitle}>Healthcare as a Right</h3>
-                <p style={styles.platformCardText}>Medicare for All to ensure universal healthcare coverage for every American.</p>
+                <h3 style={styles.platformCardTitle}>Environmental Protection</h3>
+                <p style={styles.platformCardText}>Protect land, water, and future generations: treat waste management as a fundamental right, invest in nationwide recycling and reuse systems, and clean up industrial and chemical waste. Restore streams, soils, and ecosystems while curbing destructive consumption patterns.</p>
               </article>
               <article style={styles.platformCard}>
-                <h3 style={styles.platformCardTitle}>Climate Action</h3>
-                <p style={styles.platformCardText}>Transition to 100% renewable energy and create green jobs for a sustainable future.</p>
+                <h3 style={styles.platformCardTitle}>Peace & Diplomacy</h3>
+                <p style={styles.platformCardText}>End Weaponized Democracies and transactional diplomacy: cut the defense budget, audit military spending, and reinvest in domestic infrastructure. Stop funding Israel's militarism, acknowledge and apologize for the harms of U.S. foreign policy, and make diplomacy rooted in justice — not exploitation — the cornerstone of America's role in the world.</p>
               </article>
               <article style={styles.platformCard}>
-                <h3 style={styles.platformCardTitle}>Workers' Rights</h3>
-                <p style={styles.platformCardText}>Strengthen unions, raise the minimum wage, and ensure workplace safety and dignity.</p>
+                <h3 style={styles.platformCardTitle}>Community First</h3>
+                <p style={styles.platformCardText}>Put people before profits: support local agriculture, heritage farms, and small businesses against corporate greed. Protect our elders from rising costs, end the war on drugs, address the opioid crisis with compassion, and rebuild a Department of Justice that serves people — not the status quo.</p>
               </article>
             </div>
           </div>
@@ -99,20 +99,6 @@ const HomePage = () => {
               >
                 Contribute
               </a>
-            </article>
-            <article style={styles.actionItem}>
-              <div style={styles.actionIcon}>🏠</div>
-              <h3 style={styles.actionItemTitle}>Request an Event</h3>
-              <p style={styles.actionItemText}>Organize a meet-and-greet or town hall in your community</p>
-              <Link to="/request-event" style={styles.actionBtn}>
-                Learn More
-              </Link>
-            </article>
-            <article style={styles.actionItem}>
-              <div style={styles.actionIcon}>📢</div>
-              <h3 style={styles.actionItemTitle}>Spread the Word</h3>
-              <p style={styles.actionItemText}>Share our message with friends, family, and neighbors</p>
-              <a href="#" style={styles.actionBtn}>Get Materials</a>
             </article>
           </div>
         </div>
@@ -271,7 +257,11 @@ const styles = {
   // Get Involved Section
   getInvolved: {
     padding: '5rem 2rem',
-    backgroundColor: '#fafafa'
+    backgroundImage: `linear-gradient(rgba(212, 160, 23, 0.1), rgba(45, 80, 22, 0.3)), url(/images/boulder-flatirons.jpg)`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    position: 'relative'
   },
   container: {
     maxWidth: '1200px',
@@ -286,48 +276,57 @@ const styles = {
   },
   actionGrid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-    gap: '2rem',
-    maxWidth: '1000px',
+    gridTemplateColumns: 'repeat(2, 1fr)',
+    gap: '3rem',
+    maxWidth: '800px',
     margin: '0 auto'
   },
   actionItem: {
     textAlign: 'center',
-    padding: '2.5rem 2rem',
-    backgroundColor: '#ffffff',
-    border: '2px solid #d4a017',
-    borderRadius: '8px',
-    transition: 'all 0.3s'
+    padding: '3.5rem 3rem',
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    border: '3px solid #d4a017',
+    borderRadius: '12px',
+    transition: 'all 0.3s',
+    boxShadow: '0 8px 25px rgba(0,0,0,0.15)',
+    backdropFilter: 'blur(10px)'
   },
   actionIcon: {
-    fontSize: '3rem',
-    marginBottom: '1rem',
+    fontSize: '4rem',
+    marginBottom: '1.5rem',
     color: '#2d5016'
   },
   actionItemTitle: {
     color: '#2d5016',
-    marginBottom: '1rem',
-    fontSize: '1.5rem',
+    marginBottom: '1.5rem',
+    fontSize: '1.8rem',
+    fontWeight: 'bold',
     transition: 'color 0.3s',
     fontFamily: 'Arial, sans-serif'
   },
   actionItemText: {
     color: '#4a4a4a',
-    marginBottom: '1.5rem',
+    marginBottom: '2rem',
+    fontSize: '1.1rem',
+    lineHeight: '1.6',
     transition: 'color 0.3s'
   },
   actionBtn: {
-    padding: '0.7rem 2rem',
+    padding: '1rem 3rem',
     backgroundColor: '#2d5016',
     color: '#ffffff',
     textDecoration: 'none',
-    borderRadius: '4px',
-    fontWeight: '600',
+    borderRadius: '6px',
+    fontWeight: '700',
+    fontSize: '1.2rem',
     display: 'inline-block',
     transition: 'all 0.3s',
     fontFamily: 'Arial, sans-serif',
     cursor: 'pointer',
-    border: 'none'
+    border: 'none',
+    boxShadow: '0 4px 15px rgba(45, 80, 22, 0.3)',
+    textTransform: 'uppercase',
+    letterSpacing: '1px'
   },
 
   // Newsletter Section
