@@ -7,7 +7,7 @@ const RoadToCongressPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionMessage, setSubmissionMessage] = useState('');
 
-  const endorsementGoal = 1000;
+  const endorsementGoal = 1500;
   const currentEndorsements = endorsements.length;
   const progressPercentage = Math.min((currentEndorsements / endorsementGoal) * 100, 100);
 
@@ -90,8 +90,7 @@ const RoadToCongressPage = () => {
         <div style={styles.pageContent}>
           <section style={styles.contentSection}>
             <h2 style={styles.contentSubtitle}>The Signatory Route</h2>
-            <div style={styles.campaignContent}>
-              <div style={styles.textContent}>
+            <div style={styles.textContent}>
                 <p style={styles.contentText}>
                   Which will be our road will be the signatory route. We will have to obtain <strong>1500 verified signatures from registered democrats before March 18th, 2026</strong>. Upon getting those signatures then and only then will we be able to challenge Joe Neguse for the Primary. Where any registered democrat or independent can vote in. Upon getting the democrat and independent vote then we will be the next democratic challenger in this midterm where it is almost a guaranteed win.
                 </p>
@@ -102,32 +101,8 @@ const RoadToCongressPage = () => {
                   We need help though! We need signatures, votes, volunteers, donations, involvement on social media, and ideas. We need exposure and participation!
                 </p>
                 <p style={styles.contentText}>
-                  Upon winning this seat we will have flipped this seat from the hands of corporate agendas and foreign lobbying groups to the hands and voices of Coloradans. <a href="https://secure.actblue.com/donate/cinqueforcongress" target="_blank" rel="noopener noreferrer" style={styles.donateLink}>Click here</a>
+                  Upon winning this seat we will have flipped this seat from the hands of corporate agendas and foreign lobbying groups to the hands and voices of Coloradans. <a href="https://www.opensecrets.org/members-of-congress/joseph-neguse/summary?cid=N00041080" target="_blank" rel="noopener noreferrer" style={styles.donateLink}>Click here</a>
                 </p>
-              </div>
-              <div style={styles.thermometerContainer}>
-                <div style={styles.thermometer}>
-                  <div style={styles.thermometerHeader}>
-                    <h3 style={styles.thermometerTitle}>Signature Goal</h3>
-                    <p style={styles.thermometerCount}>{currentEndorsements} / 1500</p>
-                    <p style={styles.thermometerPercentage}>{Math.round((currentEndorsements / 1500) * 100)}%</p>
-                  </div>
-                  <div style={styles.thermometerBody}>
-                    <div style={{
-                      ...styles.thermometerFill,
-                      height: `${Math.min((currentEndorsements / 1500) * 100, 100)}%`
-                    }}></div>
-                    <div style={styles.thermometerMarks}>
-                      <div style={styles.mark}>1500</div>
-                      <div style={styles.mark}>1200</div>
-                      <div style={styles.mark}>900</div>
-                      <div style={styles.mark}>600</div>
-                      <div style={styles.mark}>300</div>
-                      <div style={styles.mark}>0</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </section>
 
@@ -262,34 +237,7 @@ const RoadToCongressPage = () => {
           {/* Business/Union Endorsements */}
           <section style={styles.orgEndorsementsSection}>
             <h2 style={styles.contentSubtitle}>Organizational Endorsements</h2>
-            <div style={styles.orgEndorsements}>
-              <div style={styles.orgCategory}>
-                <h3 style={styles.orgCategoryTitle}>Labor Unions</h3>
-                <ul style={styles.orgList}>
-                  <li>United Food and Commercial Workers Local 7</li>
-                  <li>Communications Workers of America Local 7777</li>
-                  <li>Service Employees International Union Local 105</li>
-                </ul>
-              </div>
-
-              <div style={styles.orgCategory}>
-                <h3 style={styles.orgCategoryTitle}>Community Organizations</h3>
-                <ul style={styles.orgList}>
-                  <li>Colorado Progressive Coalition</li>
-                  <li>Boulder County Democratic Party</li>
-                  <li>Environmental Action Network</li>
-                </ul>
-              </div>
-
-              <div style={styles.orgCategory}>
-                <h3 style={styles.orgCategoryTitle}>Business Leaders</h3>
-                <ul style={styles.orgList}>
-                  <li>Local Business Alliance for Progressive Change</li>
-                  <li>Green Business Collective</li>
-                  <li>Worker-Owned Cooperative Network</li>
-                </ul>
-              </div>
-            </div>
+            <p style={styles.contentText}>NAA</p>
           </section>
 
           {/* External Form Button */}
