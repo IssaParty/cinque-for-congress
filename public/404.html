@@ -4,15 +4,28 @@
   <meta charset="utf-8">
   <title>Cinque Mason for Congress</title>
   <script type="text/javascript">
-    // Redirect GitHub Pages 404 to index.html with pathname preserved
+    // Improved GitHub Pages routing fix - prevent URL pollution
     var l = window.location;
-    l.replace(
-      l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-      l.pathname.split('/').slice(0, 2).join('/') + '/?/' +
-      l.pathname.slice(1).split('/').slice(1).join('/').replace(/&/g, '~and~') +
-      (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
-      l.hash
-    );
+    var redirectPath = l.pathname.slice(1);
+
+    // Check if URL is already polluted with ~and~ parameters
+    if (redirectPath.includes('~and~') || l.search.includes('~and~')) {
+      // Clean up polluted URL and redirect to clean version
+      var cleanPath = redirectPath.replace(/~and~/g, '');
+      var cleanSearch = l.search.replace(/~and~/g, '&');
+      l.replace(l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + '/' + cleanPath + cleanSearch + l.hash);
+    } else if (redirectPath && !redirectPath.includes('.')) {
+      // Normal 404 redirect for client-side routes
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        '/?/' + redirectPath +
+        (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+        l.hash
+      );
+    } else {
+      // Redirect to home for file requests or empty paths
+      l.replace(l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + '/');
+    }
   </script>
 </head>
 <body>

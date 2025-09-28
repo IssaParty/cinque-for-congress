@@ -13,6 +13,22 @@
   <meta property="og:description" content="Independent candidate for Colorado's 2nd District." />
   <meta property="og:image" content="%PUBLIC_URL%/favicon.svg" />
   <title>Cinque Mason for Congress | Colorado District 2</title>
+  <script type="text/javascript">
+    // GitHub Pages routing fix - decode URL parameters on page load
+    (function(l) {
+      if (l.search[1] === '/' ) {
+        var decoded = l.search.slice(1).split('&').map(function(s) {
+          return s.replace(/~and~/g, '&')
+        }).join('?');
+        // Clean up the URL to prevent accumulation
+        var cleanPath = decoded.replace(/\?+/g, '?').replace(/&+/g, '&');
+        if (cleanPath.endsWith('?') || cleanPath.endsWith('&')) {
+          cleanPath = cleanPath.slice(0, -1);
+        }
+        window.history.replaceState(null, null, l.pathname.slice(0, -1) + cleanPath + l.hash);
+      }
+    }(window.location))
+  </script>
 </head>
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>

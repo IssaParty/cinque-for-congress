@@ -621,7 +621,7 @@ const MyPlanPage = () => {
         <h2 style={styles.ctaTitle}>Join the Movement</h2>
         <p style={styles.ctaText}>
           <span>Believing in </span>
-          <span style={styles.glossyName}>Cinque Mason</span>
+          <span style={styles.glossyName}>Change</span>
           <span> is Believing in the people</span>
         </p>
         <Link to="/join" style={styles.ctaButton}>
