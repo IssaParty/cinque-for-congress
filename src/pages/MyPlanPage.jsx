@@ -253,6 +253,15 @@ const MyPlanPage = () => {
 
   return (
     <div style={styles.myPlanPage}>
+      <style>
+        {`
+          @keyframes glossyShine {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+          }
+        `}
+      </style>
       <div style={styles.pageHeader}>
         <h1 style={styles.pageTitle}>My Plan for Colorado's 2nd District</h1>
         <p style={styles.pageSubtitle}>
@@ -374,7 +383,9 @@ const MyPlanPage = () => {
       <div style={styles.ctaSection}>
         <h2 style={styles.ctaTitle}>Join the Movement</h2>
         <p style={styles.ctaText}>
-          These interconnected policies work together to create systemic change for Colorado's 2nd District and America.
+          <span>Believing in </span>
+          <span style={styles.glossyName}>Cinque Mason</span>
+          <span> is Believing in the people</span>
         </p>
         <Link to="/join" style={styles.ctaButton}>
           Get Involved
@@ -405,11 +416,14 @@ const styles = {
     fontFamily: 'Arial, sans-serif'
   },
   pageSubtitle: {
-    fontSize: '1.2rem',
+    fontSize: '1.4rem',
     color: '#4a5568',
-    lineHeight: '1.6',
-    maxWidth: '900px',
-    margin: '0 auto'
+    lineHeight: '2.0',
+    maxWidth: '75%',
+    margin: '0 auto',
+    letterSpacing: '0.5px',
+    wordSpacing: '2px',
+    textAlign: 'justify'
   },
   networkContainer: {
     backgroundColor: '#ffffff',
@@ -481,9 +495,24 @@ const styles = {
     fontFamily: 'Arial, sans-serif'
   },
   ctaText: {
-    fontSize: '1.1rem',
-    lineHeight: '1.6',
-    marginBottom: '2rem'
+    fontSize: '1.8rem',
+    lineHeight: '2.2',
+    marginBottom: '2rem',
+    fontWeight: 'bold',
+    fontStyle: 'italic',
+    letterSpacing: '1px',
+    width: '100%',
+    display: 'block'
+  },
+  glossyName: {
+    background: 'linear-gradient(45deg, #d4a017, #f5d76e, #d4a017)',
+    backgroundSize: '200% 200%',
+    animation: 'glossyShine 2s ease-in-out infinite',
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
+    backgroundClip: 'text',
+    textShadow: '0 0 20px rgba(212, 160, 23, 0.5)',
+    filter: 'drop-shadow(0 0 10px rgba(212, 160, 23, 0.3))'
   },
   ctaButton: {
     display: 'inline-block',
