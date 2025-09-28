@@ -145,9 +145,13 @@ export const formSubmission = {
     return formSubmission.validateForm(data, 'endorsement');
   },
 
-  // Generate session ID for tracking
+  // Generate cryptographically secure session ID
   generateSessionId: () => {
-    const sessionId = 'sess_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    // Use crypto.getRandomValues for secure random number generation
+    const array = new Uint8Array(16);
+    crypto.getRandomValues(array);
+    const randomString = Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+    const sessionId = 'sess_' + randomString;
     sessionStorage.setItem('sessionId', sessionId);
     return sessionId;
   }

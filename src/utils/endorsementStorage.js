@@ -3,25 +3,25 @@
 // For production, use a proper backend service
 
 export const endorsementStorage = {
-  // Encrypt data before storing (basic encryption)
-  encrypt: (data) => {
+  // Encode data for storage (WARNING: This is NOT encryption - just Base64 encoding)
+  encode: (data) => {
     try {
       const jsonString = JSON.stringify(data);
-      // Simple base64 encoding (NOT secure encryption)
+      // Base64 encoding for basic obfuscation - NOT SECURE
       return btoa(jsonString);
     } catch (error) {
-      console.error('Encryption failed:', error);
+      console.error('Encoding failed:', error);
       return null;
     }
   },
 
-  // Decrypt data after retrieving
-  decrypt: (encryptedData) => {
+  // Decode data after retrieving
+  decode: (encodedData) => {
     try {
-      const jsonString = atob(encryptedData);
+      const jsonString = atob(encodedData);
       return JSON.parse(jsonString);
     } catch (error) {
-      console.error('Decryption failed:', error);
+      console.error('Decoding failed:', error);
       return null;
     }
   },
@@ -43,10 +43,10 @@ export const endorsementStorage = {
     // Add new endorsement
     const updated = [...existing, endorsementWithMetadata];
 
-    // Encrypt and store
-    const encrypted = endorsementStorage.encrypt(updated);
-    if (encrypted) {
-      localStorage.setItem('campaign_endorsements', encrypted);
+    // Encode and store
+    const encoded = endorsementStorage.encode(updated);
+    if (encoded) {
+      localStorage.setItem('campaign_endorsements', encoded);
       return true;
     }
     return false;
@@ -55,11 +55,11 @@ export const endorsementStorage = {
   // Retrieve all endorsements
   getAllEndorsements: () => {
     try {
-      const encrypted = localStorage.getItem('campaign_endorsements');
-      if (!encrypted) return [];
+      const encoded = localStorage.getItem('campaign_endorsements');
+      if (!encoded) return [];
 
-      const decrypted = endorsementStorage.decrypt(encrypted);
-      return decrypted || [];
+      const decoded = endorsementStorage.decode(encoded);
+      return decoded || [];
     } catch (error) {
       console.error('Failed to retrieve endorsements:', error);
       return [];

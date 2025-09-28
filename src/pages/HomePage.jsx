@@ -6,7 +6,9 @@ const HomePage = () => {
 
   const handleNewsletterSubmit = () => {
     const email = document.getElementById('newsletter-email').value;
-    if (email && email.includes('@')) {
+    // Improved email validation with proper regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (email && emailRegex.test(email.trim())) {
       setNewsletterStatus('Thank you! We\'ll add you to our newsletter list.');
       document.getElementById('newsletter-email').value = '';
       setTimeout(() => setNewsletterStatus(''), 5000);
