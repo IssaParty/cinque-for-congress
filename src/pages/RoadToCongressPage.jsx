@@ -238,24 +238,9 @@ const RoadToCongressPage = () => {
           <section style={styles.orgEndorsementsSection}>
             <h2 style={styles.contentSubtitle}>Organizational Endorsements</h2>
             <p style={styles.contentText}>NAA</p>
+            <p style={{...styles.contentText, fontStyle: 'italic'}}>Are you an organization? Care to Endorse Us? Email us at Info@cinqueforcongress.com</p>
           </section>
 
-          {/* External Form Button */}
-          <section style={styles.externalFormSection}>
-            <h2 style={styles.contentSubtitle}>Official Endorsement Form</h2>
-            <p style={styles.externalFormText}>
-              For official endorsement documentation and to be included in campaign materials,
-              please complete our comprehensive endorsement form.
-            </p>
-            <a
-              href="https://docs.google.com/forms/d/e/1FAIpQLSf_EXAMPLE_FORM_ID/viewform"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={styles.externalFormButton}
-            >
-              I want to sign!
-            </a>
-          </section>
 
           {/* Political Statement */}
           <section style={styles.statementSection}>
