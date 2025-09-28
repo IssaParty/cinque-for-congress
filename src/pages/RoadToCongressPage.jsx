@@ -89,24 +89,46 @@ const RoadToCongressPage = () => {
         <h1 style={styles.pageTitle}>Road to Congress</h1>
         <div style={styles.pageContent}>
           <section style={styles.contentSection}>
-            <h2 style={styles.contentSubtitle}>Our Journey</h2>
-            <p style={styles.contentText}>
-              The path to Congress is one that requires dedication, community support, and unwavering commitment to the values that will drive real change.
-            </p>
-          </section>
-
-          <section style={styles.contentSection}>
-            <h2 style={styles.contentSubtitle}>Campaign Milestones</h2>
-            <p style={styles.contentText}>
-              Follow our progress as we work toward election day, building grassroots support and connecting with communities across the district.
-            </p>
-          </section>
-
-          <section style={styles.contentSection}>
-            <h2 style={styles.contentSubtitle}>Get Involved</h2>
-            <p style={styles.contentText}>
-              Every step of this journey requires community involvement. Join us as we work together to bring real representation to Congress.
-            </p>
+            <h2 style={styles.contentSubtitle}>The Signatory Route</h2>
+            <div style={styles.campaignContent}>
+              <div style={styles.textContent}>
+                <p style={styles.contentText}>
+                  Which will be our road will be the signatory route. We will have to obtain <strong>1500 verified signatures from registered democrats before March 18th, 2026</strong>. Upon getting those signatures then and only then will we be able to challenge Joe Neguse for the Primary. Where any registered democrat or independent can vote in. Upon getting the democrat and independent vote then we will be the next democratic challenger in this midterm where it is almost a guaranteed win.
+                </p>
+                <p style={styles.contentText}>
+                  <strong>Joe Neguse has gone every primary since 2019 unopposed. We plan to change that and defeat him this midterm.</strong>
+                </p>
+                <p style={styles.contentText}>
+                  We need help though! We need signatures, votes, volunteers, donations, involvement on social media, and ideas. We need exposure and participation!
+                </p>
+                <p style={styles.contentText}>
+                  Upon winning this seat we will have flipped this seat from the hands of corporate agendas and foreign lobbying groups to the hands and voices of Coloradans. <a href="https://secure.actblue.com/donate/cinqueforcongress" target="_blank" rel="noopener noreferrer" style={styles.donateLink}>Click here</a>
+                </p>
+              </div>
+              <div style={styles.thermometerContainer}>
+                <div style={styles.thermometer}>
+                  <div style={styles.thermometerHeader}>
+                    <h3 style={styles.thermometerTitle}>Signature Goal</h3>
+                    <p style={styles.thermometerCount}>{currentEndorsements} / 1500</p>
+                    <p style={styles.thermometerPercentage}>{Math.round((currentEndorsements / 1500) * 100)}%</p>
+                  </div>
+                  <div style={styles.thermometerBody}>
+                    <div style={{
+                      ...styles.thermometerFill,
+                      height: `${Math.min((currentEndorsements / 1500) * 100, 100)}%`
+                    }}></div>
+                    <div style={styles.thermometerMarks}>
+                      <div style={styles.mark}>1500</div>
+                      <div style={styles.mark}>1200</div>
+                      <div style={styles.mark}>900</div>
+                      <div style={styles.mark}>600</div>
+                      <div style={styles.mark}>300</div>
+                      <div style={styles.mark}>0</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </section>
 
           {/* Progress Bar */}
@@ -340,6 +362,86 @@ const styles = {
     color: '#4a4a4a',
     lineHeight: '1.8',
     marginBottom: '1rem'
+  },
+  campaignContent: {
+    display: 'flex',
+    gap: '2rem',
+    alignItems: 'flex-start'
+  },
+  textContent: {
+    flex: '2'
+  },
+  donateLink: {
+    color: '#2d5016',
+    fontWeight: 'bold',
+    textDecoration: 'underline',
+    transition: 'color 0.3s ease'
+  },
+  thermometerContainer: {
+    flex: '1',
+    minWidth: '200px'
+  },
+  thermometer: {
+    backgroundColor: '#f8f9fa',
+    borderRadius: '12px',
+    padding: '1.5rem',
+    border: '2px solid #e2e8f0',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+  },
+  thermometerHeader: {
+    textAlign: 'center',
+    marginBottom: '1rem'
+  },
+  thermometerTitle: {
+    color: '#2d5016',
+    fontSize: '1.2rem',
+    fontWeight: 'bold',
+    margin: '0 0 0.5rem 0',
+    fontFamily: 'Arial, sans-serif'
+  },
+  thermometerCount: {
+    color: '#1e3a5f',
+    fontSize: '1.4rem',
+    fontWeight: 'bold',
+    margin: '0 0 0.25rem 0'
+  },
+  thermometerPercentage: {
+    color: '#6c757d',
+    fontSize: '1rem',
+    margin: 0
+  },
+  thermometerBody: {
+    position: 'relative',
+    height: '200px',
+    width: '40px',
+    margin: '0 auto',
+    backgroundColor: '#e9ecef',
+    borderRadius: '20px',
+    overflow: 'hidden',
+    border: '2px solid #d4a017'
+  },
+  thermometerFill: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    background: 'linear-gradient(to top, #d4a017, #f5d76e)',
+    borderRadius: '0 0 18px 18px',
+    transition: 'height 0.5s ease-in-out'
+  },
+  thermometerMarks: {
+    position: 'absolute',
+    right: '-50px',
+    top: 0,
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    fontSize: '0.8rem',
+    color: '#6c757d'
+  },
+  mark: {
+    lineHeight: 1
   },
 
   // Progress Bar Styles

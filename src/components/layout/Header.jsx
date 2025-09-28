@@ -101,15 +101,6 @@ const Header = () => {
           </li>
           <li style={styles.navItem}>
             <Link
-              to="/ideas"
-              onClick={() => setMobileMenuOpen(false)}
-              style={styles.navLink}
-            >
-              Ideas
-            </Link>
-          </li>
-          <li style={styles.navItem}>
-            <Link
               to="/join"
               onClick={() => setMobileMenuOpen(false)}
               style={styles.navLink}
