@@ -74,63 +74,63 @@ const HomePage = () => {
               </article>
             </div>
           </div>
-        </div>
-      </section>
 
-      <section style={styles.getInvolved}>
-        <div style={styles.container}>
-          <h2 style={styles.sectionTitle}>Get Involved</h2>
-          <div style={styles.actionGrid}>
-            <article style={styles.actionItem}>
-              <div style={styles.actionIcon}>✊</div>
-              <h3 style={styles.actionItemTitle}>Volunteer</h3>
-              <p style={styles.actionItemText}>Join our grassroots movement and help build change from the ground up</p>
-              <Link to="/join" style={styles.actionBtn}>
-                Sign Up
-              </Link>
-            </article>
-            <article style={styles.actionItem}>
-              <div style={styles.actionIcon}>💰</div>
-              <h3 style={styles.actionItemTitle}>Donate</h3>
-              <p style={styles.actionItemText}>Support the campaign with a contribution - no amount is too small</p>
-              <a
-                href="https://secure.actblue.com/donate/cinqueforcongress"
-                style={styles.actionBtn}
-                target="_blank"
-                rel="noopener noreferrer"
+          {/* Get Involved Section - Now part of the same background */}
+          <div style={styles.getInvolvedIntegrated}>
+            <h2 style={styles.getInvolvedTitle}>Get Involved</h2>
+            <div style={styles.actionGrid}>
+              <article style={styles.actionItem}>
+                <div style={styles.actionIcon}>✊</div>
+                <h3 style={styles.actionItemTitle}>Volunteer</h3>
+                <p style={styles.actionItemText}>Join our grassroots movement and help build change from the ground up</p>
+                <Link to="/join" style={styles.actionBtn}>
+                  Sign Up
+                </Link>
+              </article>
+              <article style={styles.actionItem}>
+                <div style={styles.actionIcon}>💰</div>
+                <h3 style={styles.actionItemTitle}>Donate</h3>
+                <p style={styles.actionItemText}>Support the campaign with a contribution - no amount is too small</p>
+                <a
+                  href="https://secure.actblue.com/donate/cinqueforcongress"
+                  style={styles.actionBtn}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Contribute
+                </a>
+              </article>
+            </div>
+          </div>
+
+          {/* Newsletter Section - Now part of the same background */}
+          <div style={styles.newsletterIntegrated}>
+            <h2 style={styles.newsletterTitleIntegrated}>Stay Informed</h2>
+            <p style={styles.newsletterTextIntegrated}>Receive campaign updates and policy positions</p>
+            <div style={styles.newsletterForm}>
+              <input
+                type="email"
+                placeholder="Enter your email address"
+                style={styles.newsletterInput}
+                id="newsletter-email"
+              />
+              <button
+                onClick={handleNewsletterSubmit}
+                style={styles.newsletterButton}
               >
-                Contribute
-              </a>
-            </article>
+                Subscribe
+              </button>
+            </div>
+            {newsletterStatus && (
+              <p style={styles.newsletterStatus}>
+                {newsletterStatus}
+              </p>
+            )}
+            <p style={styles.newsletterDisclaimer}>
+              By subscribing, you consent to receive campaign communications.
+            </p>
           </div>
         </div>
-      </section>
-
-      <section style={styles.newsletter}>
-        <h2 style={styles.newsletterTitle}>Stay Informed</h2>
-        <p style={styles.newsletterText}>Receive campaign updates and policy positions</p>
-        <div style={styles.newsletterForm}>
-          <input
-            type="email"
-            placeholder="Enter your email address"
-            style={styles.newsletterInput}
-            id="newsletter-email"
-          />
-          <button
-            onClick={handleNewsletterSubmit}
-            style={styles.newsletterButton}
-          >
-            Subscribe
-          </button>
-        </div>
-        {newsletterStatus && (
-          <p style={styles.newsletterStatus}>
-            {newsletterStatus}
-          </p>
-        )}
-        <p style={styles.newsletterDisclaimer}>
-          By subscribing, you consent to receive campaign communications.
-        </p>
       </section>
     </main>
   );
@@ -254,6 +254,144 @@ const styles = {
     color: 'rgba(255,255,255,0.95)',
     lineHeight: '1.7',
     textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+  },
+
+  // Integrated Get Involved Section
+  getInvolvedIntegrated: {
+    paddingTop: '4rem',
+    borderTop: '2px solid rgba(255,255,255,0.3)',
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    borderRadius: '8px',
+    padding: '3rem',
+    backdropFilter: 'blur(10px)',
+    marginTop: '3rem'
+  },
+  getInvolvedTitle: {
+    fontSize: '2.5rem',
+    textAlign: 'center',
+    marginBottom: '3rem',
+    color: '#ffd700',
+    fontFamily: 'Arial, sans-serif',
+    textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
+  },
+  actionGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, 1fr)',
+    gap: '3rem',
+    maxWidth: '800px',
+    margin: '0 auto'
+  },
+  actionItem: {
+    textAlign: 'center',
+    padding: '3rem 2rem',
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    border: '3px solid #d4a017',
+    borderRadius: '12px',
+    transition: 'all 0.3s',
+    boxShadow: '0 8px 25px rgba(0,0,0,0.15)',
+    backdropFilter: 'blur(10px)'
+  },
+  actionIcon: {
+    fontSize: '3rem',
+    marginBottom: '1rem',
+    color: '#2d5016'
+  },
+  actionItemTitle: {
+    color: '#2d5016',
+    marginBottom: '1rem',
+    fontSize: '1.5rem',
+    fontWeight: 'bold',
+    fontFamily: 'Arial, sans-serif'
+  },
+  actionItemText: {
+    color: '#4a4a4a',
+    marginBottom: '1.5rem',
+    fontSize: '1rem',
+    lineHeight: '1.6'
+  },
+  actionBtn: {
+    padding: '0.8rem 2rem',
+    backgroundColor: '#2d5016',
+    color: '#ffffff',
+    textDecoration: 'none',
+    borderRadius: '6px',
+    fontWeight: '700',
+    fontSize: '1rem',
+    display: 'inline-block',
+    transition: 'all 0.3s',
+    fontFamily: 'Arial, sans-serif',
+    cursor: 'pointer',
+    border: 'none',
+    boxShadow: '0 4px 15px rgba(45, 80, 22, 0.3)',
+    textTransform: 'uppercase',
+    letterSpacing: '1px'
+  },
+
+  // Integrated Newsletter Section
+  newsletterIntegrated: {
+    paddingTop: '3rem',
+    borderTop: '2px solid rgba(255,255,255,0.3)',
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    borderRadius: '8px',
+    padding: '3rem',
+    backdropFilter: 'blur(10px)',
+    marginTop: '3rem',
+    textAlign: 'center'
+  },
+  newsletterTitleIntegrated: {
+    fontSize: '2rem',
+    marginBottom: '1rem',
+    fontFamily: 'Arial, sans-serif',
+    color: '#ffd700',
+    textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
+  },
+  newsletterTextIntegrated: {
+    marginBottom: '2rem',
+    color: 'rgba(255,255,255,0.95)',
+    textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
+    fontSize: '1.1rem'
+  },
+  newsletterForm: {
+    display: 'flex',
+    gap: '1rem',
+    maxWidth: '500px',
+    margin: '0 auto 2rem',
+    flexWrap: 'wrap',
+    justifyContent: 'center'
+  },
+  newsletterInput: {
+    flex: '1',
+    minWidth: '250px',
+    padding: '0.8rem',
+    border: 'none',
+    borderRadius: '4px',
+    fontSize: '1rem'
+  },
+  newsletterButton: {
+    padding: '0.8rem 2rem',
+    backgroundColor: '#d4a017',
+    color: '#1e3a5f',
+    border: 'none',
+    borderRadius: '4px',
+    fontWeight: '600',
+    cursor: 'pointer',
+    transition: 'all 0.3s',
+    fontSize: '1rem'
+  },
+  newsletterStatus: {
+    fontSize: '1rem',
+    marginTop: '1rem',
+    padding: '0.5rem',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    borderRadius: '4px',
+    border: '1px solid rgba(255, 255, 255, 0.3)',
+    color: 'rgba(255,255,255,0.95)'
+  },
+  newsletterDisclaimer: {
+    fontSize: '0.85rem',
+    marginTop: '1rem',
+    opacity: '0.9',
+    color: 'rgba(255,255,255,0.8)'
   },
 
   // Get Involved Section

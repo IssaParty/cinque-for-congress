@@ -27,7 +27,7 @@ const Footer = () => {
             </li>
             <li>
               <Link
-                to="/policies"
+                to="/my-plan"
                 onClick={() => window.scrollTo(0, 0)}
                 style={styles.footerLink}
               >
