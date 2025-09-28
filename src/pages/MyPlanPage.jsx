@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 const MyPlanPage = () => {
   const [selectedNode, setSelectedNode] = useState(null);
   const [hoveredNode, setHoveredNode] = useState(null);
-  const [dimensions, setDimensions] = useState({ width: 1400, height: 800 });
+  const [dimensions, setDimensions] = useState({ width: 1600, height: 1000 });
 
   // Update dimensions on window resize
   useEffect(() => {
     const updateDimensions = () => {
       setDimensions({
-        width: Math.max(1400, window.innerWidth - 100),
-        height: Math.max(800, window.innerHeight - 200)
+        width: Math.max(1600, window.innerWidth - 50),
+        height: Math.max(1000, window.innerHeight - 150)
       });
     };
 
@@ -253,50 +253,10 @@ const MyPlanPage = () => {
 
   return (
     <div style={styles.myPlanPage}>
-      <div style={styles.policyContent}>
-        <div style={styles.pageContainer}>
-          <h1 style={styles.pageTitle}>My Plan for Colorado's 2nd District</h1>
-          <p style={styles.pageSubtitle}>
-            To liberate this country from corporate greed we must take a multi-industry approach not just targeting Big Tech in Colorado. My plan cracks down on monopolies, reins in executive power, and resets the playing field so individuals have the freedom to make decisions about their own lives. True freedom means a high quality of decision-making, and that leads to a high quality of life.
-          </p>
-
-          <section style={styles.contentSection}>
-            <h2 style={styles.contentSubtitle}>Corporate Accountability</h2>
-            <p style={styles.contentText}>
-              Corporations have rigged the system in their favor for too long. It's time to break up monopolies and ensure they serve the public interest:
-            </p>
-            <ul style={styles.contentList}>
-              <li>Break up Big Tech monopolies including Amazon, Google, Facebook, and Apple</li>
-              <li>Cap CEO salaries at 20 times the median worker salary</li>
-              <li>Eliminate corporate subsidies and tax loopholes</li>
-              <li>Strengthen antitrust enforcement and create new regulations for platform companies</li>
-              <li>Ban corporate stock buybacks and require worker representation on corporate boards</li>
-              <li>Implement a wealth tax on billionaires and close offshore tax havens</li>
-            </ul>
-          </section>
-
-          <section style={styles.contentSection}>
-            <h2 style={styles.contentSubtitle}>Democratic Reform</h2>
-            <p style={styles.contentText}>
-              Our democracy has been captured by special interests. We need fundamental reforms to restore power to the people:
-            </p>
-            <ul style={styles.contentList}>
-              <li>Implement ranked choice voting in all federal elections</li>
-              <li>End gerrymandering through independent redistricting commissions</li>
-              <li>Overturn Citizens United through constitutional amendment</li>
-              <li>Establish public campaign financing and eliminate corporate PAC money</li>
-              <li>Expand voting access with automatic registration and national holiday for elections</li>
-              <li>Create binding national referendums for major policy decisions</li>
-            </ul>
-          </section>
-
-        </div>
-      </div>
-
       <div style={styles.pageHeader}>
-        <h2 style={styles.pageTitle}>Policy Network Visualization</h2>
+        <h1 style={styles.pageTitle}>My Plan for Colorado's 2nd District</h1>
         <p style={styles.pageSubtitle}>
-          An interconnected approach to transforming Colorado's 2nd District and America
+          To liberate this country from corporate greed we must take a multi-industry approach not just targeting Big Tech in Colorado. My plan cracks down on monopolies, reins in executive power, and resets the playing field so individuals have the freedom to make decisions about their own lives. True freedom means a high quality of decision-making, and that leads to a high quality of life.
         </p>
       </div>
 
@@ -428,32 +388,38 @@ const styles = {
   myPlanPage: {
     minHeight: '100vh',
     backgroundColor: '#f8f9fa',
-    padding: '2rem 1rem'
+    padding: '1rem'
   },
   pageHeader: {
     textAlign: 'center',
-    marginBottom: '2rem',
-    maxWidth: '800px',
-    margin: '0 auto 2rem'
+    marginBottom: '1rem',
+    maxWidth: '1000px',
+    margin: '0 auto 1rem',
+    padding: '1rem'
   },
   pageTitle: {
-    fontSize: '3rem',
+    fontSize: '2.5rem',
     fontWeight: 'bold',
     color: '#2d5016',
     marginBottom: '1rem',
     fontFamily: 'Arial, sans-serif'
   },
   pageSubtitle: {
-    fontSize: '1.3rem',
+    fontSize: '1.2rem',
     color: '#4a5568',
-    lineHeight: '1.6'
+    lineHeight: '1.6',
+    maxWidth: '900px',
+    margin: '0 auto'
   },
   networkContainer: {
     backgroundColor: '#ffffff',
     borderRadius: '16px',
-    padding: '2rem',
+    padding: '1rem',
     boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
-    margin: '0 auto 3rem',
+    margin: '0 auto',
+    width: '98%',
+    height: 'calc(100vh - 200px)',
+    minHeight: '800px',
     position: 'relative',
     overflow: 'hidden'
   },
