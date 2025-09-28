@@ -73,15 +73,6 @@ const Header = () => {
           </li>
           <li style={styles.navItem}>
             <Link
-              to="/endorsements"
-              onClick={() => setMobileMenuOpen(false)}
-              style={styles.navLink}
-            >
-              Endorsements
-            </Link>
-          </li>
-          <li style={styles.navItem}>
-            <Link
               to="/expenditures"
               onClick={() => setMobileMenuOpen(false)}
               style={styles.navLink}

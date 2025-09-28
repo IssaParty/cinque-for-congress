@@ -9,7 +9,6 @@ import MyPlanPage from './pages/MyPlanPage';
 import JoinPage from './pages/JoinPage';
 import RequestEventPage from './pages/RequestEventPage';
 import PressPage from './pages/PressPage';
-import EndorsementsPage from './pages/EndorsementsPage';
 import ExpendituresPage from './pages/ExpendituresPage';
 import RoadToCongressPage from './pages/RoadToCongressPage';
 import IdeasPage from './pages/IdeasPage';
@@ -26,7 +25,6 @@ const App = () => {
           <Route path="policies" element={<PoliciesPage />} />
           <Route path="vision" element={<VisionPage />} />
           <Route path="my-plan" element={<MyPlanPage />} />
-          <Route path="endorsements" element={<EndorsementsPage />} />
           <Route path="expenditures" element={<ExpendituresPage />} />
           <Route path="road-to-congress" element={<RoadToCongressPage />} />
           <Route path="ideas" element={<IdeasPage />} />
