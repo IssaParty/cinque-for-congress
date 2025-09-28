@@ -13,10 +13,8 @@ import ExpendituresPage from './pages/ExpendituresPage';
 import RoadToCongressPage from './pages/RoadToCongressPage';
 
 const App = () => {
-  const basename = process.env.NODE_ENV === 'production' ? '/cinque-for-congress' : '';
-
   return (
-    <Router basename={basename}>
+    <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
