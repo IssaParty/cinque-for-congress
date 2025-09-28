@@ -11,17 +11,6 @@ const RoadToCongressPage = () => {
   const currentEndorsements = endorsements.length;
   const progressPercentage = Math.min((currentEndorsements / endorsementGoal) * 100, 100);
 
-  // Function to count today's endorsements
-  const getTodaysEndorsementCount = () => {
-    const today = new Date();
-    const todayString = today.toDateString();
-
-    return endorsements.filter(endorsement => {
-      if (!endorsement.timestamp) return false;
-      const endorsementDate = new Date(endorsement.timestamp);
-      return endorsementDate.toDateString() === todayString;
-    }).length;
-  };
 
   useEffect(() => {
     // Generate session ID for tracking
@@ -231,16 +220,6 @@ const RoadToCongressPage = () => {
             </form>
           </section>
 
-          {/* Daily Endorsement Counter */}
-          <section style={styles.endorsementsList}>
-            <h2 style={styles.contentSubtitle}>Today's Endorsements</h2>
-            <div style={styles.dailyCounterContainer}>
-              <div style={styles.dailyCounterCard}>
-                <p style={styles.dailyCounterNumber}>{getTodaysEndorsementCount()}</p>
-                <p style={styles.dailyCounterLabel}>people endorsed us today</p>
-              </div>
-            </div>
-          </section>
 
           {/* Business/Union Endorsements */}
           <section style={styles.orgEndorsementsSection}>
