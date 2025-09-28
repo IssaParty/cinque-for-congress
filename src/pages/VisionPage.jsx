@@ -5,42 +5,90 @@ const VisionPage = () => {
   return (
     <main style={styles.contentPage}>
       <div style={styles.pageContainer}>
-        <h1 style={styles.pageTitle}>My Vision for America's Future</h1>
+        <h1 style={styles.pageTitle}>What I Stand For</h1>
         <div style={styles.pageContent}>
           <p style={styles.visionIntro}>
-            We stand at a crossroads. Corporate power has grown so dominant that it threatens the very foundation of our democracy.
-            But this moment also presents an unprecedented opportunity to build something better—an economy and political system that
-            serves people, not just profit.
+            I am running for Congress in Colorado's 2nd District as an anti-corporate, pro-human, pro-environment candidate. I believe:
+          </p>
+          <ul style={styles.standForList}>
+            <li>Corporate power is strangling democracy, and it's time to put people back in charge.</li>
+            <li>America should lead by example, not by war, cutting defense waste and investing in diplomacy, education, and peace.</li>
+            <li>Social welfare should be efficient, practical, and empowering, with direct democracy tools giving people real voice over laws.</li>
+            <li>The environment is not optional — clean water, waste management, and pollinator survival are matters of life and death.</li>
+            <li>Cost of living must come down — from healthcare to housing to groceries, people deserve relief from corporate speculation.</li>
+          </ul>
+          <p style={styles.visionIntro}>
+            I refuse corporate money, I refuse to serve lobbyists, and I refuse to vote for wars of profit. I work only for the people of Colorado's 2nd District.
           </p>
 
           <section style={styles.contentSection}>
-            <h2 style={styles.contentSubtitle}>The Corporate Problem</h2>
+            <h2 style={styles.contentSubtitle}>Corporate Greed: The All-Prevailing Problem</h2>
             <p style={styles.contentText}>
-              For decades, we've been told that what's good for corporations is good for America. This lie has led us to where we are today:
-              a handful of massive corporations control our economy, manipulate our politics, and extract wealth from working communities
-              while leaving behind environmental destruction and economic inequality.
+              Our lives were once driven by innovation — by people building in their garages and communities, creating the best products because they solved real problems. Today, it's dominated by speculation — by investors gaming stock prices and corporations buying each other out until there's no real competition left.
             </p>
             <p style={styles.contentText}>
-              Corporate consolidation has reached levels not seen since the Gilded Age. A few tech giants control the flow of information.
-              Wall Street banks control the flow of capital. Pharmaceutical companies control access to life-saving medications.
-              And all of them use their power to write the rules in their favor, creating a system where the rich get richer and
-              everyone else struggles to get by.
+              Unchecked, this destroys the marketplace. It allows buyouts on a national scale, single-entity price control (illegal under the Sherman Antitrust Act of 1890), and bureaucratic stagnation. Innovation dies. Alternatives vanish. And when an industry collapses, it drags everyone down with it.
+            </p>
+            <p style={styles.contentText}>
+              When only a handful of companies own an entire sector, the whole market becomes fragile. A shock to the cost of basic commodities should be absorbed through alternatives. But if there are no alternatives — because three companies own it all — the system collapses. Their failure becomes our liability.
+            </p>
+            <p style={styles.contentText}>
+              These corporations have speculated on every part of our lives: wood, nails, drywall, eggs, butter — the essentials of shelter, food, and health. They've driven Americans into unsustainable debt just to afford life, not luxuries. And when their bets fail, they lay off workers, trigger recessions like 2008, and leave us holding the bag.
             </p>
           </section>
 
           <section style={styles.contentSection}>
-            <h2 style={styles.contentSubtitle}>Breaking Corporate Power</h2>
+            <h2 style={styles.contentSubtitle}>Bailouts and Debt</h2>
             <p style={styles.contentText}>
-              The solution isn't to regulate these monopolies—it's to break them up entirely. Just as Teddy Roosevelt took on the trusts
-              of his era, we must take on the corporate giants of ours. This means:
+              When collapse hits, Washington steps in under the philosophy of "too big to fail." Instead of letting bad actors fail, government forces taxpayers to cover corporate losses while corporations keep their profits. They socialize the risk and privatize the reward.
+            </p>
+            <p style={styles.contentText}>
+              This cycle fuels ballooning national debt. Eventually, future generations will pay the price. And if the government defaults, the IMF model dictates cuts to welfare, privatization of public goods, and higher taxes. That means even more corporate ownership of our country.
+            </p>
+          </section>
+
+          <section style={styles.contentSection}>
+            <h2 style={styles.contentSubtitle}>Corporate Militarism</h2>
+            <p style={styles.contentText}>
+              This philosophy extends abroad. In the name of "protecting American interests" (War Powers Resolution of 1973, NDAA 2001), our military has been used to secure resources for corporations — from oil in the Middle East to minerals in developing nations. This has turned our servicemen and women into, effectively, foot soldiers for Wall Street.
+            </p>
+          </section>
+
+          <section style={styles.contentSection}>
+            <h2 style={styles.contentSubtitle}>Legislative Buyouts</h2>
+            <p style={styles.contentText}>
+              The Supreme Court's Citizens United v. FEC (2010) opened the floodgates for unlimited corporate spending in elections. The result: laws written for corporations, not people. Tax breaks, deregulation, higher barriers for small businesses, and one-sided trade deals — all bought and paid for.
+            </p>
+          </section>
+
+          <section style={styles.contentSection}>
+            <h2 style={styles.contentSubtitle}>The Revolving Door</h2>
+            <p style={styles.contentText}>
+              Too often, elected officials step out of public office and straight into lobbying jobs, cashing in on their connections to make deals for corporations at taxpayer expense. This "revolving door" is why too many politicians refuse to hold industry accountable.
+            </p>
+          </section>
+
+          <section style={styles.contentSection}>
+            <h2 style={styles.contentSubtitle}>Trust Busting</h2>
+            <p style={styles.contentText}>
+              The corporate takeover can and must be stopped. America has a proud tradition of trust-busting:
             </p>
             <ul style={styles.contentList}>
-              <li>Breaking up Big Tech companies that have become too powerful to control</li>
-              <li>Separating commercial banking from investment banking to prevent another financial crisis</li>
-              <li>Dismantling agricultural monopolies that have destroyed family farming</li>
-              <li>Ending pharmaceutical companies' stranglehold on life-saving medications</li>
-              <li>Stopping corporate consolidation in media to restore diverse, independent journalism</li>
+              <li>Sherman Antitrust Act (1890) – prohibits monopolies</li>
+              <li>Clayton Antitrust Act (1914) – bans price fixing and predatory pricing</li>
+              <li>FTC Act (1914) – created a regulator for antitrust enforcement</li>
+              <li>Robinson-Patman Act (1936) – prohibits price discrimination</li>
+              <li>Hart-Scott-Rodino Act (1976) – forces review of major acquisitions</li>
             </ul>
+            <p style={styles.contentText}>
+              Even today, leaders like Lina Khan, Tim Wu, and yes, Congressman Joe Neguse with his antitrust bills, show this work is alive. But it must go much further.
+            </p>
+            <p style={styles.contentText}>
+              CD2 can lead the charge in breaking up monopolies across agriculture, real estate, manufacturing, fast food, construction, defense, energy, technology, finance, and healthcare.
+            </p>
+            <p style={styles.contentText}>
+              Because economic freedom is political freedom. And until we take back our economy, we won't take back our democracy.
+            </p>
           </section>
 
           <section style={styles.contentSection}>
@@ -277,6 +325,14 @@ const styles = {
     marginBottom: '1rem',
     paddingLeft: '2rem',
     fontSize: '1rem'
+  },
+  standForList: {
+    color: '#1e3a5f',
+    lineHeight: '1.8',
+    marginBottom: '2rem',
+    paddingLeft: '2rem',
+    fontSize: '1.1rem',
+    fontWeight: 'bold'
   }
 };
 

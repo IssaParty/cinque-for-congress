@@ -1,15 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const HomePage = () => {
-  const [newsletterStatus, setNewsletterStatus] = React.useState('');
+  const [newsletterStatus, setNewsletterStatus] = useState('');
 
   const handleNewsletterSubmit = () => {
     const email = document.getElementById('newsletter-email').value;
     if (email && email.includes('@')) {
       setNewsletterStatus('Thank you! We\'ll add you to our newsletter list.');
       document.getElementById('newsletter-email').value = '';
-      // In a real implementation, you would send this to your backend
       setTimeout(() => setNewsletterStatus(''), 5000);
     } else {
       setNewsletterStatus('Please enter a valid email address.');
@@ -19,7 +18,14 @@ const HomePage = () => {
 
   return (
     <main>
-      <section style={styles.heroPlatform}>
+      <section style={{
+        ...styles.heroPlatform,
+        backgroundImage: `linear-gradient(rgba(212, 160, 23, 0.8), rgba(0, 0, 0, 0.6)), url(/images/boulder-landmark.svg)`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        position: 'relative'
+      }}>
         <div style={styles.heroPlatformContent}>
           <div style={styles.heroSection}>
             <h1 style={styles.heroTitle}>CINQUE MASON FOR CONGRESS</h1>
@@ -143,19 +149,21 @@ const HomePage = () => {
 };
 
 const styles = {
-  // Hero Section
+  // Hero Section with Static Background
   heroPlatform: {
-    background: 'linear-gradient(135deg, #1e3a5f 0%, #2e5c8a 100%)',
     color: '#ffffff',
     padding: '5rem 2rem 6rem',
     minHeight: '80vh',
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    position: 'relative'
   },
   heroPlatformContent: {
     maxWidth: '1200px',
     margin: '0 auto',
-    width: '100%'
+    width: '100%',
+    position: 'relative',
+    zIndex: 2
   },
   heroSection: {
     textAlign: 'center',
@@ -166,13 +174,15 @@ const styles = {
     marginBottom: '0.5rem',
     fontWeight: '700',
     letterSpacing: '-1px',
-    fontFamily: 'Arial, sans-serif'
+    fontFamily: 'Arial, sans-serif',
+    textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
   },
   district: {
     fontSize: '1.8rem',
     color: '#ffd700',
     marginBottom: '1.5rem',
-    fontWeight: '500'
+    fontWeight: '500',
+    textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
   },
   tagline: {
     fontSize: '1.3rem',
@@ -181,7 +191,8 @@ const styles = {
     fontWeight: '400',
     maxWidth: '700px',
     marginLeft: 'auto',
-    marginRight: 'auto'
+    marginRight: 'auto',
+    textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
   },
   ctaButtons: {
     display: 'flex',
@@ -208,21 +219,27 @@ const styles = {
   // Platform Overview
   platformOverview: {
     paddingTop: '3rem',
-    borderTop: '2px solid rgba(255,255,255,0.2)'
+    borderTop: '2px solid rgba(255,255,255,0.3)',
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    borderRadius: '8px',
+    padding: '3rem',
+    backdropFilter: 'blur(10px)'
   },
   platformTitle: {
     fontSize: '2.5rem',
     textAlign: 'center',
     marginBottom: '2rem',
     color: '#ffd700',
-    fontFamily: 'Arial, sans-serif'
+    fontFamily: 'Arial, sans-serif',
+    textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
   },
   platformIntro: {
     textAlign: 'center',
     maxWidth: '700px',
     margin: '0 auto 3rem',
     fontSize: '1.2rem',
-    color: 'rgba(255,255,255,0.95)'
+    color: 'rgba(255,255,255,0.95)',
+    textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
   },
   platformGrid: {
     display: 'grid',
@@ -230,22 +247,25 @@ const styles = {
     gap: '2rem'
   },
   platformCard: {
-    background: 'rgba(255,255,255,0.1)',
+    background: 'rgba(255,255,255,0.15)',
     backdropFilter: 'blur(10px)',
     padding: '2rem',
     borderLeft: '4px solid #d4a017',
     borderRadius: '8px',
-    transition: 'all 0.3s'
+    transition: 'all 0.3s',
+    border: '1px solid rgba(255,255,255,0.2)'
   },
   platformCardTitle: {
     color: '#ffd700',
     marginBottom: '1rem',
     fontSize: '1.4rem',
-    fontFamily: 'Arial, sans-serif'
+    fontFamily: 'Arial, sans-serif',
+    textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
   },
   platformCardText: {
-    color: 'rgba(255,255,255,0.9)',
-    lineHeight: '1.7'
+    color: 'rgba(255,255,255,0.95)',
+    lineHeight: '1.7',
+    textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
   },
 
   // Get Involved Section

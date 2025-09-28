@@ -12,10 +12,13 @@ import PressPage from './pages/PressPage';
 import EndorsementsPage from './pages/EndorsementsPage';
 import ExpendituresPage from './pages/ExpendituresPage';
 import RoadToCongressPage from './pages/RoadToCongressPage';
+import IdeasPage from './pages/IdeasPage';
 
 const App = () => {
+  const basename = process.env.NODE_ENV === 'production' ? '/cinque-for-congress' : '';
+
   return (
-    <Router basename="/cinque-for-congress">
+    <Router basename={basename}>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
@@ -26,6 +29,7 @@ const App = () => {
           <Route path="endorsements" element={<EndorsementsPage />} />
           <Route path="expenditures" element={<ExpendituresPage />} />
           <Route path="road-to-congress" element={<RoadToCongressPage />} />
+          <Route path="ideas" element={<IdeasPage />} />
           <Route path="join" element={<JoinPage />} />
           <Route path="request-event" element={<RequestEventPage />} />
           <Route path="press" element={<PressPage />} />

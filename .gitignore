@@ -19,3 +19,16 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Additional development files
+generate-favicon.html
+package 2.json
+
+# Document files
+*.pdf
+*.xlsx
+*.doc
+*.docx
+
+# Personal folders
+Cinque Images and Docs/

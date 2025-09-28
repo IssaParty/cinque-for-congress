@@ -7,113 +7,82 @@ const AboutPage = () => {
         <h1 style={styles.pageTitle}>About Cinque Mason</h1>
         <div style={styles.pageContent}>
           <section style={styles.contentSection}>
-            <h2 style={styles.contentSubtitle}>Who I Am</h2>
+            <h2 style={styles.contentSubtitle}>About Me</h2>
             <p style={styles.contentText}>
-              I'm Cinque Mason, a 32-year-old construction worker, small business owner, and community organizer from Colorado's 2nd District. Born and raised in Denver, I've spent my life building connections across our diverse communities—from the urban neighborhoods of Denver to the rural farming towns of the Eastern Plains, from the ski resorts of the mountains to the college campuses of Boulder and Fort Collins.
-            </p>
-            <p style={styles.contentText}>
-              Unlike career politicians, I understand what it means to work for a living. I've spent the last decade in construction, building the infrastructure that keeps our communities strong. I know what it's like to worry about rent, to struggle with healthcare costs, and to watch corporations get richer while working families get squeezed.
+              My name is Cinque Dominic Mason, I am named after my father and I grew up in Denver Colorado. My education was diverse and different from the average Denverite— from expeditionary schools that taught me survival skills and land navigation, to a private high school where I played basketball, to earning a degree in Communications & International Development for my interest in humanitarian work at Colorado State University. At CSU, I was deeply involved in student advocacy, even running for student body president and working to ensure student's basic needs were met.
             </p>
           </section>
 
           <section style={styles.contentSection}>
-            <h2 style={styles.contentSubtitle}>My Journey</h2>
+            <h2 style={styles.contentSubtitle}>Global Work</h2>
             <p style={styles.contentText}>
-              My path to politics wasn't traditional. I didn't go to law school or climb the corporate ladder. Instead, I built my understanding of the world through real experience:
+              My interest in humanitarian work has taken me far beyond Colorado. I partnered with Indian universities on development research in '19, traveled across North and West Africa alongside refugees seeking safety in Europe in '23, built NGO capacity in Mali during a dictatorship in '24, supported feeding programs in Ethiopia since '22, and witnessed firsthand the dangers of war in Kashmir during the India-Pakistan conflict in '25. I have had the incredible opportunity to be able to see firsthand the consequences of the decisions in global power dynamics, the systems set up in post colonial rule Africa and India, and the onset and proliferation of the unchecked quick consumerism across the world. These experiences solidified my conviction that diplomacy, education, and capacity building are more powerful than militarization, coercion, and brutality.
             </p>
-            <ul style={styles.contentList}>
-              <li><strong>Construction Work:</strong> For over a decade, I've worked with my hands, building homes and infrastructure across Colorado. This work taught me the value of honest labor and showed me firsthand how economic policies affect real families.</li>
-              <li><strong>Small Business Owner:</strong> I've run my own contracting business, dealing with the challenges of taxes, regulations, and trying to provide good jobs for my employees while competing against corporations that exploit workers.</li>
-              <li><strong>International Experience:</strong> I've traveled extensively, including humanitarian work in Africa and Asia, giving me perspective on America's role in the world and the consequences of our foreign policy decisions.</li>
-              <li><strong>Educational Background:</strong> I hold degrees in Communications & International Development from Colorado State University and an MBA from CU Boulder, combining academic knowledge with real-world experience.</li>
-              <li><strong>Community Organizing:</strong> I've organized workers, advocated for better conditions, and seen how collective action can create change when people stand together.</li>
-            </ul>
+          </section>
+
+          <section style={styles.contentSection}>
+            <h2 style={styles.contentSubtitle}>Work at Home</h2>
+            <p style={styles.contentText}>
+              Closer to home, I've worked as a rancher across three states, a sheep shearer traveling county to county across Colorado, and today as a construction and handyman worker while living in Boulder. I hold a Master's in Business Administration from CU Boulder, but for me the corporate lifestyle is not where I get my purpose in life.
+            </p>
           </section>
 
           <section style={styles.contentSection}>
             <h2 style={styles.contentSubtitle}>Why I'm Running</h2>
             <p style={styles.contentText}>
-              I'm running for Congress because I'm tired of politicians who serve corporations instead of people. I've watched Democrats and Republicans alike take money from special interests while working families struggle. I've seen how our representatives vote for wars that enrich defense contractors while our schools crumble and our infrastructure fails.
-            </p>
-            <p style={styles.contentText}>
-              In my work in construction, if you cut corners or ignore problems, buildings fall down and people get hurt. In politics, when you cut corners or ignore problems, families lose their homes, students can't afford college, and communities are destroyed by corporate greed. We need representatives who understand that consequences are real, not just talking points.
+              As I have worked this array of jobs have given me great insight into different lives day to day. I have seen that I am not unique in my desire to serve and give back to others. It's actually (luckily) quite the opposite, most people want to give back to the people in their own unique way, if it is with farming, building, teaching, sanitary work or medicine. People have the desire to give to their countrymen and for a long time our country and our state have always been in a unique position to be able to do that locally and abroad. Codifying in law and in culture the intrinsic human need for service for the feeling of fulfillment.
             </p>
           </section>
 
           <section style={styles.contentSection}>
-            <h2 style={styles.contentSubtitle}>My Principles</h2>
+            <h2 style={styles.contentSubtitle}>Broken promises at home</h2>
             <p style={styles.contentText}>
-              My campaign is built on three simple principles:
-            </p>
-            <ul style={styles.contentList}>
-              <li><strong>No Corporate Money:</strong> I don't take donations from corporations, PACs, or special interests. My loyalty is to the people of CD2, not to wealthy donors.</li>
-              <li><strong>People Over Profit:</strong> Every decision should be made with working families in mind, not corporate bottom lines. When there's a conflict between what's good for people and what's good for profits, I choose people every time.</li>
-              <li><strong>Full Transparency:</strong> Politics works best when it's transparent. I commit to holding regular town halls, publishing all my schedules and meetings, and being accountable to the communities I serve.</li>
-            </ul>
-          </section>
-
-          <section style={styles.contentSection}>
-            <h2 style={styles.contentSubtitle}>Understanding Our District</h2>
-            <p style={styles.contentText}>
-              Colorado's 2nd District is one of the most diverse in the country—geographically, economically, and politically. We have:
-            </p>
-            <ul style={styles.contentList}>
-              <li><strong>Urban communities</strong> in Boulder and parts of Denver facing housing costs and gentrification</li>
-              <li><strong>Rural farming communities</strong> dealing with water rights, agricultural challenges, and feeling left behind by economic changes</li>
-              <li><strong>Mountain communities</strong> balancing tourism economies with environmental protection and affordable housing</li>
-              <li><strong>Suburban families</strong> struggling with education funding, healthcare costs, and economic uncertainty</li>
-              <li><strong>College students and young workers</strong> facing debt, limited job opportunities, and climate anxiety</li>
-            </ul>
-            <p style={styles.contentText}>
-              Unlike many politicians who focus on just one part of our district, I've lived and worked across CD2. I understand that our diversity is our strength, but only if we have leadership that brings us together instead of dividing us.
+              Unfortunately, it has become increasingly more difficult to do the work I love in peace while seeing the future that myself and my peers are attempting to build is being sabotaged. We are said to be the richest country in history but our elders are working long hours to pay medical bills, a box of nails is $15, and owning a home is currently unimaginable for my generation. If this is what it means to be the greatest country in the world then I don't think number 1 is a position we should want. It seems more cursed than blessed.
             </p>
           </section>
 
           <section style={styles.contentSection}>
-            <h2 style={styles.contentSubtitle}>A Different Kind of Representative</h2>
+            <h2 style={styles.contentSubtitle}>Broken government at large</h2>
             <p style={styles.contentText}>
-              When I get to Congress, I won't be another politician climbing the ladder or positioning for the next election. I'll be there to work—to build the policies our communities need, to stand up to corporate power, and to prove that government can work for ordinary people again.
+              This is not a pick yourself up by your bootstraps fix or should have planned a better financial situation. This is a systematic issue of regulatory gate keeping and artificial inflation where our tax dollars and legislators are preventing us from upward financial mobility through the financing of wars, subsidizing corporate takeovers, and protecting elitist interests in critical and standard industries. It is becoming more clear every day that our tax money is used to harm more than it is to help the masses.
             </p>
             <p style={styles.contentText}>
-              I know what it's like to budget carefully, to worry about unexpected expenses, to choose between spending money on necessities. I know what it's like to work long hours and still struggle to get ahead. These experiences didn't make me bitter—they made me determined to fight for a system that works for everyone, not just the wealthy.
-            </p>
-          </section>
-
-          <section style={styles.contentSection}>
-            <h2 style={styles.contentSubtitle}>My Commitment to You</h2>
-            <p style={styles.contentText}>
-              If you elect me to represent Colorado's 2nd District, I promise:
-            </p>
-            <ul style={styles.contentList}>
-              <li>I will never take corporate money or let special interests influence my votes</li>
-              <li>I will hold monthly town halls in different parts of the district to hear directly from constituents</li>
-              <li>I will publish my schedule and meeting notes so you know exactly who I'm talking to and what we're discussing</li>
-              <li>I will vote based on what's best for working families, even when it's politically difficult</li>
-              <li>I will work across party lines when it serves our district, and I will stand firm against bad ideas regardless of which party promotes them</li>
-              <li>I will treat this job as exactly what it is: a temporary position to serve my community, not a career to build personal wealth or power</li>
-            </ul>
-          </section>
-
-          <section style={styles.contentSection}>
-            <h2 style={styles.contentSubtitle}>Beyond Politics</h2>
-            <p style={styles.contentText}>
-              When I'm not working or campaigning, I love spending time outdoors—hiking, skiing, and exploring the incredible natural beauty of Colorado. I play guitar, read voraciously, and try to stay connected to friends and family who keep me grounded. I volunteer with local organizations that support workers' rights and environmental protection.
+              This isn't the American dream, and this isn't Life, Liberty, and the Pursuit of Happiness. This is a corporate attempt of turning our country into an oligopolistic milk farm where they can milk everyone as fast and frequently as they can.
             </p>
             <p style={styles.contentText}>
-              I live in Boulder with my partner and our dog, in a modest apartment where we worry about the same things most people in our district worry about: rent increases, healthcare costs, and whether we'll ever be able to afford to buy a home in the community we love.
+              Since before the Global War On Terror the presidential office has been abused, making a mockery of the checks and balances of our democracy. The legislative branch has been complicit in this expansion of executive power. Which now has allowed the president with loose precedent to effectively declare war on non agreeing constituents backed by partisan ideology within the country.
             </p>
           </section>
 
           <section style={styles.contentSection}>
-            <h2 style={styles.contentSubtitle}>The Choice We Face</h2>
+            <h2 style={styles.contentSubtitle}>Global Consequences</h2>
             <p style={styles.contentText}>
-              This election is about more than choosing between candidates—it's about choosing what kind of country we want to be. Do we want a democracy that serves corporate donors, or one that serves working families? Do we want representatives who get rich in office, or ones who understand the struggles of ordinary people?
+              The current actions of the government are seriously endangering economic and global order not just at home but around the world. With the Tariffs and protectionism, weapon transfers to Israel, and use of military force without UN approval the United States has been violating key agreements that it led in the creation of. These are the Bretton Woods agreement of 1944, the Nuclear Proliferation Prevention Act of 1994 and the UN Charter. The collapse of these agreements will undermine all diplomacy that has been written in the last 100 years. Leading allies are uncertain where America will go under any sort of pressure which in turn is creating a massive power vacuum.
             </p>
             <p style={styles.contentText}>
-              I'm running because I believe we can do better. I believe in the people of Colorado's 2nd District—their intelligence, their compassion, and their determination to build a better future for their children. Together, we can prove that democracy still works when it's truly of the people, by the people, and for the people.
+              A power vacuum internationally where powerful but: ethnic, theocratic, or oligopolistic countries are rising to fill in. Governments where there is a large and loud distinction of who's considered a socially respected human and who is not. This is a very serious issue if the Reformed World Order is written under the pretense that not everyone is equal.
+            </p>
+          </section>
+
+          <section style={styles.contentSection}>
+            <h2 style={styles.contentSubtitle}>My position</h2>
+            <p style={styles.contentText}>
+              But I am not advocating for us to continue on pre-Trump era global policy, quite the opposite and like many others such as the founding fathers would say, no document should be static or unchanging forever. Constitutions, treaties, agreements need to be updated as time moves on. But that's done through a right and due process, through representation, dialogue, and healthy compromises. Not through a single entity's desire to consolidate power. Just as we tried to do in 1945 with the creation of the UN, and with Wilson in 1914 we have changed and we will change the outcome of this turbulence to a more just and equal society locally and globally.
+            </p>
+          </section>
+
+          <section style={styles.contentSection}>
+            <h2 style={styles.contentSubtitle}>My Vision</h2>
+            <h3 style={styles.contentSubtitle}>Foundations</h3>
+            <p style={styles.contentText}>
+              This foundational change is due at home too, as I mentioned before our domestic policy is abysmal and many citizens have been calling for a change for some time. With Obama in 2008 to Trump in 2016 each time the winner was voted in, because they promised to bring a systematic change. Change is what Americans know best. Nothing has stayed the same within our country. We have the world's oldest constitution but only because we have been able to alter it as times have changed. As the great Thomas Jefferson famously put it "The earth belongs always to the living generation... every constitution, then, and every law, naturally expires at the end of 19 years." From a very foundational standpoint, this is a dynamic foundation of society. A process that requires everyone's voice and representation as it is being codified into society.
             </p>
             <p style={styles.contentText}>
-              Join me in this fight. Together, we can build a movement that puts people over profit and creates real change for our communities.
+              This, I believe, is what makes America so great, a way to change things diplomatically and foundationally without drawing a sword and still correcting balance within our country. The first country to do it in this modern era with still the ability to be a revolutionary democracy that gives hope to the oppressed peoples of this world.
+            </p>
+            <h3 style={styles.contentSubtitle}>Mission statement</h3>
+            <p style={styles.contentText}>
+              So I see this as a very clear but potentially arduous mission. The government is not broken beyond repair — it is always evolving, and we the people have the power to change it. We have to redefine the government at all costs, this time in the hands of the people. We have to crack down on corporations, reduce the military's budget, and invest back into ourselves, our environments, food, communities, and our democracy.
             </p>
           </section>
         </div>

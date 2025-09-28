@@ -109,14 +109,13 @@ const Header = () => {
             </Link>
           </li>
           <li style={styles.navItem}>
-            <a
-              href="https://docs.google.com/forms/d/e/1FAIpQLSeE1BfYK3w1BH_uE2oRxS-DwKeVaiK65N6tvKOp4jB0S1Ty-g/viewform?usp=header"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/ideas"
+              onClick={() => setMobileMenuOpen(false)}
               style={styles.navLink}
             >
               Ideas
-            </a>
+            </Link>
           </li>
           <li style={styles.navItem}>
             <Link
@@ -159,9 +158,8 @@ const styles = {
     zIndex: 1000
   },
   nav: {
-    maxWidth: '1200px',
-    margin: '0 auto',
-    padding: '1.2rem 2rem',
+    width: '100%',
+    padding: '1.2rem 1rem',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center'
@@ -169,7 +167,8 @@ const styles = {
   logoContainer: {
     display: 'flex',
     alignItems: 'center',
-    gap: '0.8rem'
+    gap: '0.8rem',
+    flexShrink: 0
   },
   logoIcon: {
     flexShrink: 0
@@ -187,10 +186,14 @@ const styles = {
   navMenu: {
     display: 'flex',
     listStyle: 'none',
-    gap: '2.5rem',
+    gap: '1rem',
     alignItems: 'center',
     margin: 0,
-    padding: 0
+    padding: 0,
+    flex: 1,
+    justifyContent: 'center',
+    flexWrap: 'nowrap',
+    overflow: 'hidden'
   },
   navMenuActive: {
     display: 'flex',
@@ -211,24 +214,28 @@ const styles = {
     textDecoration: 'none',
     color: '#1a1a1a',
     fontWeight: '500',
-    fontSize: '0.95rem',
+    fontSize: '0.85rem',
     transition: 'all 0.3s',
     fontFamily: 'Arial, sans-serif',
     cursor: 'pointer',
-    padding: '0.5rem 1rem',
+    padding: '0.5rem 0.8rem',
     border: '1px solid #d4a017',
     borderRadius: '4px',
-    display: 'inline-block'
+    display: 'inline-block',
+    whiteSpace: 'nowrap',
+    textAlign: 'center'
   },
   donateBtn: {
     backgroundColor: '#d4a017',
     color: '#1e3a5f',
-    padding: '0.6rem 1.8rem',
+    padding: '0.6rem 1.2rem',
     textDecoration: 'none',
     fontWeight: '600',
     transition: 'all 0.3s',
     borderRadius: '4px',
-    fontFamily: 'Arial, sans-serif'
+    fontFamily: 'Arial, sans-serif',
+    flexShrink: 0,
+    fontSize: '0.9rem'
   },
   menuToggle: {
     display: 'none',
