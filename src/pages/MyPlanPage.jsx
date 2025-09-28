@@ -4,21 +4,22 @@ import { Link } from 'react-router-dom';
 const MyPlanPage = () => {
   const [selectedNode, setSelectedNode] = useState(null);
   const [hoveredNode, setHoveredNode] = useState(null);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [dimensions, setDimensions] = useState({ width: 1600, height: 1000 });
 
   // Update dimensions on window resize
   useEffect(() => {
     const updateDimensions = () => {
       setDimensions({
-        width: Math.max(1600, window.innerWidth - 50),
-        height: Math.max(1000, window.innerHeight - 150)
+        width: Math.max(1200, window.innerWidth - 100),
+        height: isExpanded ? Math.max(800, window.innerHeight - 300) : 300
       });
     };
 
     updateDimensions();
     window.addEventListener('resize', updateDimensions);
     return () => window.removeEventListener('resize', updateDimensions);
-  }, []);
+  }, [isExpanded]);
 
   // Colorblind-friendly palette
   const colors = {
@@ -223,6 +224,14 @@ const MyPlanPage = () => {
     setSelectedNode(selectedNode?.id === node.id ? null : node);
   };
 
+  const toggleDiagram = () => {
+    setIsExpanded(!isExpanded);
+    if (!isExpanded) {
+      setSelectedNode(null);
+      setHoveredNode(null);
+    }
+  };
+
   const isNodeConnected = (nodeId) => {
     if (!selectedNode) return true;
     if (selectedNode.id === nodeId) return true;
@@ -269,13 +278,34 @@ const MyPlanPage = () => {
         </p>
       </div>
 
-      <div style={styles.networkContainer}>
-        <svg
-          width="100%"
-          height={dimensions.height}
-          viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
-          style={styles.svg}
-        >
+      <div style={styles.diagramSection}>
+        <div style={styles.diagramHeader} onClick={toggleDiagram}>
+          <h2 style={styles.diagramTitle}>
+            Policy Network Visualization
+            <span style={styles.expandIcon}>
+              {isExpanded ? '▼' : '▶'}
+            </span>
+          </h2>
+          <p style={styles.diagramSubtitle}>
+            {isExpanded
+              ? 'Click to collapse the interactive policy network'
+              : 'Click to explore the interconnected policy framework'
+            }
+          </p>
+        </div>
+
+        <div style={{
+          ...styles.networkContainer,
+          height: isExpanded ? dimensions.height : 0,
+          overflow: 'hidden',
+          transition: 'all 0.5s ease-in-out'
+        }}>
+          <svg
+            width="100%"
+            height={dimensions.height}
+            viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
+            style={styles.svg}
+          >
           {/* Connection lines */}
           {connections.map((conn, index) => {
             const fromNode = policyNodes.find(n => n.id === conn.from);
@@ -378,6 +408,7 @@ const MyPlanPage = () => {
             </p>
           </div>
         )}
+        </div>
       </div>
 
       <div style={styles.ctaSection}>
@@ -425,17 +456,53 @@ const styles = {
     wordSpacing: '2px',
     textAlign: 'justify'
   },
+  diagramSection: {
+    margin: '2rem auto',
+    maxWidth: '95%',
+    border: '2px solid #e2e8f0',
+    borderRadius: '12px',
+    backgroundColor: '#ffffff',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+    transition: 'all 0.3s ease'
+  },
+  diagramHeader: {
+    padding: '1.5rem 2rem',
+    cursor: 'pointer',
+    borderBottom: '1px solid #e2e8f0',
+    backgroundColor: '#f8f9fa',
+    borderRadius: '10px 10px 0 0',
+    transition: 'background-color 0.3s ease',
+    '&:hover': {
+      backgroundColor: '#e9ecef'
+    }
+  },
+  diagramTitle: {
+    fontSize: '1.8rem',
+    fontWeight: 'bold',
+    color: '#2d5016',
+    margin: '0 0 0.5rem 0',
+    fontFamily: 'Arial, sans-serif',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+  diagramSubtitle: {
+    fontSize: '1rem',
+    color: '#6c757d',
+    margin: 0,
+    fontStyle: 'italic'
+  },
+  expandIcon: {
+    fontSize: '1.2rem',
+    color: '#d4a017',
+    transition: 'transform 0.3s ease',
+    marginLeft: '1rem'
+  },
   networkContainer: {
     backgroundColor: '#ffffff',
-    borderRadius: '16px',
     padding: '1rem',
-    boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
-    margin: '0 auto',
-    width: '98%',
-    height: 'calc(100vh - 200px)',
-    minHeight: '800px',
     position: 'relative',
-    overflow: 'hidden'
+    borderRadius: '0 0 10px 10px'
   },
   svg: {
     display: 'block',
