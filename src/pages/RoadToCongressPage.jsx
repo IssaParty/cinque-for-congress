@@ -237,7 +237,6 @@ const RoadToCongressPage = () => {
           {/* Business/Union Endorsements */}
           <section style={styles.orgEndorsementsSection}>
             <h2 style={styles.contentSubtitle}>Organizational Endorsements</h2>
-            <p style={styles.contentText}>NAA</p>
             <p style={{...styles.contentText, fontStyle: 'italic'}}>Are you an organization? Care to Endorse Us? Email us at Info@cinqueforcongress.com</p>
           </section>
 
