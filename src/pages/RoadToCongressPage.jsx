@@ -11,6 +11,18 @@ const RoadToCongressPage = () => {
   const currentEndorsements = endorsements.length;
   const progressPercentage = Math.min((currentEndorsements / endorsementGoal) * 100, 100);
 
+  // Function to count today's endorsements
+  const getTodaysEndorsementCount = () => {
+    const today = new Date();
+    const todayString = today.toDateString();
+
+    return endorsements.filter(endorsement => {
+      if (!endorsement.timestamp) return false;
+      const endorsementDate = new Date(endorsement.timestamp);
+      return endorsementDate.toDateString() === todayString;
+    }).length;
+  };
+
   useEffect(() => {
     // Generate session ID for tracking
     formSubmission.generateSessionId();
@@ -219,20 +231,16 @@ const RoadToCongressPage = () => {
             </form>
           </section>
 
-          {/* Real-time Endorsements List */}
-          {endorsements.length > 0 && (
-            <section style={styles.endorsementsList}>
-              <h2 style={styles.contentSubtitle}>Recent Endorsements</h2>
-              <div style={styles.endorsementsGrid}>
-                {endorsements.slice(-12).reverse().map((endorsement) => (
-                  <div key={endorsement.id} style={styles.endorsementCard}>
-                    <p style={styles.endorsementName}>{endorsement.name}</p>
-                    <p style={styles.endorsementLocation}>{endorsement.city}, {endorsement.zipCode}</p>
-                  </div>
-                ))}
+          {/* Daily Endorsement Counter */}
+          <section style={styles.endorsementsList}>
+            <h2 style={styles.contentSubtitle}>Today's Endorsements</h2>
+            <div style={styles.dailyCounterContainer}>
+              <div style={styles.dailyCounterCard}>
+                <p style={styles.dailyCounterNumber}>{getTodaysEndorsementCount()}</p>
+                <p style={styles.dailyCounterLabel}>people endorsed us today</p>
               </div>
-            </section>
-          )}
+            </div>
+          </section>
 
           {/* Business/Union Endorsements */}
           <section style={styles.orgEndorsementsSection}>
@@ -503,6 +511,35 @@ const styles = {
     color: '#666',
     margin: 0,
     fontSize: '0.9rem'
+  },
+
+  // Daily Counter Styles
+  dailyCounterContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '1rem'
+  },
+  dailyCounterCard: {
+    backgroundColor: '#f8f9fa',
+    padding: '2rem',
+    borderRadius: '12px',
+    textAlign: 'center',
+    border: '3px solid #d4a017',
+    boxShadow: '0 4px 15px rgba(212, 160, 23, 0.2)',
+    minWidth: '200px'
+  },
+  dailyCounterNumber: {
+    fontSize: '3rem',
+    fontWeight: 'bold',
+    color: '#2d5016',
+    margin: '0 0 0.5rem 0',
+    fontFamily: 'Arial, sans-serif'
+  },
+  dailyCounterLabel: {
+    fontSize: '1.1rem',
+    color: '#1e3a5f',
+    margin: 0,
+    fontFamily: 'Arial, sans-serif'
   },
 
   // Organizational Endorsements Styles
