@@ -6,13 +6,16 @@ const MyPlanPage = () => {
   const [hoveredNode, setHoveredNode] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [dimensions, setDimensions] = useState({ width: 1600, height: 1000 });
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Update dimensions on window resize
+  // Update dimensions and mobile state on window resize
   useEffect(() => {
     const updateDimensions = () => {
+      const isMobileView = window.innerWidth <= 768;
+      setIsMobile(isMobileView);
       setDimensions({
-        width: Math.max(1200, window.innerWidth - 100),
-        height: isExpanded ? Math.max(800, window.innerHeight - 300) : 300
+        width: Math.max(isMobileView ? 350 : 1200, window.innerWidth - (isMobileView ? 20 : 100)),
+        height: isExpanded ? Math.max(600, window.innerHeight - (isMobileView ? 200 : 300)) : (isMobileView ? 200 : 300)
       });
     };
 
@@ -261,7 +264,7 @@ const MyPlanPage = () => {
   };
 
   return (
-    <div style={styles.myPlanPage}>
+    <div style={isMobile ? styles.myPlanPageMobile : styles.myPlanPage}>
       <style>
         {`
           @keyframes glossyShine {
@@ -271,9 +274,9 @@ const MyPlanPage = () => {
           }
         `}
       </style>
-      <div style={styles.pageHeader}>
-        <h1 style={styles.pageTitle}>My Plan for Colorado's 2nd District</h1>
-        <p style={styles.pageSubtitle}>
+      <div style={isMobile ? styles.pageHeaderMobile : styles.pageHeader}>
+        <h1 style={isMobile ? styles.pageTitleMobile : styles.pageTitle}>My Plan for Colorado's 2nd District</h1>
+        <p style={isMobile ? styles.pageSubtitleMobile : styles.pageSubtitle}>
           To liberate this country from corporate greed we must take a multi-industry approach not just targeting Big Tech in Colorado. My plan cracks down on monopolies, reins in executive power, and resets the playing field so individuals have the freedom to make decisions about their own lives. True freedom means a high quality of decision-making, and that leads to a high quality of life.
         </p>
       </div>
@@ -415,8 +418,8 @@ const MyPlanPage = () => {
       )}
 
       {/* NEW CONTENT: Governmental Reform Pillars */}
-      <div style={styles.pillarsSection}>
-        <h2 style={styles.pillarsTitle}>Governmental Reform Pillars</h2>
+      <div style={isMobile ? styles.pillarsSectionMobile : styles.pillarsSection}>
+        <h2 style={isMobile ? styles.pillarsTitleMobile : styles.pillarsTitle}>Governmental Reform Pillars</h2>
 
         <div style={styles.keyPillarsSection}>
           <h3 style={styles.sectionSubtitle}>Key Pillars</h3>
@@ -920,6 +923,50 @@ const styles = {
     marginBottom: '1rem',
     paddingLeft: '2rem',
     fontSize: '1rem'
+  },
+
+  // Mobile styles
+  myPlanPageMobile: {
+    minHeight: '100vh',
+    background: 'linear-gradient(135deg, rgba(212, 160, 23, 0.1), rgba(45, 80, 22, 0.05))',
+    padding: '0.5rem'
+  },
+  pageHeaderMobile: {
+    textAlign: 'center',
+    marginBottom: '1.5rem',
+    maxWidth: '100%',
+    margin: '0 auto 1.5rem',
+    padding: '1rem'
+  },
+  pageTitleMobile: {
+    fontSize: '1.8rem',
+    fontWeight: 'bold',
+    color: '#2d5016',
+    marginBottom: '0.8rem',
+    fontFamily: 'Arial, sans-serif',
+    lineHeight: '1.2'
+  },
+  pageSubtitleMobile: {
+    fontSize: '1rem',
+    color: '#1e3a5f',
+    lineHeight: '1.6',
+    fontFamily: 'Arial, sans-serif'
+  },
+  pillarsSectionMobile: {
+    maxWidth: '100%',
+    margin: '0 auto',
+    padding: '1rem 0.5rem',
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    borderRadius: '8px',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+  },
+  pillarsTitleMobile: {
+    fontSize: '1.6rem',
+    fontWeight: 'bold',
+    color: '#2d5016',
+    textAlign: 'center',
+    marginBottom: '1.5rem',
+    fontFamily: 'Arial, sans-serif'
   }
 };
 
