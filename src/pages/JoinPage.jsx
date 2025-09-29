@@ -32,6 +32,20 @@ const JoinPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Track form interaction for analytics
+    if (window.trackFormInteraction) {
+      window.trackFormInteraction('join_us');
+    }
+
+    // Track campaign event
+    if (window.trackCampaignEvent) {
+      window.trackCampaignEvent('join_campaign_attempt', {
+        'city': formData.city,
+        'zipCode': formData.zipCode.substring(0, 3) + 'XX', // Privacy-friendly
+        'form_type': 'join_us'
+      });
+    }
+
     // Validate form data
     const validationErrors = formSubmission.validateForm(formData, 'join_us');
     if (validationErrors.length > 0) {
@@ -55,6 +69,14 @@ const JoinPage = () => {
       if (result.success) {
         setFormData({ name: '', city: '', zipCode: '', phone: '', email: '' });
         setSubmissionMessage('Thank you for joining our campaign! We will be in touch soon with volunteer opportunities.');
+
+        // Track successful campaign signup
+        if (window.trackCampaignEvent) {
+          window.trackCampaignEvent('join_campaign_success', {
+            'engagement_level': 'high',
+            'conversion': 'volunteer_signup'
+          });
+        }
       } else {
         setSubmissionMessage(result.error || 'There was an error submitting your information. Please try again.');
       }
