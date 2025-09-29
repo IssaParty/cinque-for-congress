@@ -9,6 +9,11 @@ const Header = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
+  const handleMobileNavClick = () => {
+    setMobileMenuOpen(false);
+    window.scrollTo(0, 0);
+  };
+
   // Check screen size and update mobile state
   useEffect(() => {
     const checkScreenSize = () => {
@@ -164,7 +169,7 @@ const Header = () => {
             <li style={styles.mobileMenuItem}>
               <Link
                 to="/"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={handleMobileNavClick}
                 style={styles.mobileMenuLink}
                 className="mobile-menu-link"
               >
@@ -174,7 +179,7 @@ const Header = () => {
             <li style={styles.mobileMenuItem}>
               <Link
                 to="/about"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={handleMobileNavClick}
                 style={styles.mobileMenuLink}
                 className="mobile-menu-link"
               >
@@ -184,7 +189,7 @@ const Header = () => {
             <li style={styles.mobileMenuItem}>
               <Link
                 to="/my-plan"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={handleMobileNavClick}
                 style={styles.mobileMenuLink}
                 className="mobile-menu-link"
               >
@@ -194,7 +199,7 @@ const Header = () => {
             <li style={styles.mobileMenuItem}>
               <Link
                 to="/vision"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={handleMobileNavClick}
                 style={styles.mobileMenuLink}
                 className="mobile-menu-link"
               >
@@ -204,7 +209,7 @@ const Header = () => {
             <li style={styles.mobileMenuItem}>
               <Link
                 to="/expenditures"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={handleMobileNavClick}
                 style={styles.mobileMenuLink}
                 className="mobile-menu-link"
               >
@@ -218,7 +223,7 @@ const Header = () => {
                 rel="noopener noreferrer"
                 style={styles.mobileMenuLink}
                 className="mobile-menu-link"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={handleMobileNavClick}
               >
                 Shop
               </a>
@@ -226,7 +231,7 @@ const Header = () => {
             <li style={styles.mobileMenuItem}>
               <Link
                 to="/road-to-congress"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={handleMobileNavClick}
                 style={styles.mobileMenuLink}
                 className="mobile-menu-link"
               >
@@ -236,7 +241,7 @@ const Header = () => {
             <li style={styles.mobileMenuItem}>
               <Link
                 to="/join"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={handleMobileNavClick}
                 style={styles.mobileMenuLink}
                 className="mobile-menu-link"
               >
@@ -250,7 +255,7 @@ const Header = () => {
                 rel="noopener noreferrer"
                 style={styles.mobileDonateBtnLink}
                 className="mobile-donate-btn"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={handleMobileNavClick}
               >
                 DONATE
               </a>
