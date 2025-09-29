@@ -7,21 +7,16 @@ export const formSubmission = {
       // Create a hidden form
       const form = document.createElement('form');
       form.method = 'POST';
-      // Use different script URLs based on form type
-      const scriptUrl = formType === 'ideas'
-        ? process.env.REACT_APP_IDEAS_SCRIPT_URL
-        : process.env.REACT_APP_GOOGLE_SCRIPT_URL;
+      // Obfuscated script URL construction
+      const parts = [
+        'https://script.google.com/macros/s/',
+        process.env.REACT_APP_GOOGLE_SCRIPT_URL?.split('/').pop() || '',
+      ];
+      const scriptUrl = parts.join('');
 
-      console.log('Form submission details:', {
-        formType,
-        scriptUrl,
-        ideasUrl: process.env.REACT_APP_IDEAS_SCRIPT_URL,
-        mainUrl: process.env.REACT_APP_GOOGLE_SCRIPT_URL
-      });
 
       form.action = scriptUrl;
-      form.target = 'hidden-iframe';
-      form.style.display = 'none';
+      form.style.cssText = 'position:absolute;left:-9999px;width:1px;height:1px;visibility:hidden;';
 
       // Add form fields
       const fields = {
@@ -30,7 +25,7 @@ export const formSubmission = {
         zipCode: formData.zipCode,
         phone: formData.phone || '',
         email: formData.email || '',
-        type: formType, // 'endorsement', 'join_us', or 'ideas'
+        type: formType, // 'endorsement' or 'join_us'
         source: 'website',
         userAgent: navigator.userAgent.substring(0, 100),
         referrer: document.referrer || 'direct',
@@ -38,11 +33,6 @@ export const formSubmission = {
         timestamp: new Date().toISOString()
       };
 
-      // Add ideas-specific fields if this is an ideas submission
-      if (formType === 'ideas') {
-        fields.idea = formData.idea || '';
-        fields.category = formData.category || '';
-      }
 
       Object.keys(fields).forEach(key => {
         const input = document.createElement('input');
@@ -52,29 +42,70 @@ export const formSubmission = {
         form.appendChild(input);
       });
 
-      // Create hidden iframe
+      // Create hidden iframe with obfuscated properties
       const iframe = document.createElement('iframe');
-      iframe.name = 'hidden-iframe';
-      iframe.style.display = 'none';
+      iframe.name = `f${Date.now()}`;
+      form.target = iframe.name;
+      iframe.style.cssText = 'position:absolute;left:-9999px;width:1px;height:1px;visibility:hidden;';
 
-      // Handle response
+      // Handle response from Google Apps Script
+      let responseReceived = false;
+
+      // Listen for postMessage from the iframe (Google Apps Script sends this)
+      const messageHandler = (event) => {
+        if (event.origin === 'https://n-lu7gxgbhobbozbojcaeycqx4ko5t3hlpwx6euji-0lu-script.googleusercontent.com' ||
+            event.origin === 'https://script.google.com') {
+          responseReceived = true;
+          window.removeEventListener('message', messageHandler);
+
+          setTimeout(() => {
+            try {
+              if (form && form.parentNode) {
+                document.body.removeChild(form);
+              }
+              if (iframe && iframe.parentNode) {
+                document.body.removeChild(iframe);
+              }
+            } catch (error) {
+              // Silent cleanup
+            }
+
+            // Check if the response indicates success
+            const isSuccess = event.data && event.data.toString().includes('SUCCESS');
+            resolve({
+              success: isSuccess,
+              id: `submission_${Date.now()}`,
+              message: event.data ? event.data.toString() : 'Form submitted'
+            });
+          }, 500);
+        }
+      };
+
+      window.addEventListener('message', messageHandler);
+
+      // Handle iframe load (fallback if postMessage doesn't work)
       iframe.onload = () => {
         setTimeout(() => {
-          try {
-            if (form && form.parentNode) {
-              document.body.removeChild(form);
+          if (!responseReceived) {
+            window.removeEventListener('message', messageHandler);
+            try {
+              if (form && form.parentNode) {
+                document.body.removeChild(form);
+              }
+              if (iframe && iframe.parentNode) {
+                document.body.removeChild(iframe);
+              }
+            } catch (error) {
+              // Silent cleanup
             }
-            if (iframe && iframe.parentNode) {
-              document.body.removeChild(iframe);
-            }
-          } catch (error) {
-            console.log('Error removing form elements:', error);
+            // Assume success if iframe loads without errors
+            resolve({ success: true, id: `submission_${Date.now()}` });
           }
-          resolve({ success: true, id: `submission_${Date.now()}` });
-        }, 1000);
+        }, 2000);
       };
 
       iframe.onerror = () => {
+        window.removeEventListener('message', messageHandler);
         try {
           if (form && form.parentNode) {
             document.body.removeChild(form);
@@ -83,15 +114,19 @@ export const formSubmission = {
             document.body.removeChild(iframe);
           }
         } catch (error) {
-          console.log('Error removing form elements:', error);
+          // Silent cleanup
         }
         resolve({ success: false, error: 'Submission failed' });
       };
 
-      // Add to page and submit
+      // Add to page and submit with small random delay
       document.body.appendChild(iframe);
       document.body.appendChild(form);
-      form.submit();
+
+      // Random delay to prevent timing analysis
+      setTimeout(() => {
+        form.submit();
+      }, Math.floor(Math.random() * 100) + 50);
     });
   },
 
@@ -111,7 +146,7 @@ export const formSubmission = {
       errors.push('Valid ZIP code is required (e.g., 12345 or 12345-6789)');
     }
 
-    // Email validation (optional for endorsements and ideas, required for join us)
+    // Email validation (optional for endorsements, required for join us)
     if (data.email && data.email.trim()) {
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) {
         errors.push('Valid email address is required');
@@ -120,15 +155,6 @@ export const formSubmission = {
       errors.push('Email address is required for joining the campaign');
     }
 
-    // Ideas-specific validation
-    if (formType === 'ideas') {
-      if (!data.idea || data.idea.trim().length < 10) {
-        errors.push('Please provide your idea or suggestion (minimum 10 characters)');
-      }
-      if (!data.category || data.category.trim().length < 1) {
-        errors.push('Please select a category for your idea');
-      }
-    }
 
     // Phone validation (optional)
     if (data.phone && data.phone.trim()) {
