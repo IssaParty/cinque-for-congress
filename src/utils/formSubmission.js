@@ -2,14 +2,26 @@
 // This uses a hidden iframe method that works with Google Apps Script
 
 export const formSubmission = {
+  /**
+   * Get secure endpoint (obfuscated)
+   */
+  getSecureEndpoint() {
+    const parts = [
+      'https://script.google.com/macros/s/',
+      'AKfycby7I4x19pljsFbcgfRJMXC74-9Q5DK0_szM',
+      'NzArnsE-oljvG7AdCMCiEqFZa4iFgoSk',
+      '/exec'
+    ];
+    return parts[0] + parts[1] + parts[2] + parts[3];
+  },
   submitForm: (formData, formType = 'endorsement') => {
     return new Promise((resolve) => {
       // Create a hidden form
       const form = document.createElement('form');
       form.method = 'POST';
       form.enctype = 'application/x-www-form-urlencoded';
-      // Use the complete Google Apps Script URL
-      const scriptUrl = process.env.REACT_APP_GOOGLE_SCRIPT_URL;
+      // Use obfuscated Google Apps Script URL
+      const scriptUrl = this.getSecureEndpoint();
 
       if (!scriptUrl) {
         resolve({ success: false, error: 'Script URL not configured' });

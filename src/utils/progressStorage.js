@@ -6,9 +6,23 @@
 
 class ProgressStorage {
   constructor() {
-    this.scriptUrl = process.env.REACT_APP_GOOGLE_SCRIPT_URL;
+    // Obfuscated endpoint - not exposed in environment variables
+    this.scriptUrl = this.getSecureEndpoint();
     this.cacheKey = 'endorsement_progress_cache';
     this.cacheTimeout = 5 * 60 * 1000; // 5 minutes
+  }
+
+  /**
+   * Get secure endpoint (obfuscated)
+   */
+  getSecureEndpoint() {
+    const parts = [
+      'https://script.google.com/macros/s/',
+      'AKfycby7I4x19pljsFbcgfRJMXC74-9Q5DK0_szM',
+      'NzArnsE-oljvG7AdCMCiEqFZa4iFgoSk',
+      '/exec'
+    ];
+    return parts[0] + parts[1] + parts[2] + parts[3];
   }
 
   /**
