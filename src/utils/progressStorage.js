@@ -43,7 +43,7 @@ class ProgressStorage {
   async getCurrentCount() {
     try {
       // First check cache
-      const cached = this.getCachedCount();
+      const cached = await this.getCachedCount();
       if (cached !== null) {
         return cached;
       }
