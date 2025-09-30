@@ -28,13 +28,28 @@ const RoadToCongressPage = () => {
     // Generate session ID for tracking
     formSubmission.generateSessionId();
 
-    // Load existing endorsements from localStorage for display
-    const savedEndorsements = localStorage.getItem('endorsements');
-    if (savedEndorsements) {
-      try {
-        setEndorsements(JSON.parse(savedEndorsements));
-      } catch (error) {
-        console.error('Error loading saved endorsements:', error);
+    // Reset endorsements to start fresh (this runs once when app loads)
+    // This ensures progress starts from zero even after code changes
+    const resetKey = 'endorsements_reset_2025';
+    const hasBeenReset = localStorage.getItem(resetKey);
+
+    if (!hasBeenReset) {
+      // First time since reset - clear old data and mark as reset
+      localStorage.removeItem('endorsements');
+      localStorage.setItem(resetKey, 'true');
+      setEndorsements([]);
+    } else {
+      // Load existing endorsements from localStorage for display
+      const savedEndorsements = localStorage.getItem('endorsements');
+      if (savedEndorsements) {
+        try {
+          setEndorsements(JSON.parse(savedEndorsements));
+        } catch (error) {
+          console.error('Error loading saved endorsements:', error);
+          // If there's an error loading, start fresh
+          localStorage.removeItem('endorsements');
+          setEndorsements([]);
+        }
       }
     }
   }, []);
@@ -132,7 +147,7 @@ const RoadToCongressPage = () => {
                 ></div>
               </div>
               <p style={isMobile ? styles.progressTextMobile : styles.progressText}>
-                {currentEndorsements} of {endorsementGoal} endorsements ({Math.round(progressPercentage)}%)
+                {currentEndorsements} of {endorsementGoal} signatures ({Math.round(progressPercentage)}%)
               </p>
             </div>
           </section>

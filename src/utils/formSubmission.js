@@ -1,5 +1,5 @@
-// Simple form submission approach that bypasses CORS issues
-// This uses a hidden iframe method that always works with Google Apps Script
+// Secure form submission approach that bypasses CORS issues
+// This uses a hidden iframe method that works with Google Apps Script
 
 export const formSubmission = {
   submitForm: (formData, formType = 'endorsement') => {
@@ -7,13 +7,14 @@ export const formSubmission = {
       // Create a hidden form
       const form = document.createElement('form');
       form.method = 'POST';
-      // Obfuscated script URL construction
-      const parts = [
-        'https://script.google.com/macros/s/',
-        process.env.REACT_APP_GOOGLE_SCRIPT_URL?.split('/').pop() || '',
-      ];
-      const scriptUrl = parts.join('');
+      form.enctype = 'application/x-www-form-urlencoded';
+      // Use the complete Google Apps Script URL
+      const scriptUrl = process.env.REACT_APP_GOOGLE_SCRIPT_URL;
 
+      if (!scriptUrl) {
+        resolve({ success: false, error: 'Script URL not configured' });
+        return;
+      }
 
       form.action = scriptUrl;
       form.style.cssText = 'position:absolute;left:-9999px;width:1px;height:1px;visibility:hidden;';
@@ -33,7 +34,6 @@ export const formSubmission = {
         timestamp: new Date().toISOString()
       };
 
-
       Object.keys(fields).forEach(key => {
         const input = document.createElement('input');
         input.type = 'hidden';
@@ -42,7 +42,7 @@ export const formSubmission = {
         form.appendChild(input);
       });
 
-      // Create hidden iframe with obfuscated properties
+      // Create hidden iframe with secure properties
       const iframe = document.createElement('iframe');
       iframe.name = `f${Date.now()}`;
       form.target = iframe.name;
@@ -54,6 +54,7 @@ export const formSubmission = {
       // Listen for postMessage from the iframe (Google Apps Script sends this)
       const messageHandler = (event) => {
         if (event.origin === 'https://n-lu7gxgbhobbozbojcaeycqx4ko5t3hlpwx6euji-0lu-script.googleusercontent.com' ||
+            event.origin === 'https://n-qvabiondzydbfg7xscdcubd66c5t3hlpwx6euji-0lu-script.googleusercontent.com' ||
             event.origin === 'https://script.google.com') {
           responseReceived = true;
           window.removeEventListener('message', messageHandler);
@@ -101,7 +102,7 @@ export const formSubmission = {
             // Assume success if iframe loads without errors
             resolve({ success: true, id: `submission_${Date.now()}` });
           }
-        }, 2000);
+        }, 3000);
       };
 
       iframe.onerror = () => {
@@ -119,7 +120,7 @@ export const formSubmission = {
         resolve({ success: false, error: 'Submission failed' });
       };
 
-      // Add to page and submit with small random delay
+      // Add to page and submit with small random delay for security
       document.body.appendChild(iframe);
       document.body.appendChild(form);
 
@@ -130,12 +131,17 @@ export const formSubmission = {
     });
   },
 
-  // Validate form data
-  validateForm: (data, formType = 'endorsement') => {
+  generateSessionId: () => {
+    if (!sessionStorage.getItem('sessionId')) {
+      sessionStorage.setItem('sessionId', 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9));
+    }
+  },
+
+  validateEndorsement: (data) => {
     const errors = [];
 
     if (!data.name || data.name.trim().length < 2) {
-      errors.push('Full name is required (minimum 2 characters)');
+      errors.push('Name is required (minimum 2 characters)');
     }
 
     if (!data.city || data.city.trim().length < 2) {
@@ -151,14 +157,11 @@ export const formSubmission = {
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) {
         errors.push('Valid email address is required');
       }
-    } else if (formType === 'join_us') {
-      errors.push('Email address is required for joining the campaign');
     }
-
 
     // Phone validation (optional)
     if (data.phone && data.phone.trim()) {
-      if (!/^[\d\s\-\(\)\+]+$/.test(data.phone.trim())) {
+      if (!/^[\d\s\-\(\)\+\.]{7,}$/.test(data.phone.trim())) {
         errors.push('Valid phone number is required');
       }
     }
@@ -166,21 +169,14 @@ export const formSubmission = {
     return errors;
   },
 
-  // Backward compatibility
-  validateEndorsement: (data) => {
-    return formSubmission.validateForm(data, 'endorsement');
-  },
+  validateJoinUs: (data) => {
+    const errors = this.validateEndorsement(data);
 
-  // Generate cryptographically secure session ID
-  generateSessionId: () => {
-    // Use crypto.getRandomValues for secure random number generation
-    const array = new Uint8Array(16);
-    crypto.getRandomValues(array);
-    const randomString = Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
-    const sessionId = 'sess_' + randomString;
-    sessionStorage.setItem('sessionId', sessionId);
-    return sessionId;
+    // Email is required for join us
+    if (!data.email || !data.email.trim()) {
+      errors.push('Email address is required for joining the campaign');
+    }
+
+    return errors;
   }
 };
-
-export default formSubmission;
