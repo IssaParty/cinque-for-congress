@@ -76,6 +76,7 @@ export const formSubmission = {
       const csrfToken = inputSecurity.generateCSRFToken();
 
       const fields = {
+        action: 'SUBMIT_ENDORSEMENT',
         name: secureFormData.name,
         city: secureFormData.city,
         zipCode: secureFormData.zipCode,

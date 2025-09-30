@@ -107,14 +107,27 @@ function handleSubmitEndorsement(params) {
       }
     }
 
+    // Anti-bot validation
+    const humanValidation = validateHumanUser(params);
+    if (!humanValidation.isHuman) {
+      return createResponse(false, humanValidation.reason || 'Validation failed');
+    }
+
     // Sanitize and validate data
     const endorsementData = {
       name: sanitizeInput(params.name),
       city: sanitizeInput(params.city),
       zipCode: sanitizeInput(params.zipCode),
+      email: params.email ? sanitizeInput(params.email) : '',
+      phone: params.phone ? sanitizeInput(params.phone) : '',
       timestamp: new Date(),
       source: 'website',
-      ipHash: hashIP(params.clientIP || 'unknown')
+      ipHash: hashIP(params.clientIP || 'unknown'),
+      userAgent: params.userAgent ? params.userAgent.substring(0, 100) : '',
+      sessionId: params.sessionId || '',
+      formInteractionTime: parseInt(params.formInteractionTime) || 0,
+      humanConfirmed: params.humanConfirmed === 'true',
+      browserFingerprint: params.browserFingerprint || ''
     };
 
     // Check for duplicates
@@ -431,6 +444,30 @@ function sanitizeInput(input) {
 function hashIP(ip) {
   const hash = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_1, ip + 'salt_string');
   return hash.map(byte => (byte + 256) % 256).map(byte => byte.toString(16).padStart(2, '0')).join('').substring(0, 16);
+}
+
+/**
+ * Validate human user with anti-bot checks
+ */
+function validateHumanUser(params) {
+  // Check human confirmation
+  if (params.humanConfirmed !== 'true') {
+    return { isHuman: false, reason: 'Human confirmation required' };
+  }
+
+  // Check form interaction time (minimum 3 seconds)
+  const interactionTime = parseInt(params.formInteractionTime) || 0;
+  if (interactionTime < 3) {
+    return { isHuman: false, reason: 'Please spend more time filling out the form' };
+  }
+
+  // Check for browser fingerprint (basic bot detection)
+  if (!params.browserFingerprint || params.browserFingerprint.length < 10) {
+    return { isHuman: false, reason: 'Invalid browser signature' };
+  }
+
+  // All checks passed
+  return { isHuman: true };
 }
 
 /**
