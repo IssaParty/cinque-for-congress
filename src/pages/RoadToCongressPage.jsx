@@ -151,6 +151,7 @@ const RoadToCongressPage = () => {
         }
 
         setFormData({ name: '', city: '', zipCode: '', phone: '', email: '' });
+        setHumanConfirmed(false); // Reset human confirmation checkbox
         setSubmissionMessage('Thank you for your endorsement! Your support has been recorded.');
       } else {
         setSubmissionMessage(result.error || 'There was an error submitting your endorsement. Please try again.');

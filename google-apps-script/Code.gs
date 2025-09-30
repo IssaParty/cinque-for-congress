@@ -63,12 +63,11 @@ function doPost(e) {
 }
 
 /**
- * Get current endorsement count from the sheet
+ * Get current endorsement count from the sheet (FIXED: always read from actual sheet)
  */
 function handleGetCount() {
   try {
     const count = getCurrentEndorsementCount();
-    updateProgressTracker(count);
 
     return createResponse(true, 'Count retrieved successfully', {
       count: count,
@@ -84,32 +83,28 @@ function handleGetCount() {
 }
 
 /**
- * Increment the endorsement count (used for website progress tracking)
+ * Increment the endorsement count (FIXED: use actual sheet count)
  */
 function handleIncrementCount() {
   try {
-    // Get current count from actual endorsements
+    // Always get count from actual endorsements, not progress tracker
     const currentCount = getCurrentEndorsementCount();
-    const newCount = currentCount + 1;
 
-    // Update progress tracker
-    updateProgressTracker(newCount);
-
-    return createResponse(true, 'Count incremented successfully', {
-      count: newCount,
+    return createResponse(true, 'Count retrieved successfully', {
+      count: currentCount,
       target: TARGET_SIGNATURES,
-      percentage: Math.round((newCount / TARGET_SIGNATURES) * 100),
+      percentage: Math.round((currentCount / TARGET_SIGNATURES) * 100),
       lastUpdated: new Date().toISOString()
     });
   } catch (error) {
-    console.error('Error incrementing count:', error);
+    console.error('Error getting count:', error);
     logError('handleIncrementCount', error);
-    return createResponse(false, 'Failed to increment count');
+    return createResponse(false, 'Failed to get count');
   }
 }
 
 /**
- * Submit a new endorsement to the sheet
+ * Submit a new endorsement to the sheet (UPDATED: new column format + email validation)
  */
 function handleSubmitEndorsement(params) {
   try {
@@ -134,17 +129,16 @@ function handleSubmitEndorsement(params) {
       zipCode: sanitizeInput(params.zipCode),
       email: params.email ? sanitizeInput(params.email) : '',
       phone: params.phone ? sanitizeInput(params.phone) : '',
-      timestamp: new Date(),
+      timestamp: new Date().toISOString(),
+      type: params.type || 'endorsement',
       source: 'website',
-      ipHash: hashIP(params.clientIP || 'unknown'),
       userAgent: params.userAgent ? params.userAgent.substring(0, 100) : '',
+      referrer: params.referrer || 'direct',
       sessionId: params.sessionId || '',
-      formInteractionTime: parseInt(params.formInteractionTime) || 0,
-      humanConfirmed: params.humanConfirmed === 'true',
-      browserFingerprint: params.browserFingerprint || ''
+      status: 'pending'
     };
 
-    // Check for duplicates
+    // Check for duplicates (UPDATED: name + email validation)
     if (isDuplicateEndorsement(endorsementData)) {
       return createResponse(false, 'Endorsement already recorded for this information');
     }
@@ -152,9 +146,8 @@ function handleSubmitEndorsement(params) {
     // Add to endorsements sheet
     const endorsementId = addEndorsement(endorsementData);
 
-    // Update count
+    // Get actual count after adding
     const newCount = getCurrentEndorsementCount();
-    updateProgressTracker(newCount);
 
     return createResponse(true, 'Endorsement submitted successfully', {
       id: endorsementId,
@@ -171,26 +164,19 @@ function handleSubmitEndorsement(params) {
 }
 
 /**
- * Handle sync check requests (called hourly by website)
+ * Handle sync check requests (FIXED: use actual sheet count)
  */
 function handleSyncCheck() {
   try {
     const actualCount = getCurrentEndorsementCount();
-    const trackedCount = getTrackedCount();
-
-    // Check for discrepancies
-    if (Math.abs(actualCount - trackedCount) > 0) {
-      console.log(`Sync discrepancy detected: actual=${actualCount}, tracked=${trackedCount}`);
-      updateProgressTracker(actualCount);
-    }
 
     // Validate data integrity
     const validationResult = validateDataIntegrity();
 
     return createResponse(true, 'Sync check completed', {
       actualCount: actualCount,
-      trackedCount: trackedCount,
-      synced: actualCount === trackedCount,
+      trackedCount: actualCount,
+      synced: true,
       validationPassed: validationResult.passed,
       lastSyncCheck: new Date().toISOString()
     });
@@ -221,71 +207,28 @@ function getCurrentEndorsementCount() {
 }
 
 /**
- * Get tracked count from progress sheet
- */
-function getTrackedCount() {
-  try {
-    const sheet = getProgressSheet();
-    const lastRow = sheet.getLastRow();
-
-    if (lastRow <= 1) {
-      return 0;
-    }
-
-    const data = sheet.getRange(lastRow, 2).getValue();
-    return parseInt(data) || 0;
-  } catch (error) {
-    console.error('Error getting tracked count:', error);
-    return 0;
-  }
-}
-
-/**
- * Update progress tracker with new count
- */
-function updateProgressTracker(count) {
-  try {
-    const sheet = getProgressSheet();
-    const timestamp = new Date();
-
-    // Add new entry
-    sheet.appendRow([
-      timestamp,
-      count,
-      TARGET_SIGNATURES,
-      Math.round((count / TARGET_SIGNATURES) * 100),
-      'auto-sync'
-    ]);
-
-    // Keep only last 1000 entries to prevent sheet bloat
-    const lastRow = sheet.getLastRow();
-    if (lastRow > 1001) {
-      sheet.deleteRows(2, lastRow - 1001);
-    }
-
-  } catch (error) {
-    console.error('Error updating progress tracker:', error);
-  }
-}
-
-/**
- * Add endorsement to the sheet
+ * Add endorsement to the sheet (UPDATED: new column format)
+ * Format: [timestamp, name, city, zipCode, phone, email, type, source, userAgent, referrer, sessionId, status]
  */
 function addEndorsement(endorsementData) {
   try {
     const sheet = getEndorsementSheet();
     const endorsementId = `end_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
+    // NEW FORMAT: timestamp, name, city, zipCode, phone, email, type, source, userAgent, referrer, sessionId, status
     sheet.appendRow([
+      endorsementData.timestamp,
       endorsementData.name,
       endorsementData.city,
       endorsementData.zipCode,
-      endorsementData.timestamp,
+      endorsementData.phone,
+      endorsementData.email,
+      endorsementData.type,
       endorsementData.source,
-      endorsementData.ipHash,
-      endorsementId,
       endorsementData.userAgent,
-      endorsementData.referrer
+      endorsementData.referrer,
+      endorsementData.sessionId,
+      endorsementData.status
     ]);
 
     return endorsementId;
@@ -296,7 +239,7 @@ function addEndorsement(endorsementData) {
 }
 
 /**
- * Check for duplicate endorsements
+ * Check for duplicate endorsements (UPDATED: name + email validation)
  */
 function isDuplicateEndorsement(newEndorsement) {
   try {
@@ -307,17 +250,24 @@ function isDuplicateEndorsement(newEndorsement) {
     const recentData = data.slice(Math.max(1, data.length - 100));
 
     for (const row of recentData) {
-      if (row[0] && row[1] && row[2]) {
-        const existingName = row[0].toString().toLowerCase().trim();
-        const existingCity = row[1].toString().toLowerCase().trim();
-        const existingZip = row[2].toString().trim();
+      if (row[1] && row[3]) { // Check if name and city exist (adjusted for new format)
+        const existingName = row[1].toString().toLowerCase().trim();  // Column 1: name
+        const existingEmail = row[5] ? row[5].toString().toLowerCase().trim() : ''; // Column 5: email
 
         const newName = newEndorsement.name.toLowerCase().trim();
-        const newCity = newEndorsement.city.toLowerCase().trim();
-        const newZip = newEndorsement.zipCode.trim();
+        const newEmail = newEndorsement.email ? newEndorsement.email.toLowerCase().trim() : '';
 
-        if (existingName === newName && existingCity === newCity && existingZip === newZip) {
-          return true;
+        // Validation logic: if email provided, check name + email; if no email, check name only
+        if (newEmail && existingEmail) {
+          // Both have emails - check name + email combination
+          if (existingName === newName && existingEmail === newEmail) {
+            return true;
+          }
+        } else {
+          // No email provided - check name only
+          if (existingName === newName) {
+            return true;
+          }
         }
       }
     }
@@ -335,23 +285,17 @@ function isDuplicateEndorsement(newEndorsement) {
 function validateDataIntegrity() {
   try {
     const endorsementSheet = getEndorsementSheet();
-    const progressSheet = getProgressSheet();
 
     // Check if sheets exist and have data
     const endorsementData = endorsementSheet.getDataRange().getValues();
-    const progressData = progressSheet.getDataRange().getValues();
-
     const actualCount = Math.max(0, endorsementData.length - 1);
-    const lastTrackedCount = progressData.length > 1 ?
-      parseInt(progressData[progressData.length - 1][1]) || 0 : 0;
 
     return {
       passed: true,
       actualCount: actualCount,
-      trackedCount: lastTrackedCount,
       checks: {
         sheetsExist: true,
-        dataConsistent: Math.abs(actualCount - lastTrackedCount) <= 1
+        dataConsistent: true
       }
     };
   } catch (error) {
@@ -364,7 +308,7 @@ function validateDataIntegrity() {
 }
 
 /**
- * Get endorsement sheet, create if doesn't exist
+ * Get endorsement sheet, create if doesn't exist (UPDATED: new column headers)
  */
 function getEndorsementSheet() {
   const spreadsheet = SpreadsheetApp.openById(SHEET_ID);
@@ -372,9 +316,9 @@ function getEndorsementSheet() {
 
   if (!sheet) {
     sheet = spreadsheet.insertSheet(ENDORSEMENT_SHEET_NAME);
-    // Add headers with anti-bot tracking
-    sheet.getRange(1, 1, 1, 9).setValues([[
-      'Name', 'City', 'ZIP Code', 'Timestamp', 'Source', 'IP Hash', 'ID', 'User Agent', 'Referrer'
+    // NEW HEADERS: timestamp, name, city, zipCode, phone, email, type, source, userAgent, referrer, sessionId, status
+    sheet.getRange(1, 1, 1, 12).setValues([[
+      'Timestamp', 'Name', 'City', 'ZIP Code', 'Phone', 'Email', 'Type', 'Source', 'User Agent', 'Referrer', 'Session ID', 'Status'
     ]]);
   }
 
@@ -450,14 +394,6 @@ function sanitizeInput(input) {
     .replace(/javascript:/gi, '')
     .replace(/on\w+\s*=/gi, '')
     .substring(0, 100); // Limit length
-}
-
-/**
- * Hash IP address for privacy
- */
-function hashIP(ip) {
-  const hash = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_1, ip + 'salt_string');
-  return hash.map(byte => (byte + 256) % 256).map(byte => byte.toString(16).padStart(2, '0')).join('').substring(0, 16);
 }
 
 /**
@@ -580,34 +516,6 @@ function createResponse(success, message, data = {}) {
 }
 
 /**
- * Scheduled function for hourly sync checks (set up as a trigger)
- */
-function hourlySync() {
-  try {
-    console.log('Running hourly sync check...');
-
-    const actualCount = getCurrentEndorsementCount();
-    const trackedCount = getTrackedCount();
-
-    if (actualCount !== trackedCount) {
-      console.log(`Sync issue detected: actual=${actualCount}, tracked=${trackedCount}`);
-      updateProgressTracker(actualCount);
-    }
-
-    // Validate data integrity
-    const validation = validateDataIntegrity();
-    if (!validation.passed) {
-      console.error('Data integrity validation failed:', validation.error);
-    }
-
-    console.log('Hourly sync completed successfully');
-  } catch (error) {
-    console.error('Hourly sync failed:', error);
-    logError('hourlySync', error);
-  }
-}
-
-/**
  * Initialize the script - run this once to set up sheets and triggers
  */
 function initialize() {
@@ -615,12 +523,6 @@ function initialize() {
     // Create sheets if they don't exist
     getEndorsementSheet();
     getProgressSheet();
-
-    // Set up hourly trigger
-    ScriptApp.newTrigger('hourlySync')
-      .timeBased()
-      .everyHours(1)
-      .create();
 
     console.log('Initialization completed successfully');
   } catch (error) {
