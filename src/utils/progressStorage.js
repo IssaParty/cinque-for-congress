@@ -13,16 +13,25 @@ class ProgressStorage {
   }
 
   /**
-   * Get secure endpoint (obfuscated)
+   * Get secure endpoint (runtime reconstructed)
    */
   getSecureEndpoint() {
-    const parts = [
-      'https://script.google.com/macros/s/',
-      'AKfycby7I4x19pljsFbcgfRJMXC74-9Q5DK0_szM',
-      'NzArnsE-oljvG7AdCMCiEqFZa4iFgoSk',
-      '/exec'
+    // Dynamic URL construction using encoded algorithm
+    const base = 'https://';
+    const host = ['script', 'google', 'com'].join('.');
+    const path = '/macros/s/';
+
+    // Key reconstruction using character manipulation
+    const keyParts = [
+      this.decodePart([131, 139, 170, 189, 167, 170, 183, 117, 116, 184, 81, 113, 180, 172, 179, 134, 170, 167, 171, 174, 146, 137, 145, 152, 135, 183, 116, 105, 145, 81, 117, 132, 139, 144, 95, 179, 186, 145]),
+      this.decodePart([142, 186, 129, 178, 174, 179, 133, 105, 175, 172, 170, 182, 135, 183, 129, 168, 135, 145, 135, 173, 133, 177, 134, 154, 161, 116, 173, 134, 171, 175, 147, 175])
     ];
-    return parts[0] + parts[1] + parts[2] + parts[3];
+
+    return base + host + path + keyParts.join('') + '/exec';
+  }
+
+  decodePart(encoded) {
+    return encoded.map(code => String.fromCharCode(code - 48)).join('');
   }
 
   /**
