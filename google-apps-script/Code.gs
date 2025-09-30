@@ -5,7 +5,7 @@
  */
 
 // Configuration Constants
-const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID'; // Replace with your actual sheet ID
+const SHEET_ID = '1uFSlYswZXSQqlRhwqc0f4VeVYoqDQ9NKGv9W7jFc9Ck'; // Your actual sheet ID
 const ENDORSEMENT_SHEET_NAME = 'Endorsements';
 const PROGRESS_SHEET_NAME = 'Progress';
 const TARGET_SIGNATURES = 1500;
@@ -15,6 +15,15 @@ const RATE_LIMIT_WINDOW = 60 * 60 * 1000; // 1 hour in milliseconds
 const MAX_REQUESTS_PER_WINDOW = 500; // Increased for campaign events and rallies
 
 /**
+ * Handle GET requests (required for web app deployment)
+ */
+function doGet(e) {
+  return ContentService
+    .createTextOutput('Cinque for Congress Endorsement API - Use POST requests')
+    .setMimeType(ContentService.MimeType.TEXT);
+}
+
+/**
  * Main entry point for web app requests
  */
 function doPost(e) {
@@ -22,6 +31,11 @@ function doPost(e) {
     // Parse the request
     const params = e.parameter;
     const action = params.action;
+
+    // Domain validation check
+    if (!validateDomain(params)) {
+      return createResponse(false, 'Unauthorized request source');
+    }
 
     // Rate limiting check
     if (!checkRateLimit()) {
@@ -444,6 +458,54 @@ function sanitizeInput(input) {
 function hashIP(ip) {
   const hash = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_1, ip + 'salt_string');
   return hash.map(byte => (byte + 256) % 256).map(byte => byte.toString(16).padStart(2, '0')).join('').substring(0, 16);
+}
+
+/**
+ * Validate domain - security layer to prevent unauthorized API access
+ */
+function validateDomain(params) {
+  try {
+    const referrer = params.referrer || '';
+    const userAgent = params.userAgent || '';
+
+    // Allowed domains for your campaign
+    const allowedDomains = [
+      'cinqueforcongress.com',
+      'www.cinqueforcongress.com',
+      'issaparty.github.io',
+      'localhost',
+      '127.0.0.1'
+    ];
+
+    // Check referrer domain
+    let domainValid = false;
+    if (referrer === '' || referrer === 'direct') {
+      // Allow direct visits (bookmarks, direct typing)
+      domainValid = true;
+    } else {
+      domainValid = allowedDomains.some(domain => referrer.includes(domain));
+    }
+
+    // Additional bot detection
+    const botSignatures = ['bot', 'crawler', 'spider', 'scraper', 'headless'];
+    const isBot = botSignatures.some(sig => userAgent.toLowerCase().includes(sig));
+
+    if (isBot) {
+      console.log(`Bot detected: ${userAgent}`);
+      return false;
+    }
+
+    if (!domainValid) {
+      console.log(`Unauthorized domain: ${referrer}`);
+      return false;
+    }
+
+    return true;
+
+  } catch (error) {
+    console.error('Domain validation error:', error);
+    return true; // Allow request if validation fails to prevent blocking legitimate users
+  }
 }
 
 /**
