@@ -34,3 +34,6 @@ package 2.json
 
 # Personal folders
 Cinque Images and Docs/
+
+# Google Apps Script files (contain sensitive data)
+*APPS_SCRIPT*.js

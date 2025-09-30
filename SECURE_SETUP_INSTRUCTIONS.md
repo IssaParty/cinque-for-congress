@@ -13,7 +13,7 @@ Your old Google Apps Script URL was exposed in the public GitHub repository. You
 3. **Replace** the default `Code.gs` content with the code from `NEW_APPS_SCRIPT.js`
 4. **Update Line 21:** Replace `YOUR_GOOGLE_SHEET_ID_HERE` with your actual Google Sheet ID:
    ```javascript
-   const SHEET_ID = '1E_hlG4vVeEVM-N7sr2wuDO0liXuuqLBjFFH8U0hwPl4';
+   const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID_HERE';
    ```
 
 ### 2. Deploy the Script
@@ -36,7 +36,7 @@ Your old Google Apps Script URL was exposed in the public GitHub repository. You
 2. **Edit** `.env` with your NEW script URL:
    ```
    REACT_APP_GOOGLE_SCRIPT_URL=https://script.google.com/macros/s/YOUR_NEW_SCRIPT_ID_HERE/exec
-   REACT_APP_GOOGLE_SHEET_ID=1E_hlG4vVeEVM-N7sr2wuDO0liXuuqLBjFFH8U0hwPl4
+   REACT_APP_GOOGLE_SHEET_ID=YOUR_GOOGLE_SHEET_ID_HERE
    REACT_APP_GA_MEASUREMENT_ID=G-XXXXXXXXXX
    ```
 

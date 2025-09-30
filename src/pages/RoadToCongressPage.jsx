@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { formSubmission } from '../utils/formSubmission';
+import { progressStorage } from '../utils/progressStorage';
 
 const RoadToCongressPage = () => {
   const [endorsements, setEndorsements] = useState([]);
@@ -7,9 +8,10 @@ const RoadToCongressPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionMessage, setSubmissionMessage] = useState('');
   const [isMobile, setIsMobile] = useState(false);
+  const [currentEndorsements, setCurrentEndorsements] = useState(0);
+  const [isLoadingProgress, setIsLoadingProgress] = useState(true);
 
   const endorsementGoal = 1500;
-  const currentEndorsements = endorsements.length;
   const progressPercentage = Math.min((currentEndorsements / endorsementGoal) * 100, 100);
 
   // Check screen size for responsive design
@@ -28,31 +30,35 @@ const RoadToCongressPage = () => {
     // Generate session ID for tracking
     formSubmission.generateSessionId();
 
-    // Reset endorsements to start fresh (this runs once when app loads)
-    // This ensures progress starts from zero even after code changes
-    const resetKey = 'endorsements_reset_2025';
-    const hasBeenReset = localStorage.getItem(resetKey);
+    // Load progress count from Google Sheets (persistent across deployments)
+    loadProgressCount();
 
-    if (!hasBeenReset) {
-      // First time since reset - clear old data and mark as reset
-      localStorage.removeItem('endorsements');
-      localStorage.setItem(resetKey, 'true');
-      setEndorsements([]);
-    } else {
-      // Load existing endorsements from localStorage for display
-      const savedEndorsements = localStorage.getItem('endorsements');
-      if (savedEndorsements) {
-        try {
-          setEndorsements(JSON.parse(savedEndorsements));
-        } catch (error) {
-          console.error('Error loading saved endorsements:', error);
-          // If there's an error loading, start fresh
-          localStorage.removeItem('endorsements');
-          setEndorsements([]);
-        }
+    // Load existing endorsements from localStorage for display
+    const savedEndorsements = localStorage.getItem('endorsements');
+    if (savedEndorsements) {
+      try {
+        setEndorsements(JSON.parse(savedEndorsements));
+      } catch (error) {
+        console.error('Error loading saved endorsements:', error);
+        localStorage.removeItem('endorsements');
+        setEndorsements([]);
       }
     }
   }, []);
+
+  const loadProgressCount = async () => {
+    try {
+      setIsLoadingProgress(true);
+      const count = await progressStorage.getCurrentCount();
+      setCurrentEndorsements(count);
+      console.log('Loaded progress count:', count);
+    } catch (error) {
+      console.error('Error loading progress count:', error);
+      setCurrentEndorsements(0);
+    } finally {
+      setIsLoadingProgress(false);
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -97,6 +103,12 @@ const RoadToCongressPage = () => {
 
         // Save to localStorage for persistence
         localStorage.setItem('endorsements', JSON.stringify(updatedEndorsements));
+
+        // Update the progress count from server response
+        if (result.count !== undefined) {
+          setCurrentEndorsements(result.count);
+          progressStorage.setCachedCount(result.count);
+        }
 
         setFormData({ name: '', city: '', zipCode: '', phone: '', email: '' });
         setSubmissionMessage('Thank you for your endorsement! Your support has been recorded.');
@@ -147,7 +159,10 @@ const RoadToCongressPage = () => {
                 ></div>
               </div>
               <p style={isMobile ? styles.progressTextMobile : styles.progressText}>
-                {currentEndorsements} of {endorsementGoal} signatures ({Math.round(progressPercentage)}%)
+                {isLoadingProgress ?
+                  'Loading progress...' :
+                  `${currentEndorsements} of ${endorsementGoal} signatures (${Math.round(progressPercentage)}%)`
+                }
               </p>
             </div>
           </section>
