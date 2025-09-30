@@ -57,21 +57,15 @@ const RoadToCongressPage = () => {
       setIsLoadingProgress(true);
       const count = await progressStorage.getCurrentCount();
 
-      // Ensure we have a valid number
+      // Ensure we have a valid number (now completely relies on Google Sheets data)
       const validCount = typeof count === 'number' && !isNaN(count) ? count : 0;
       setCurrentEndorsements(validCount);
-      logger.debug('Loaded progress count:', validCount);
+      logger.debug('Loaded progress count from Google Sheets:', validCount);
 
-      // If this is the first load and count is 0, initialize with a starting value
-      if (validCount === 0) {
-        // Set initial count to demonstrate progress bar functionality
-        await progressStorage.setCachedCount(25); // Starting with 25 endorsements
-        setCurrentEndorsements(25);
-      }
     } catch (error) {
       logger.error(error, 'Error loading progress count');
-      // Set a fallback starting value instead of 0
-      setCurrentEndorsements(25);
+      // No hardcoded fallback - relies on progressStorage's getFallbackCount()
+      setCurrentEndorsements(0);
     } finally {
       setIsLoadingProgress(false);
     }
