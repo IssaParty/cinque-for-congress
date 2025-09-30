@@ -10,9 +10,9 @@ const ENDORSEMENT_SHEET_NAME = 'Endorsements';
 const PROGRESS_SHEET_NAME = 'Progress';
 const TARGET_SIGNATURES = 1500;
 
-// Rate limiting configuration
+// Rate limiting configuration - optimized for campaign traffic
 const RATE_LIMIT_WINDOW = 60 * 60 * 1000; // 1 hour in milliseconds
-const MAX_REQUESTS_PER_WINDOW = 100;
+const MAX_REQUESTS_PER_WINDOW = 500; // Increased for campaign events and rallies
 
 /**
  * Main entry point for web app requests
@@ -256,7 +256,9 @@ function addEndorsement(endorsementData) {
       endorsementData.timestamp,
       endorsementData.source,
       endorsementData.ipHash,
-      endorsementId
+      endorsementId,
+      endorsementData.userAgent,
+      endorsementData.referrer
     ]);
 
     return endorsementId;
@@ -343,9 +345,9 @@ function getEndorsementSheet() {
 
   if (!sheet) {
     sheet = spreadsheet.insertSheet(ENDORSEMENT_SHEET_NAME);
-    // Add headers
-    sheet.getRange(1, 1, 1, 7).setValues([[
-      'Name', 'City', 'ZIP Code', 'Timestamp', 'Source', 'IP Hash', 'ID'
+    // Add headers with anti-bot tracking
+    sheet.getRange(1, 1, 1, 9).setValues([[
+      'Name', 'City', 'ZIP Code', 'Timestamp', 'Source', 'IP Hash', 'ID', 'User Agent', 'Referrer'
     ]]);
   }
 
