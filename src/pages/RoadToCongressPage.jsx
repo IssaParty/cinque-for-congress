@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { formSubmission } from '../utils/formSubmission';
 import { progressStorage } from '../utils/progressStorage';
+import { logger } from '../utils/secureLogger';
+import { secureStorage } from '../utils/secureStorage';
 
 const RoadToCongressPage = () => {
   const [endorsements, setEndorsements] = useState([]);
@@ -27,23 +29,27 @@ const RoadToCongressPage = () => {
   }, []);
 
   useEffect(() => {
-    // Generate session ID for tracking
-    formSubmission.generateSessionId();
+    const initializeApp = async () => {
+      // Generate session ID for tracking
+      await formSubmission.generateSessionId();
 
-    // Load progress count from Google Sheets (persistent across deployments)
-    loadProgressCount();
+      // Load progress count from Google Sheets (persistent across deployments)
+      loadProgressCount();
 
-    // Load existing endorsements from localStorage for display
-    const savedEndorsements = localStorage.getItem('endorsements');
-    if (savedEndorsements) {
+      // Load existing endorsements from secure storage for display
       try {
-        setEndorsements(JSON.parse(savedEndorsements));
+        const savedEndorsements = await secureStorage.getItem('endorsements');
+        if (savedEndorsements) {
+          setEndorsements(savedEndorsements || []);
+        }
       } catch (error) {
-        console.error('Error loading saved endorsements:', error);
-        localStorage.removeItem('endorsements');
+        logger.error(error, 'Error loading saved endorsements');
+        secureStorage.removeItem('endorsements');
         setEndorsements([]);
       }
-    }
+    };
+
+    initializeApp();
   }, []);
 
   const loadProgressCount = async () => {
@@ -51,9 +57,9 @@ const RoadToCongressPage = () => {
       setIsLoadingProgress(true);
       const count = await progressStorage.getCurrentCount();
       setCurrentEndorsements(count);
-      console.log('Loaded progress count:', count);
+      logger.debug('Loaded progress count:', count);
     } catch (error) {
-      console.error('Error loading progress count:', error);
+      logger.error(error, 'Error loading progress count');
       setCurrentEndorsements(0);
     } finally {
       setIsLoadingProgress(false);
@@ -101,8 +107,8 @@ const RoadToCongressPage = () => {
         const updatedEndorsements = [...endorsements, newEndorsement];
         setEndorsements(updatedEndorsements);
 
-        // Save to localStorage for persistence
-        localStorage.setItem('endorsements', JSON.stringify(updatedEndorsements));
+        // Save to secure storage for persistence
+        await secureStorage.setItem('endorsements', updatedEndorsements);
 
         // Update the progress count from server response
         if (result.count !== undefined) {
@@ -116,7 +122,7 @@ const RoadToCongressPage = () => {
         setSubmissionMessage(result.error || 'There was an error submitting your endorsement. Please try again.');
       }
     } catch (error) {
-      console.error('Submission error:', error);
+      logger.error(error, 'Submission error');
       setSubmissionMessage('There was an error submitting your endorsement. Please try again.');
     } finally {
       setIsSubmitting(false);

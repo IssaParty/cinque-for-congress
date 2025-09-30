@@ -1,6 +1,8 @@
 // Google Sheets Integration for Secure Endorsement Storage
 // This approach uses Google Apps Script as a secure backend
 
+import { logger } from './secureLogger.js';
+
 export const googleSheetsStorage = {
   // Your Google Apps Script Web App URL (deploy script as web app)
   SCRIPT_URL: process.env.REACT_APP_GOOGLE_SCRIPT_URL || 'YOUR_GOOGLE_SCRIPT_URL',
@@ -52,7 +54,7 @@ export const googleSheetsStorage = {
       }
 
     } catch (error) {
-      console.error('Google Sheets submission error:', error);
+      logger.error('Google Sheets submission error:', error);
       return {
         success: false,
         error: error.message || 'Network error - please try again'

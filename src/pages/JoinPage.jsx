@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { formSubmission } from '../utils/formSubmission';
+import { logger } from '../utils/secureLogger';
 
 const JoinPage = () => {
   const [formData, setFormData] = useState({ name: '', city: '', zipCode: '', phone: '', email: '' });
@@ -81,7 +82,7 @@ const JoinPage = () => {
         setSubmissionMessage(result.error || 'There was an error submitting your information. Please try again.');
       }
     } catch (error) {
-      console.error('Submission error:', error);
+      logger.error(error, 'Submission error');
       setSubmissionMessage('There was an error submitting your information. Please try again.');
     } finally {
       setIsSubmitting(false);

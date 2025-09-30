@@ -1,6 +1,10 @@
 // Secure form submission approach that bypasses CORS issues
 // This uses a hidden iframe method that works with Google Apps Script
 
+import { logger } from './secureLogger.js';
+import { inputSecurity } from './inputSecurity.js';
+import { secureStorage } from './secureStorage.js';
+
 export const formSubmission = {
   /**
    * Get secure endpoint (runtime reconstructed)
@@ -23,8 +27,32 @@ export const formSubmission = {
   decodePart(encoded) {
     return encoded.map(code => String.fromCharCode(code - 48)).join('');
   },
-  submitForm: (formData, formType = 'endorsement') => {
-    return new Promise((resolve) => {
+  submitForm: async (formData, formType = 'endorsement') => {
+    return new Promise(async (resolve) => {
+      // Security validation
+      const validation = inputSecurity.validateFormData(formData, formType);
+      if (validation.errors.length > 0) {
+        logger.warn('Form validation failed', validation.errors);
+        resolve({ success: false, errors: validation.errors });
+        return;
+      }
+
+      // Rate limiting check
+      const clientId = await secureStorage.getItem('client_id') || 'anonymous';
+      if (!inputSecurity.checkRateLimit(clientId)) {
+        resolve({ success: false, error: 'Too many submissions. Please try again later.' });
+        return;
+      }
+
+      // Honeypot validation
+      if (!inputSecurity.validateHoneypot(formData.website_url)) {
+        logger.warn('Honeypot triggered - potential bot submission');
+        resolve({ success: false, error: 'Submission failed validation' });
+        return;
+      }
+
+      // Use sanitized data
+      const secureFormData = validation.sanitizedData;
       // Create a hidden form
       const form = document.createElement('form');
       form.method = 'POST';
@@ -40,18 +68,22 @@ export const formSubmission = {
       form.action = scriptUrl;
       form.style.cssText = 'position:absolute;left:-9999px;width:1px;height:1px;visibility:hidden;';
 
-      // Add form fields
+      // Add secure form fields with CSRF protection
+      const sessionId = await secureStorage.getItem('sessionId') || 'unknown';
+      const csrfToken = inputSecurity.generateCSRFToken();
+
       const fields = {
-        name: formData.name,
-        city: formData.city,
-        zipCode: formData.zipCode,
-        phone: formData.phone || '',
-        email: formData.email || '',
+        name: secureFormData.name,
+        city: secureFormData.city,
+        zipCode: secureFormData.zipCode,
+        phone: secureFormData.phone || '',
+        email: secureFormData.email || '',
         type: formType, // 'endorsement' or 'join_us'
         source: 'website',
         userAgent: navigator.userAgent.substring(0, 100),
         referrer: document.referrer || 'direct',
-        sessionId: sessionStorage.getItem('sessionId') || 'unknown',
+        sessionId: sessionId,
+        csrfToken: csrfToken,
         timestamp: new Date().toISOString()
       };
 
@@ -152,52 +184,32 @@ export const formSubmission = {
     });
   },
 
-  generateSessionId: () => {
-    if (!sessionStorage.getItem('sessionId')) {
-      sessionStorage.setItem('sessionId', 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9));
+  generateSessionId: async () => {
+    let sessionId = await secureStorage.getItem('sessionId');
+    if (!sessionId) {
+      sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      await secureStorage.setItem('sessionId', sessionId);
+
+      // Also generate a client ID for rate limiting
+      const clientId = 'client_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      await secureStorage.setItem('client_id', clientId);
     }
   },
 
   validateEndorsement: (data) => {
-    const errors = [];
-
-    if (!data.name || data.name.trim().length < 2) {
-      errors.push('Name is required (minimum 2 characters)');
-    }
-
-    if (!data.city || data.city.trim().length < 2) {
-      errors.push('City is required (minimum 2 characters)');
-    }
-
-    if (!data.zipCode || !/^\d{5}(-\d{4})?$/.test(data.zipCode.trim())) {
-      errors.push('Valid ZIP code is required (e.g., 12345 or 12345-6789)');
-    }
-
-    // Email validation (optional for endorsements, required for join us)
-    if (data.email && data.email.trim()) {
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) {
-        errors.push('Valid email address is required');
-      }
-    }
-
-    // Phone validation (optional)
-    if (data.phone && data.phone.trim()) {
-      if (!/^[\d\s\-\(\)\+\.]{7,}$/.test(data.phone.trim())) {
-        errors.push('Valid phone number is required');
-      }
-    }
-
-    return errors;
+    // Use the new secure validation system
+    const validation = inputSecurity.validateFormData(data, 'endorsement');
+    return validation.errors;
   },
 
   validateJoinUs: function(data) {
-    const errors = this.validateEndorsement(data);
+    // Use the new secure validation system
+    const validation = inputSecurity.validateFormData(data, 'join_us');
+    return validation.errors;
+  },
 
-    // Email is required for join us
-    if (!data.email || !data.email.trim()) {
-      errors.push('Email address is required for joining the campaign');
-    }
-
-    return errors;
+  // Add honeypot field for bot detection
+  createHoneypotField: () => {
+    return inputSecurity.createHoneypot();
   }
 };

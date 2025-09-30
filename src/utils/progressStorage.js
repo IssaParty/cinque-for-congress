@@ -4,6 +4,9 @@
  * Ensures progress persists across code updates and deployments
  */
 
+import { logger } from './secureLogger.js';
+import { secureStorage } from './secureStorage.js';
+
 class ProgressStorage {
   constructor() {
     // Obfuscated endpoint - not exposed in environment variables
@@ -50,15 +53,15 @@ class ProgressStorage {
 
       if (response.success) {
         const count = response.count || 0;
-        this.setCachedCount(count);
+        await this.setCachedCount(count);
         return count;
       } else {
-        console.warn('Failed to fetch count from server, using cached/default');
-        return this.getCachedCount() || 0;
+        logger.warn('Failed to fetch count from server, using cached/default');
+        return await this.getCachedCount() || 0;
       }
     } catch (error) {
-      console.error('Error fetching progress count:', error);
-      return this.getCachedCount() || 0;
+      logger.error(error, 'Error fetching progress count');
+      return await this.getCachedCount() || 0;
     }
   }
 
@@ -71,19 +74,19 @@ class ProgressStorage {
 
       if (response.success) {
         const newCount = response.count || 0;
-        this.setCachedCount(newCount);
+        await this.setCachedCount(newCount);
         return newCount;
       } else {
         // Fallback: increment locally
-        const currentCount = this.getCachedCount() || 0;
+        const currentCount = await this.getCachedCount() || 0;
         const newCount = currentCount + 1;
-        this.setCachedCount(newCount);
+        await this.setCachedCount(newCount);
         return newCount;
       }
     } catch (error) {
-      console.error('Error incrementing count:', error);
+      logger.error(error, 'Error incrementing count');
       // Fallback: increment locally
-      const currentCount = this.getCachedCount() || 0;
+      const currentCount = await this.getCachedCount() || 0;
       const newCount = currentCount + 1;
       this.setCachedCount(newCount);
       return newCount;
@@ -121,22 +124,22 @@ class ProgressStorage {
   /**
    * Get cached count from localStorage
    */
-  getCachedCount() {
+  async getCachedCount() {
     try {
-      const cached = localStorage.getItem(this.cacheKey);
+      const cached = await secureStorage.getItem(this.cacheKey);
       if (!cached) return null;
 
-      const { count, timestamp } = JSON.parse(cached);
+      const { count, timestamp } = cached;
 
       // Check if cache is still valid
       if (Date.now() - timestamp > this.cacheTimeout) {
-        localStorage.removeItem(this.cacheKey);
+        secureStorage.removeItem(this.cacheKey);
         return null;
       }
 
       return count;
     } catch (error) {
-      console.error('Error reading cached count:', error);
+      logger.error(error, 'Error reading cached count');
       return null;
     }
   }
@@ -144,15 +147,15 @@ class ProgressStorage {
   /**
    * Set cached count in localStorage
    */
-  setCachedCount(count) {
+  async setCachedCount(count) {
     try {
       const cacheData = {
         count: count,
         timestamp: Date.now()
       };
-      localStorage.setItem(this.cacheKey, JSON.stringify(cacheData));
+      await secureStorage.setItem(this.cacheKey, cacheData);
     } catch (error) {
-      console.error('Error caching count:', error);
+      logger.error(error, 'Error caching count');
     }
   }
 
@@ -160,7 +163,7 @@ class ProgressStorage {
    * Clear cache (force refresh from server)
    */
   clearCache() {
-    localStorage.removeItem(this.cacheKey);
+    secureStorage.removeItem(this.cacheKey);
   }
 }
 

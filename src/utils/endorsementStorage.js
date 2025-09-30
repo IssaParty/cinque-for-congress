@@ -2,6 +2,8 @@
 // WARNING: This approach stores data in browser localStorage only
 // For production, use a proper backend service
 
+import { logger } from './secureLogger.js';
+
 export const endorsementStorage = {
   // Encode data for storage (WARNING: This is NOT encryption - just Base64 encoding)
   encode: (data) => {
@@ -10,7 +12,7 @@ export const endorsementStorage = {
       // Base64 encoding for basic obfuscation - NOT SECURE
       return btoa(jsonString);
     } catch (error) {
-      console.error('Encoding failed:', error);
+      logger.error('Encoding failed:', error);
       return null;
     }
   },
@@ -21,7 +23,7 @@ export const endorsementStorage = {
       const jsonString = atob(encodedData);
       return JSON.parse(jsonString);
     } catch (error) {
-      console.error('Decoding failed:', error);
+      logger.error('Decoding failed:', error);
       return null;
     }
   },
@@ -61,7 +63,7 @@ export const endorsementStorage = {
       const decoded = endorsementStorage.decode(encoded);
       return decoded || [];
     } catch (error) {
-      console.error('Failed to retrieve endorsements:', error);
+      logger.error('Failed to retrieve endorsements:', error);
       return [];
     }
   },
@@ -122,7 +124,7 @@ export const endorsementStorage = {
     // - Netlify Forms
     // etc.
 
-    console.log('Would submit to external service:', endorsementData);
+    logger.debug('Would submit to external service:', endorsementData);
 
     // Example Google Sheets integration:
     /*
@@ -161,7 +163,7 @@ export const githubStorageConfig = {
     // 3. Encrypted file content
     // 4. Proper error handling
 
-    console.warn('GitHub storage not implemented - use external service instead');
+    logger.warn('GitHub storage not implemented - use external service instead');
     return { success: false, error: 'Not implemented' };
   }
 };
