@@ -47,14 +47,14 @@ const JoinPage = () => {
     }
 
     // Validate form data
-    const validationErrors = formSubmission.validateForm(formData, 'join_us');
+    const validationErrors = formSubmission.validateJoinUs(formData);
     if (validationErrors.length > 0) {
       setSubmissionMessage(validationErrors[0]);
       return;
     }
 
     setIsSubmitting(true);
-    setSubmissionMessage('Submitting your information...');
+    setSubmissionMessage('Submitting your information to join our campaign...');
 
     try {
       // Submit using form method (bypasses CORS)
@@ -68,7 +68,7 @@ const JoinPage = () => {
 
       if (result.success) {
         setFormData({ name: '', city: '', zipCode: '', phone: '', email: '' });
-        setSubmissionMessage('Thank you for joining our campaign! We will be in touch soon with volunteer opportunities.');
+        setSubmissionMessage('Thank you for joining our campaign! Your submission has been recorded and we will be in touch soon with volunteer opportunities.');
 
         // Track successful campaign signup
         if (window.trackCampaignEvent) {

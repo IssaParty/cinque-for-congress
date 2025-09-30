@@ -169,7 +169,7 @@ export const formSubmission = {
     return errors;
   },
 
-  validateJoinUs: (data) => {
+  validateJoinUs: function(data) {
     const errors = this.validateEndorsement(data);
 
     // Email is required for join us
