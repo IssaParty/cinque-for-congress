@@ -13,6 +13,10 @@ const RoadToCongressPage = () => {
   const [currentEndorsements, setCurrentEndorsements] = useState(0);
   const [isLoadingProgress, setIsLoadingProgress] = useState(true);
 
+  // Anti-bot security tracking
+  const [formStartTime, setFormStartTime] = useState(null);
+  const [humanConfirmed, setHumanConfirmed] = useState(false);
+
   const endorsementGoal = 1500;
   const progressPercentage = Math.min((currentEndorsements / endorsementGoal) * 100, 100);
 
@@ -32,6 +36,9 @@ const RoadToCongressPage = () => {
     const initializeApp = async () => {
       // Generate session ID for tracking
       await formSubmission.generateSessionId();
+
+      // Initialize anti-bot form timing
+      setFormStartTime(Date.now());
 
       // Load progress count from Google Sheets (persistent across deployments)
       loadProgressCount();
@@ -79,6 +86,20 @@ const RoadToCongressPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Anti-bot validation
+    if (!humanConfirmed) {
+      setSubmissionMessage('Please confirm that you are human before submitting.');
+      return;
+    }
+
+    // Check interaction time (minimum 3 seconds)
+    const currentTime = Date.now();
+    const interactionTime = formStartTime ? (currentTime - formStartTime) / 1000 : 0;
+    if (interactionTime < 3) {
+      setSubmissionMessage('Please spend more time filling out the form.');
+      return;
+    }
+
     // Validate form data
     const validationErrors = formSubmission.validateEndorsement(formData);
     if (validationErrors.length > 0) {
@@ -90,13 +111,16 @@ const RoadToCongressPage = () => {
     setSubmissionMessage('Submitting your endorsement...');
 
     try {
-      // Submit using form method (bypasses CORS)
+      // Submit using form method (bypasses CORS) with anti-bot data
       const result = await formSubmission.submitForm({
         name: formData.name.trim(),
         city: formData.city.trim(),
         zipCode: formData.zipCode.trim(),
         phone: formData.phone.trim(),
-        email: formData.email.trim()
+        email: formData.email.trim(),
+        formInteractionTime: Math.floor(interactionTime),
+        humanConfirmed: humanConfirmed,
+        browserFingerprint: `${navigator.userAgent}_${screen.width}x${screen.height}_${new Date().getTimezoneOffset()}`
       }, 'endorsement');
 
       if (result.success) {
@@ -253,6 +277,28 @@ const RoadToCongressPage = () => {
                   style={isMobile ? styles.formInputMobile : styles.formInput}
                   placeholder="Enter your email address (optional)"
                 />
+              </div>
+
+              <div style={styles.formGroup}>
+                <label style={{
+                  ...(isMobile ? styles.formLabelMobile : styles.formLabel),
+                  display: 'flex',
+                  alignItems: 'center',
+                  cursor: 'pointer',
+                  fontSize: isMobile ? '14px' : '16px'
+                }}>
+                  <input
+                    type="checkbox"
+                    checked={humanConfirmed}
+                    onChange={(e) => setHumanConfirmed(e.target.checked)}
+                    style={{
+                      marginRight: '8px',
+                      transform: 'scale(1.2)'
+                    }}
+                    required
+                  />
+                  I confirm that I am a human and not a bot
+                </label>
               </div>
 
               <button

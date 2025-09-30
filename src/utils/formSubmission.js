@@ -15,17 +15,20 @@ export const formSubmission = {
     const host = ['script', 'google', 'com'].join('.');
     const path = '/macros/s/';
 
-    // Key reconstruction using character manipulation
-    const keyParts = [
-      this.decodePart([113, 139, 174, 185, 179, 179, 169, 185, 121, 116, 172, 124, 113, 153, 168, 169, 186, 177, 118, 169, 179, 135, 174, 135, 153, 139, 118, 154, 159, 131, 185, 116, 157, 140, 118, 168, 169, 186, 135, 157, 174, 186, 177, 118, 163, 178, 165, 177]),
-      this.decodePart([117, 141, 167, 169, 186, 174, 135, 153, 121, 113, 168, 116, 179, 139, 179, 161, 174, 177, 134, 186, 113, 156, 161, 174, 135, 167, 135, 167, 117])
+    // Secure key reconstruction - runtime assembly for obfuscation
+    const segments = [
+      'AKfycbxl',
+      'FjOKPBxy',
+      'lh3JM1zO',
+      'bCcxGJmJ',
+      'U7YhRfzn',
+      'I6rOsEvR',
+      '8N2Zf5yD',
+      'pBaKMSKK',
+      'E'
     ];
 
-    return base + host + path + keyParts.join('') + '/exec';
-  },
-
-  decodePart(encoded) {
-    return encoded.map(code => String.fromCharCode(code - 48)).join('');
+    return base + host + path + segments.join('') + '/exec';
   },
   submitForm: async (formData, formType = 'endorsement') => {
     return new Promise(async (resolve) => {
@@ -84,7 +87,11 @@ export const formSubmission = {
         referrer: document.referrer || 'direct',
         sessionId: sessionId,
         csrfToken: csrfToken,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        // Anti-bot parameters
+        formInteractionTime: secureFormData.formInteractionTime || 0,
+        humanConfirmed: secureFormData.humanConfirmed || false,
+        browserFingerprint: secureFormData.browserFingerprint || ''
       };
 
       Object.keys(fields).forEach(key => {
@@ -124,12 +131,27 @@ export const formSubmission = {
               // Silent cleanup
             }
 
-            // Check if the response indicates success
-            const isSuccess = event.data && event.data.toString().includes('SUCCESS');
+            // Check if the response indicates success (handle both JSON and string responses)
+            let isSuccess = false;
+            let responseMessage = 'Form submitted';
+            let responseId = `submission_${Date.now()}`;
+
+            try {
+              // Try parsing as JSON first (Google Apps Script returns JSON)
+              const response = JSON.parse(event.data);
+              isSuccess = response.success === true;
+              responseMessage = response.message || responseMessage;
+              responseId = response.id || responseId;
+            } catch {
+              // Fallback to string checking for legacy compatibility
+              isSuccess = event.data && event.data.toString().includes('SUCCESS');
+              responseMessage = event.data ? event.data.toString() : responseMessage;
+            }
+
             resolve({
               success: isSuccess,
-              id: `submission_${Date.now()}`,
-              message: event.data ? event.data.toString() : 'Form submitted'
+              id: responseId,
+              message: responseMessage
             });
           }, 500);
         }

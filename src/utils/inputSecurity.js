@@ -124,6 +124,17 @@ class InputSecurity {
       }
     }
 
+    // Anti-bot fields
+    if (data.formInteractionTime !== undefined) {
+      sanitizedData.formInteractionTime = parseInt(data.formInteractionTime) || 0;
+    }
+    if (data.humanConfirmed !== undefined) {
+      sanitizedData.humanConfirmed = Boolean(data.humanConfirmed);
+    }
+    if (data.browserFingerprint) {
+      sanitizedData.browserFingerprint = this.sanitizeInput(data.browserFingerprint, 'default');
+    }
+
     return { errors, sanitizedData };
   }
 

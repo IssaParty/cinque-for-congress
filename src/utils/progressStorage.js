@@ -31,17 +31,20 @@ class ProgressStorage {
     const host = ['script', 'google', 'com'].join('.');
     const path = '/macros/s/';
 
-    // Key reconstruction using character manipulation
-    const keyParts = [
-      this.decodePart([113, 139, 174, 185, 179, 179, 169, 185, 121, 116, 172, 124, 113, 153, 168, 169, 186, 177, 118, 169, 179, 135, 174, 135, 153, 139, 118, 154, 159, 131, 185, 116, 157, 140, 118, 168, 169, 186, 135, 157, 174, 186, 177, 118, 163, 178, 165, 177]),
-      this.decodePart([117, 141, 167, 169, 186, 174, 135, 153, 121, 113, 168, 116, 179, 139, 179, 161, 174, 177, 134, 186, 113, 156, 161, 174, 135, 167, 135, 167, 117])
+    // Secure key reconstruction - runtime assembly for obfuscation
+    const segments = [
+      'AKfycbxl',
+      'FjOKPBxy',
+      'lh3JM1zO',
+      'bCcxGJmJ',
+      'U7YhRfzn',
+      'I6rOsEvR',
+      '8N2Zf5yD',
+      'pBaKMSKK',
+      'E'
     ];
 
-    return base + host + path + keyParts.join('') + '/exec';
-  }
-
-  decodePart(encoded) {
-    return encoded.map(code => String.fromCharCode(code - 48)).join('');
+    return base + host + path + segments.join('') + '/exec';
   }
 
   /**
@@ -111,31 +114,105 @@ class ProgressStorage {
   }
 
   /**
-   * Make request to Google Apps Script
+   * Make request to Google Apps Script using iframe method (bypasses CORS)
    */
   async makeRequest(action, data = {}) {
-    if (!this.scriptUrl) {
-      throw new Error('Google Script URL not configured');
-    }
+    return new Promise((resolve) => {
+      const scriptUrl = this.getSecureEndpoint();
+      if (!scriptUrl) {
+        resolve({ success: false, error: 'Script URL not configured' });
+        return;
+      }
 
-    const formData = new FormData();
-    formData.append('action', action);
+      // Create a hidden form
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.enctype = 'application/x-www-form-urlencoded';
+      form.action = scriptUrl;
+      form.style.cssText = 'position:absolute;left:-9999px;width:1px;height:1px;visibility:hidden;';
 
-    // Add any additional data
-    Object.keys(data).forEach(key => {
-      formData.append(key, data[key]);
+      // Add form fields
+      const fields = { action, ...data };
+      Object.keys(fields).forEach(key => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = fields[key];
+        form.appendChild(input);
+      });
+
+      // Create hidden iframe
+      const iframe = document.createElement('iframe');
+      iframe.name = `progress_${Date.now()}`;
+      form.target = iframe.name;
+      iframe.style.cssText = 'position:absolute;left:-9999px;width:1px;height:1px;visibility:hidden;';
+
+      let responseReceived = false;
+
+      // Listen for postMessage from iframe
+      const messageHandler = (event) => {
+        if (event.origin === 'https://n-lu7gxgbhobbozbojcaeycqx4ko5t3hlpwx6euji-0lu-script.googleusercontent.com' ||
+            event.origin === 'https://n-qvabiondzydbfg7xscdcubd66c5t3hlpwx6euji-0lu-script.googleusercontent.com' ||
+            event.origin === 'https://script.google.com') {
+          responseReceived = true;
+          window.removeEventListener('message', messageHandler);
+
+          setTimeout(() => {
+            try {
+              if (form && form.parentNode) document.body.removeChild(form);
+              if (iframe && iframe.parentNode) document.body.removeChild(iframe);
+            } catch (error) {
+              // Silent cleanup
+            }
+
+            let result = { success: false };
+            try {
+              result = JSON.parse(event.data);
+            } catch {
+              result.success = event.data && event.data.toString().includes('SUCCESS');
+            }
+            resolve(result);
+          }, 500);
+        }
+      };
+
+      window.addEventListener('message', messageHandler);
+
+      // Handle iframe load (fallback)
+      iframe.onload = () => {
+        setTimeout(() => {
+          if (!responseReceived) {
+            window.removeEventListener('message', messageHandler);
+            try {
+              if (form && form.parentNode) document.body.removeChild(form);
+              if (iframe && iframe.parentNode) document.body.removeChild(iframe);
+            } catch (error) {
+              // Silent cleanup
+            }
+            resolve({ success: false, error: 'No response received' });
+          }
+        }, 3000);
+      };
+
+      iframe.onerror = () => {
+        window.removeEventListener('message', messageHandler);
+        try {
+          if (form && form.parentNode) document.body.removeChild(form);
+          if (iframe && iframe.parentNode) document.body.removeChild(iframe);
+        } catch (error) {
+          // Silent cleanup
+        }
+        resolve({ success: false, error: 'Request failed' });
+      };
+
+      // Add to page and submit
+      document.body.appendChild(iframe);
+      document.body.appendChild(form);
+
+      setTimeout(() => {
+        form.submit();
+      }, 100);
     });
-
-    const response = await fetch(this.scriptUrl, {
-      method: 'POST',
-      body: formData
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    return await response.json();
   }
 
   /**
