@@ -94,16 +94,16 @@ const HomePage = () => {
             <div style={isMobile ? styles.actionGridMobile : styles.actionGrid}>
               <article style={isMobile ? styles.actionItemMobile : styles.actionItem}>
                 <div style={styles.actionIcon}>✊</div>
-                <h3 style={styles.actionItemTitle}>Volunteer</h3>
-                <p style={styles.actionItemText}>Join our grassroots movement and help build change from the ground up</p>
+                <h3 style={isMobile ? styles.actionItemTitleMobile : styles.actionItemTitle}>Volunteer</h3>
+                <p style={isMobile ? styles.actionItemTextMobile : styles.actionItemText}>Join our grassroots movement and help build change from the ground up</p>
                 <Link to="/join" style={styles.actionBtn}>
                   Sign Up
                 </Link>
               </article>
               <article style={isMobile ? styles.actionItemMobile : styles.actionItem}>
                 <div style={styles.actionIcon}>💰</div>
-                <h3 style={styles.actionItemTitle}>Donate</h3>
-                <p style={styles.actionItemText}>Support the campaign with a contribution - no amount is too small</p>
+                <h3 style={isMobile ? styles.actionItemTitleMobile : styles.actionItemTitle}>Donate</h3>
+                <p style={isMobile ? styles.actionItemTextMobile : styles.actionItemText}>Support the campaign with a contribution - no amount is too small</p>
                 <a
                   href="https://secure.actblue.com/donate/cinqueforcongress"
                   style={styles.actionBtn}
@@ -687,6 +687,23 @@ const styles = {
     transition: 'all 0.3s',
     fontSize: '1rem',
     width: '100%'
+  },
+
+  // Mobile-specific action item styles with better contrast
+  actionItemTitleMobile: {
+    color: '#ffd700', // Bright gold for better visibility on dark background
+    marginBottom: '1rem',
+    fontSize: '1.3rem',
+    fontWeight: 'bold',
+    fontFamily: 'Arial, sans-serif',
+    textShadow: '1px 1px 2px rgba(0,0,0,0.8)' // Strong text shadow for readability
+  },
+  actionItemTextMobile: {
+    color: 'rgba(255,255,255,0.9)', // Light color for good contrast on dark background
+    marginBottom: '1.5rem',
+    fontSize: '0.95rem',
+    lineHeight: '1.6',
+    textShadow: '1px 1px 2px rgba(0,0,0,0.6)' // Text shadow for readability
   }
 };
 
