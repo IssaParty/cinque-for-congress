@@ -33,6 +33,9 @@ class ProgressStorage {
       return null; // Will trigger mock response in development
     }
 
+    // Enhanced mobile detection for better API calls
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
     // Dynamic URL construction using encoded algorithm
     const base = 'https://';
     const host = ['script', 'google', 'com'].join('.');
@@ -216,9 +219,13 @@ class ProgressStorage {
       document.body.appendChild(iframe);
       document.body.appendChild(form);
 
+      // Mobile devices need longer delay for proper iframe initialization
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      const delay = isMobile ? 500 : 100;
+
       setTimeout(() => {
         form.submit();
-      }, 100);
+      }, delay);
     });
   }
 

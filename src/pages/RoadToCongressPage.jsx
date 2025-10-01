@@ -20,10 +20,13 @@ const RoadToCongressPage = () => {
   const endorsementGoal = 1500;
   const progressPercentage = Math.min((currentEndorsements / endorsementGoal) * 100, 100);
 
-  // Check screen size for responsive design
+  // Enhanced mobile detection for better compatibility
   useEffect(() => {
     const checkScreenSize = () => {
-      setIsMobile(window.innerWidth <= 768);
+      const width = window.innerWidth;
+      const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      const isSmallScreen = width <= 768;
+      setIsMobile(isMobileDevice || isSmallScreen);
     };
 
     checkScreenSize();
@@ -59,9 +62,15 @@ const RoadToCongressPage = () => {
     initializeApp();
   }, []);
 
-  const loadProgressCount = async () => {
+  const loadProgressCount = async (retryCount = 0) => {
     try {
       setIsLoadingProgress(true);
+
+      // Add extra delay for mobile devices to ensure proper initialization
+      if (isMobile && retryCount === 0) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+
       const count = await progressStorage.getCurrentCount();
 
       // Ensure we have a valid number (now completely relies on Google Sheets data)
@@ -71,10 +80,21 @@ const RoadToCongressPage = () => {
 
     } catch (error) {
       logger.error(error, 'Error loading progress count');
-      // No hardcoded fallback - relies on progressStorage's getFallbackCount()
+
+      // Retry logic for mobile devices (network issues are more common)
+      if (retryCount < 2 && isMobile) {
+        logger.warn(`Retrying progress load on mobile (attempt ${retryCount + 1})`);
+        setTimeout(() => loadProgressCount(retryCount + 1), 2000 * (retryCount + 1));
+        return;
+      }
+
+      // Final fallback
       setCurrentEndorsements(0);
     } finally {
-      setIsLoadingProgress(false);
+      // Only stop loading if this isn't a retry
+      if (retryCount < 2) {
+        setIsLoadingProgress(false);
+      }
     }
   };
 
@@ -205,6 +225,17 @@ const RoadToCongressPage = () => {
                   `${currentEndorsements} of ${endorsementGoal} signatures (${Math.round(progressPercentage)}%)`
                 }
               </p>
+
+              {/* Mobile refresh button if progress seems stuck */}
+              {isMobile && (isLoadingProgress || currentEndorsements === 0) && (
+                <button
+                  onClick={() => loadProgressCount(0)}
+                  style={styles.refreshButton}
+                  type="button"
+                >
+                  🔄 Refresh Progress
+                </button>
+              )}
             </div>
           </section>
 
@@ -800,6 +831,19 @@ const styles = {
     lineHeight: '1.5',
     margin: 0,
     fontFamily: 'Arial, sans-serif'
+  },
+  refreshButton: {
+    backgroundColor: '#2d5016',
+    color: 'white',
+    border: 'none',
+    borderRadius: '8px',
+    padding: '10px 16px',
+    fontSize: '0.9rem',
+    fontWeight: 'bold',
+    cursor: 'pointer',
+    marginTop: '10px',
+    transition: 'all 0.3s ease',
+    boxShadow: '0 2px 8px rgba(45, 80, 22, 0.3)'
   }
 };
 
