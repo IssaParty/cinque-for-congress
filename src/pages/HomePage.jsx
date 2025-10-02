@@ -689,7 +689,7 @@ const styles = {
     width: '100%'
   },
 
-  // Mobile-specific action item styles with better contrast (force rebuild)
+  // Mobile-specific action item styles with better contrast
   actionItemTitleMobile: {
     color: '#ffd700', // Bright gold for better visibility on dark background
     marginBottom: '1rem',

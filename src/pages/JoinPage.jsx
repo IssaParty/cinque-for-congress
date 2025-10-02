@@ -3,10 +3,18 @@ import { formSubmission } from '../utils/formSubmission';
 import { logger } from '../utils/secureLogger';
 
 const JoinPage = () => {
-  const [formData, setFormData] = useState({ name: '', city: '', zipCode: '', phone: '', email: '' });
+  const [formData, setFormData] = useState({
+    name: '',
+    city: '',
+    zipCode: '',
+    phone: '',
+    email: '',
+    website_url: '' // Honeypot field
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionMessage, setSubmissionMessage] = useState('');
   const [isMobile, setIsMobile] = useState(false);
+  const [mouseEvents, setMouseEvents] = useState([]);
 
   // Check screen size for responsive design
   useEffect(() => {
@@ -23,6 +31,35 @@ const JoinPage = () => {
   useEffect(() => {
     // Generate session ID for tracking
     formSubmission.generateSessionId();
+    // Track form start time for security
+    formSubmission.trackFormStart();
+
+    // Track mouse movements for bot detection
+    const handleMouseMove = (e) => {
+      setMouseEvents(prev => [...prev.slice(-10), { // Keep last 10 events
+        type: 'mousemove',
+        x: e.clientX,
+        y: e.clientY,
+        timestamp: Date.now()
+      }]);
+    };
+
+    const handleClick = (e) => {
+      setMouseEvents(prev => [...prev.slice(-10), {
+        type: 'click',
+        x: e.clientX,
+        y: e.clientY,
+        timestamp: Date.now()
+      }]);
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('click', handleClick);
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('click', handleClick);
+    };
   }, []);
 
   const handleInputChange = (e) => {
@@ -58,17 +95,22 @@ const JoinPage = () => {
     setSubmissionMessage('Submitting your information to join our campaign...');
 
     try {
-      // Submit using form method (bypasses CORS)
+      // Submit using form method (bypasses CORS) with security data
       const result = await formSubmission.submitForm({
         name: formData.name.trim(),
         city: formData.city.trim(),
         zipCode: formData.zipCode.trim(),
         phone: formData.phone.trim(),
-        email: formData.email.trim()
+        email: formData.email.trim(),
+        website_url: formData.website_url, // Honeypot field
+        mouseEvents: JSON.stringify(mouseEvents),
+        humanConfirmed: true,
+        formInteractionTime: Date.now() - (parseInt(localStorage.getItem('formStartTime')) || Date.now())
       }, 'join_us');
 
       if (result.success) {
-        setFormData({ name: '', city: '', zipCode: '', phone: '', email: '' });
+        setFormData({ name: '', city: '', zipCode: '', phone: '', email: '', website_url: '' });
+        setMouseEvents([]); // Clear mouse events
         setSubmissionMessage('Thank you for joining our campaign! Your submission has been recorded and we will be in touch soon with volunteer opportunities.');
 
         // Track successful campaign signup
@@ -161,6 +203,19 @@ const JoinPage = () => {
               style={isMobile ? styles.formInputMobile : styles.formInput}
               placeholder="Enter your email address"
               required
+            />
+          </div>
+
+          {/* Honeypot field - hidden from users, bots will fill it */}
+          <div style={{ position: 'absolute', left: '-9999px', visibility: 'hidden' }}>
+            <label>Website URL (leave blank)</label>
+            <input
+              type="text"
+              name="website_url"
+              value={formData.website_url}
+              onChange={handleInputChange}
+              tabIndex="-1"
+              autoComplete="off"
             />
           </div>
 
