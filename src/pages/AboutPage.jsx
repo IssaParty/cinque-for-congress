@@ -127,31 +127,34 @@ const styles = {
     margin: '0 auto'
   },
   pageTitle: {
-    color: '#2d5016',
+    color: 'var(--primary-green)',
     marginBottom: '2rem',
     fontSize: '2.5rem',
-    fontFamily: 'Arial, sans-serif'
+    fontFamily: 'var(--font-family)'
   },
   pageContent: {},
   contentSection: {
     marginBottom: '2rem'
   },
   contentSubtitle: {
-    color: '#1e3a5f',
+    color: 'var(--secondary-green)',
     marginTop: '2rem',
     marginBottom: '1rem',
-    fontFamily: 'Arial, sans-serif'
+    fontFamily: 'var(--font-family)',
+    fontWeight: '600'
   },
   contentText: {
-    color: '#4a4a4a',
-    lineHeight: '1.8',
-    marginBottom: '1rem'
-  },
-  contentList: {
-    color: '#4a4a4a',
+    color: 'var(--text-black)',
     lineHeight: '1.8',
     marginBottom: '1rem',
-    paddingLeft: '2rem'
+    fontFamily: 'var(--font-family)'
+  },
+  contentList: {
+    color: 'var(--text-black)',
+    lineHeight: '1.8',
+    marginBottom: '1rem',
+    paddingLeft: '2rem',
+    fontFamily: 'var(--font-family)'
   },
   sliderContainer: {
     marginTop: '2rem',
@@ -170,32 +173,35 @@ const styles = {
     padding: '0 0.5rem'
   },
   pageTitleMobile: {
-    color: '#2d5016',
+    color: 'var(--primary-green)',
     marginBottom: '1.5rem',
     fontSize: '2rem',
-    fontFamily: 'Arial, sans-serif',
+    fontFamily: 'var(--font-family)',
     textAlign: 'center',
     lineHeight: '1.2'
   },
   contentSubtitleMobile: {
-    color: '#1e3a5f',
+    color: 'var(--secondary-green)',
     marginTop: '1.5rem',
     marginBottom: '0.8rem',
-    fontFamily: 'Arial, sans-serif',
-    fontSize: '1.3rem'
+    fontFamily: 'var(--font-family)',
+    fontSize: '1.3rem',
+    fontWeight: '600'
   },
   contentTextMobile: {
-    color: '#4a4a4a',
+    color: 'var(--text-black)',
     lineHeight: '1.7',
     marginBottom: '1rem',
-    fontSize: '1rem'
+    fontSize: '1rem',
+    fontFamily: 'var(--font-family)'
   },
   contentListMobile: {
-    color: '#4a4a4a',
+    color: 'var(--text-black)',
     lineHeight: '1.7',
     marginBottom: '1rem',
     paddingLeft: '1.5rem',
-    fontSize: '1rem'
+    fontSize: '1rem',
+    fontFamily: 'var(--font-family)'
   }
 };
 
