@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ImageSlider from '../components/ImageSlider';
 
 const AboutPage = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -15,6 +16,34 @@ const AboutPage = () => {
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
+  // Selected campaign photos for the slider
+  const sliderImages = [
+    {
+      src: '/images/PHOTO-2025-09-14-16-58-19.jpeg',
+      alt: 'Campaign photo'
+    },
+    {
+      src: '/images/PHOTO-2025-09-14-17-02-49.jpeg',
+      alt: 'Campaign photo'
+    },
+    {
+      src: '/images/PHOTO-2025-09-14-16-58-33.jpeg',
+      alt: 'Campaign photo'
+    },
+    {
+      src: '/images/PHOTO-2025-09-14-17-00-33.jpeg',
+      alt: 'Campaign photo'
+    },
+    {
+      src: '/images/PHOTO-2025-09-14-17-03-50.jpeg',
+      alt: 'Campaign photo'
+    },
+    {
+      src: '/images/PHOTO-2025-09-14-17-04-05.jpeg',
+      alt: 'Campaign photo'
+    }
+  ];
+
   return (
     <main style={isMobile ? styles.contentPageMobile : styles.contentPage}>
       <div style={isMobile ? styles.pageContainerMobile : styles.pageContainer}>
@@ -28,6 +57,10 @@ const AboutPage = () => {
             <p style={isMobile ? styles.contentTextMobile : styles.contentText}>
               Closer to home, I've worked as a rancher across three states, a sheep shearer traveling county to county in Colorado, and today as a construction and handyman worker while living in Boulder. I also hold a Master's in Business Administration from CU Boulder — but I've never been drawn to the corporate lifestyle. My purpose has always been service.
             </p>
+
+            <div style={styles.sliderContainer}>
+              <ImageSlider images={sliderImages} autoplaySpeed={5500} />
+            </div>
           </section>
 
           <section style={styles.contentSection}>
@@ -119,6 +152,10 @@ const styles = {
     lineHeight: '1.8',
     marginBottom: '1rem',
     paddingLeft: '2rem'
+  },
+  sliderContainer: {
+    marginTop: '2rem',
+    marginBottom: '2rem'
   },
 
   // Mobile styles

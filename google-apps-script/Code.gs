@@ -377,16 +377,17 @@ function validateNoMaliciousContent(data) {
 }
 
 /**
- * Enhanced domain validation with referrer checking
+ * Simplified domain validation with trailing dot fix
  */
 function validateDomain(origin, referrer) {
   try {
+    const allowedDomains = ['cinqueforcongress.com', 'localhost'];
+
     const checkDomain = (url) => {
       if (!url) return false;
-      const domain = url.replace(/^https?:\/\//, '').split('/')[0].toLowerCase();
-      return ALLOWED_DOMAINS.some(allowed =>
-        domain === allowed || domain.endsWith('.' + allowed)
-      );
+      // Remove protocol, get domain, remove trailing dot
+      const domain = url.replace(/^https?:\/\//, '').split('/')[0].toLowerCase().replace(/\.$/, '');
+      return allowedDomains.includes(domain);
     };
 
     return checkDomain(origin) || checkDomain(referrer);

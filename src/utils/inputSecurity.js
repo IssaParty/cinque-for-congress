@@ -112,8 +112,15 @@ class InputSecurity {
     // Optional fields
     if (data.phone) {
       sanitizedData.phone = this.sanitizeInput(data.phone, 'phone');
-      if (sanitizedData.phone && !/^[\d\s\-\(\)\+\.]{7,}$/.test(sanitizedData.phone)) {
-        errors.push('Phone number is invalid');
+      if (sanitizedData.phone) {
+        // Remove all non-digit characters to validate
+        const digitsOnly = sanitizedData.phone.replace(/\D/g, '');
+        // US phone numbers: 10 digits (with optional 1 prefix = 11 digits)
+        if (digitsOnly.length !== 10 && digitsOnly.length !== 11) {
+          errors.push('Phone number must be 10 digits (or 11 with country code)');
+        } else if (digitsOnly.length === 11 && !digitsOnly.startsWith('1')) {
+          errors.push('11-digit phone number must start with 1');
+        }
       }
     }
 

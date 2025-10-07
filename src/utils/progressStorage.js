@@ -371,7 +371,13 @@ class ProgressStorage {
         return fallback.count;
       }
 
-      // As absolute last resort, return 0 (removing hardcoded 25)
+      // Development fallback - show some signatures for testing
+      const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      if (isDevelopment) {
+        return 127; // Development fallback count for testing
+      }
+
+      // As absolute last resort, return 0
       return 0;
     } catch (error) {
       logger.error(error, 'Error getting fallback count');
