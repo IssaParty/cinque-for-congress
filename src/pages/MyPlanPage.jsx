@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Header from '../components/layout/Header';
+import Footer from '../components/layout/Footer';
 
 const MyPlanPage = () => {
   const [selectedNode, setSelectedNode] = useState(null);
@@ -264,7 +266,9 @@ const MyPlanPage = () => {
   };
 
   return (
-    <div style={isMobile ? styles.myPlanPageMobile : styles.myPlanPage}>
+    <>
+      <Header />
+      <div style={isMobile ? styles.myPlanPageMobile : styles.myPlanPage}>
       <style>
         {`
           @keyframes glossyShine {
@@ -620,18 +624,9 @@ const MyPlanPage = () => {
         </div>
       </div>
 
-      <div style={styles.ctaSection}>
-        <h2 style={styles.ctaTitle}>Join the Movement</h2>
-        <p style={styles.ctaText}>
-          <span>Believing in </span>
-          <span style={styles.glossyName}>Change</span>
-          <span> is Believing in the people</span>
-        </p>
-        <Link to="/join" style={styles.ctaButton}>
-          Get Involved
-        </Link>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

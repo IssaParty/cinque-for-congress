@@ -1,9 +1,7 @@
 // Secure form submission approach that bypasses CORS issues
 // This uses a hidden iframe method that works with Google Apps Script
 
-import { logger } from './secureLogger.js';
 import { inputSecurity } from './inputSecurity.js';
-import { secureStorage } from './secureStorage.js';
 
 export const formSubmission = {
   /**
@@ -43,13 +41,13 @@ export const formSubmission = {
       // Security validation
       const validation = inputSecurity.validateFormData(formData, formType);
       if (validation.errors.length > 0) {
-        logger.warn('Form validation failed', validation.errors);
+        console.warn('Form validation failed:', validation.errors);
         resolve({ success: false, errors: validation.errors });
         return;
       }
 
       // Rate limiting check
-      const clientId = await secureStorage.getItem('client_id') || 'anonymous';
+      const clientId = localStorage.getItem('client_id') || 'anonymous';
       if (!inputSecurity.checkRateLimit(clientId)) {
         resolve({ success: false, error: 'Too many submissions. Please try again later.' });
         return;
@@ -57,7 +55,7 @@ export const formSubmission = {
 
       // Honeypot validation
       if (!inputSecurity.validateHoneypot(formData.website_url)) {
-        logger.warn('Honeypot triggered - potential bot submission');
+        console.warn('Honeypot triggered - potential bot submission');
         resolve({ success: false, error: 'Submission failed validation' });
         return;
       }
@@ -80,7 +78,7 @@ export const formSubmission = {
       form.style.cssText = 'position:absolute;left:-9999px;width:1px;height:1px;visibility:hidden;';
 
       // Add secure form fields matching backend expectations
-      const sessionId = await secureStorage.getItem('sessionId') || 'unknown';
+      const sessionId = localStorage.getItem('sessionId') || 'unknown';
       const timestamp = Date.now().toString();
 
       // Generate signature for request validation (matches backend expectation)
@@ -90,7 +88,7 @@ export const formSubmission = {
       const browserFingerprint = await generateBrowserFingerprint();
 
       // Calculate form interaction time
-      const formStartTime = await secureStorage.getItem('formStartTime') || Date.now();
+      const formStartTime = parseInt(localStorage.getItem('formStartTime')) || Date.now();
       const formInteractionTime = Date.now() - parseInt(formStartTime);
 
       const fields = {
@@ -233,21 +231,21 @@ export const formSubmission = {
   },
 
   generateSessionId: async () => {
-    let sessionId = await secureStorage.getItem('sessionId');
+    let sessionId = localStorage.getItem('sessionId');
     if (!sessionId) {
       sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-      await secureStorage.setItem('sessionId', sessionId);
+      localStorage.setItem('sessionId', sessionId);
 
       // Also generate a client ID for rate limiting
       const clientId = 'client_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-      await secureStorage.setItem('client_id', clientId);
+      localStorage.setItem('client_id', clientId);
     }
   },
 
   // Track form start time for interaction analysis
   trackFormStart: async () => {
     const startTime = Date.now();
-    await secureStorage.setItem('formStartTime', startTime.toString());
+    localStorage.setItem('formStartTime', startTime.toString());
   },
 
   validateEndorsement: (data) => {

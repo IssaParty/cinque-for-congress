@@ -3,7 +3,6 @@
  * Prevents XSS, injection attacks, and malicious input
  */
 
-import { logger } from './secureLogger.js';
 
 class InputSecurity {
   constructor() {
@@ -156,7 +155,7 @@ class InputSecurity {
     const recentSubmissions = submissions.filter(time => now - time < this.timeWindow);
 
     if (recentSubmissions.length >= this.maxSubmissions) {
-      logger.warn('Rate limit exceeded', { identifier, count: recentSubmissions.length });
+      console.warn('Rate limit exceeded:', { identifier, count: recentSubmissions.length });
       return false;
     }
 
@@ -176,7 +175,7 @@ class InputSecurity {
       crypto.getRandomValues(array);
       return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
     } catch (e) {
-      logger.error(e, 'Failed to generate CSRF token');
+      console.error('Failed to generate CSRF token:', e);
       return 'fallback_' + Date.now() + '_' + Math.random().toString(36);
     }
   }

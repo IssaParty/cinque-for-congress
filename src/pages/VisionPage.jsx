@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Header from '../components/layout/Header';
+import Footer from '../components/layout/Footer';
 
 const VisionPage = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -17,9 +19,11 @@ const VisionPage = () => {
   }, []);
 
   return (
-    <main style={isMobile ? styles.contentPageMobile : styles.contentPage}>
-      <div style={isMobile ? styles.pageContainerMobile : styles.pageContainer}>
-        <h1 style={isMobile ? styles.pageTitleMobile : styles.pageTitle}>Our Vision: A Cleaner, Safer, and Unified Republic</h1>
+    <>
+      <Header />
+      <main style={isMobile ? styles.contentPageMobile : styles.contentPage}>
+        <div style={isMobile ? styles.pageContainerMobile : styles.pageContainer}>
+          <h1 style={isMobile ? styles.pageTitleMobile : styles.pageTitle}>Our Vision: A Cleaner, Safer, and Unified Republic</h1>
         <div style={styles.pageContent}>
           <p style={isMobile ? styles.visionIntroMobile : styles.visionIntro}>
             We believe in a society where people come first — where quality of life matters more than the quality of stocks, and where innovation and community drive progress, not corporate greed. Our mission is simple: break the grip of corporations on every aspect of life, restore civil liberties to the people, and build a path toward direct democracy.
@@ -110,8 +114,10 @@ const VisionPage = () => {
             </Link>
           </div>
         </div>
-      </div>
-    </main>
+        </div>
+      </main>
+      <Footer />
+    </>
   );
 };
 

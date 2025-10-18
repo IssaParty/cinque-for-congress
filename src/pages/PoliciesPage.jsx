@@ -14,7 +14,7 @@ const PoliciesPage = () => {
               and detailed view of our plans for Colorado's 2nd District.
             </p>
             <p style={styles.redirectText}>
-              Our platform covers everything from Free Palestine advocacy to corporate accountability,
+              Our platform covers everything from Justice For Palestine advocacy to corporate accountability,
               Medicare for All, climate action, workers' rights, and much more.
             </p>
             <Link to="/my-plan" style={styles.redirectButton}>

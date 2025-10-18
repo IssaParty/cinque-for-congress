@@ -16,7 +16,7 @@ const AboutPage = () => {
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
-  // Selected campaign photos for the slider
+  // Selected campaign photos for the slider - using original images folder
   const sliderImages = [
     {
       src: '/images/PHOTO-2025-09-14-16-58-19.jpeg',
@@ -127,34 +127,34 @@ const styles = {
     margin: '0 auto'
   },
   pageTitle: {
-    color: 'var(--primary-green)',
+    color: '#0E3A60',
     marginBottom: '2rem',
     fontSize: '2.5rem',
-    fontFamily: 'var(--font-family)'
+    fontFamily: 'Merriweather, serif'
   },
   pageContent: {},
   contentSection: {
     marginBottom: '2rem'
   },
   contentSubtitle: {
-    color: 'var(--secondary-green)',
+    color: '#2E6FB3',
     marginTop: '2rem',
     marginBottom: '1rem',
-    fontFamily: 'var(--font-family)',
+    fontFamily: 'Merriweather, serif',
     fontWeight: '600'
   },
   contentText: {
-    color: 'var(--text-black)',
+    color: '#1a1a1a',
     lineHeight: '1.8',
     marginBottom: '1rem',
-    fontFamily: 'var(--font-family)'
+    fontFamily: 'Open Sans, sans-serif'
   },
   contentList: {
-    color: 'var(--text-black)',
+    color: '#1a1a1a',
     lineHeight: '1.8',
     marginBottom: '1rem',
     paddingLeft: '2rem',
-    fontFamily: 'var(--font-family)'
+    fontFamily: 'Open Sans, sans-serif'
   },
   sliderContainer: {
     marginTop: '2rem',
@@ -173,35 +173,35 @@ const styles = {
     padding: '0 0.5rem'
   },
   pageTitleMobile: {
-    color: 'var(--primary-green)',
+    color: '#0E3A60',
     marginBottom: '1.5rem',
     fontSize: '2rem',
-    fontFamily: 'var(--font-family)',
+    fontFamily: 'Merriweather, serif',
     textAlign: 'center',
     lineHeight: '1.2'
   },
   contentSubtitleMobile: {
-    color: 'var(--secondary-green)',
+    color: '#2E6FB3',
     marginTop: '1.5rem',
     marginBottom: '0.8rem',
-    fontFamily: 'var(--font-family)',
+    fontFamily: 'Merriweather, serif',
     fontSize: '1.3rem',
     fontWeight: '600'
   },
   contentTextMobile: {
-    color: 'var(--text-black)',
+    color: '#1a1a1a',
     lineHeight: '1.7',
     marginBottom: '1rem',
     fontSize: '1rem',
-    fontFamily: 'var(--font-family)'
+    fontFamily: 'Open Sans, sans-serif'
   },
   contentListMobile: {
-    color: 'var(--text-black)',
+    color: '#1a1a1a',
     lineHeight: '1.7',
     marginBottom: '1rem',
     paddingLeft: '1.5rem',
     fontSize: '1rem',
-    fontFamily: 'var(--font-family)'
+    fontFamily: 'Open Sans, sans-serif'
   }
 };
 

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { formSubmission } from '../utils/formSubmission';
-import { progressStorage } from '../utils/progressStorage';
-import { logger } from '../utils/secureLogger';
-import { secureStorage } from '../utils/secureStorage';
+import Header from '../components/layout/Header';
+import Footer from '../components/layout/Footer';
 
 const RoadToCongressPage = () => {
   const [endorsements, setEndorsements] = useState([]);
@@ -10,15 +9,11 @@ const RoadToCongressPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionMessage, setSubmissionMessage] = useState('');
   const [isMobile, setIsMobile] = useState(false);
-  const [currentEndorsements, setCurrentEndorsements] = useState(0);
-  const [isLoadingProgress, setIsLoadingProgress] = useState(true);
 
   // Anti-bot security tracking
   const [formStartTime, setFormStartTime] = useState(null);
   const [humanConfirmed, setHumanConfirmed] = useState(false);
 
-  const endorsementGoal = 1500;
-  const progressPercentage = Math.min((currentEndorsements / endorsementGoal) * 100, 100);
 
   // Enhanced mobile detection for better compatibility
   useEffect(() => {
@@ -43,18 +38,16 @@ const RoadToCongressPage = () => {
       // Initialize anti-bot form timing
       setFormStartTime(Date.now());
 
-      // Load progress count from Google Sheets (persistent across deployments)
-      loadProgressCount();
 
-      // Load existing endorsements from secure storage for display
+      // Load existing endorsements from localStorage for display
       try {
-        const savedEndorsements = await secureStorage.getItem('endorsements');
+        const savedEndorsements = localStorage.getItem('endorsements');
         if (savedEndorsements) {
-          setEndorsements(savedEndorsements || []);
+          setEndorsements(JSON.parse(savedEndorsements) || []);
         }
       } catch (error) {
-        logger.error(error, 'Error loading saved endorsements');
-        secureStorage.removeItem('endorsements');
+        console.error('Error loading saved endorsements:', error);
+        localStorage.removeItem('endorsements');
         setEndorsements([]);
       }
     };
@@ -62,41 +55,6 @@ const RoadToCongressPage = () => {
     initializeApp();
   }, []);
 
-  const loadProgressCount = async (retryCount = 0) => {
-    try {
-      setIsLoadingProgress(true);
-
-      // Add extra delay for mobile devices to ensure proper initialization
-      if (isMobile && retryCount === 0) {
-        await new Promise(resolve => setTimeout(resolve, 1000));
-      }
-
-      const count = await progressStorage.getCurrentCount();
-
-      // Ensure we have a valid number (now completely relies on Google Sheets data)
-      const validCount = typeof count === 'number' && !isNaN(count) ? count : 0;
-      setCurrentEndorsements(validCount);
-      logger.debug('Loaded progress count from Google Sheets:', validCount);
-
-    } catch (error) {
-      logger.error(error, 'Error loading progress count');
-
-      // Retry logic for mobile devices (network issues are more common)
-      if (retryCount < 2 && isMobile) {
-        logger.warn(`Retrying progress load on mobile (attempt ${retryCount + 1})`);
-        setTimeout(() => loadProgressCount(retryCount + 1), 2000 * (retryCount + 1));
-        return;
-      }
-
-      // Final fallback
-      setCurrentEndorsements(0);
-    } finally {
-      // Only stop loading if this isn't a retry
-      if (retryCount < 2) {
-        setIsLoadingProgress(false);
-      }
-    }
-  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -180,19 +138,9 @@ const RoadToCongressPage = () => {
         const updatedEndorsements = [...endorsements, newEndorsement];
         setEndorsements(updatedEndorsements);
 
-        // Save to secure storage for persistence
-        await secureStorage.setItem('endorsements', updatedEndorsements);
+        // Save to localStorage for persistence
+        localStorage.setItem('endorsements', JSON.stringify(updatedEndorsements));
 
-        // Update the progress count from server response or increment locally
-        if (result.count !== undefined) {
-          setCurrentEndorsements(result.count);
-          await progressStorage.setCachedCount(result.count);
-        } else {
-          // If server doesn't return count, increment locally
-          const newCount = currentEndorsements + 1;
-          setCurrentEndorsements(newCount);
-          await progressStorage.setCachedCount(newCount);
-        }
 
         setFormData({ name: '', city: '', zipCode: '', phone: '', email: '' });
         setHumanConfirmed(false); // Reset human confirmation checkbox
@@ -201,7 +149,7 @@ const RoadToCongressPage = () => {
         setSubmissionMessage(result.error || 'There was an error submitting your endorsement. Please try again.');
       }
     } catch (error) {
-      logger.error(error, 'Submission error');
+      console.error('Submission error:', error);
       setSubmissionMessage('There was an error submitting your endorsement. Please try again.');
     } finally {
       setIsSubmitting(false);
@@ -209,7 +157,9 @@ const RoadToCongressPage = () => {
   };
 
   return (
-    <main style={isMobile ? styles.contentPageMobile : styles.contentPage}>
+    <>
+      <Header />
+      <main style={isMobile ? styles.contentPageMobile : styles.contentPage}>
       <div style={isMobile ? styles.pageContainerMobile : styles.pageContainer}>
         <h1 style={isMobile ? styles.pageTitleMobile : styles.pageTitle}>Road to Congress</h1>
         <div style={styles.pageContent}>
@@ -231,37 +181,6 @@ const RoadToCongressPage = () => {
             </div>
           </section>
 
-          {/* Progress Bar */}
-          <section style={styles.progressSection}>
-            <h2 style={isMobile ? styles.progressTitleMobile : styles.progressTitle}>Endorsement Progress</h2>
-            <div style={isMobile ? styles.progressContainerMobile : styles.progressContainer}>
-              <div style={styles.progressBar}>
-                <div
-                  style={{
-                    ...styles.progressFill,
-                    width: `${progressPercentage}%`
-                  }}
-                ></div>
-              </div>
-              <p style={isMobile ? styles.progressTextMobile : styles.progressText}>
-                {isLoadingProgress ?
-                  'Loading progress...' :
-                  `${currentEndorsements} of ${endorsementGoal} signatures (${Math.round(progressPercentage)}%)`
-                }
-              </p>
-
-              {/* Mobile refresh button if progress seems stuck */}
-              {isMobile && (isLoadingProgress || currentEndorsements === 0) && (
-                <button
-                  onClick={() => loadProgressCount(0)}
-                  style={styles.refreshButton}
-                  type="button"
-                >
-                  🔄 Refresh Progress
-                </button>
-              )}
-            </div>
-          </section>
 
           {/* Endorsement Form */}
           <section style={styles.formSection}>
@@ -400,7 +319,9 @@ const RoadToCongressPage = () => {
           </section>
         </div>
       </div>
-    </main>
+      </main>
+      <Footer />
+    </>
   );
 };
 
@@ -523,44 +444,6 @@ const styles = {
     lineHeight: 1
   },
 
-  // Progress Bar Styles
-  progressSection: {
-    backgroundColor: '#ffffff',
-    padding: '2rem',
-    borderRadius: '8px',
-    marginBottom: '2rem',
-    boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
-  },
-  progressTitle: {
-    color: '#1e3a5f',
-    marginBottom: '1rem',
-    fontFamily: 'Arial, sans-serif',
-    fontSize: '1.5rem',
-    textAlign: 'center'
-  },
-  progressContainer: {
-    width: '100%'
-  },
-  progressBar: {
-    width: '100%',
-    height: '30px',
-    backgroundColor: '#e0e0e0',
-    borderRadius: '15px',
-    overflow: 'hidden',
-    marginBottom: '0.5rem'
-  },
-  progressFill: {
-    height: '100%',
-    backgroundColor: '#2d5016',
-    transition: 'width 0.3s ease',
-    borderRadius: '15px'
-  },
-  progressText: {
-    textAlign: 'center',
-    color: '#4a4a4a',
-    fontWeight: 'bold',
-    fontSize: '1.1rem'
-  },
 
   // Form Styles
   formSection: {
@@ -790,22 +673,6 @@ const styles = {
     color: '#4a4a4a',
     lineHeight: '1.7',
     marginBottom: '1rem',
-    fontSize: '1rem'
-  },
-  progressTitleMobile: {
-    color: '#1e3a5f',
-    marginBottom: '1rem',
-    fontFamily: 'Arial, sans-serif',
-    fontSize: '1.3rem',
-    textAlign: 'center'
-  },
-  progressContainerMobile: {
-    width: '100%'
-  },
-  progressTextMobile: {
-    textAlign: 'center',
-    color: '#4a4a4a',
-    fontWeight: 'bold',
     fontSize: '1rem'
   },
   formDescriptionMobile: {

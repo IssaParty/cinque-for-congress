@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { formSubmission } from '../utils/formSubmission';
-import { logger } from '../utils/secureLogger';
+import Header from '../components/layout/Header';
+import Footer from '../components/layout/Footer';
 
 const JoinPage = () => {
   const [formData, setFormData] = useState({
     name: '',
     city: '',
     zipCode: '',
-    phone: '',
     email: '',
     website_url: '' // Honeypot field
   });
@@ -64,32 +64,9 @@ const JoinPage = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
-    if (name === 'phone') {
-      // Format phone number as user types
-      const formatted = formatPhoneNumber(value);
-      setFormData(prev => ({ ...prev, [name]: formatted }));
-    } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
-    }
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  // Format phone number to (XXX) XXX-XXXX
-  const formatPhoneNumber = (value) => {
-    // Remove all non-digit characters
-    const digits = value.replace(/\D/g, '');
-
-    // Limit to 11 digits max (country code + 10 digits)
-    const limited = digits.substring(0, 11);
-
-    // Format based on length
-    if (limited.length === 0) return '';
-    if (limited.length <= 3) return limited;
-    if (limited.length <= 6) return `(${limited.slice(0, 3)}) ${limited.slice(3)}`;
-    if (limited.length <= 10) return `(${limited.slice(0, 3)}) ${limited.slice(3, 6)}-${limited.slice(6)}`;
-    // Handle 11 digits (country code)
-    return `+${limited.slice(0, 1)} (${limited.slice(1, 4)}) ${limited.slice(4, 7)}-${limited.slice(7)}`;
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -124,7 +101,6 @@ const JoinPage = () => {
         name: formData.name.trim(),
         city: formData.city.trim(),
         zipCode: formData.zipCode.trim(),
-        phone: formData.phone.trim(),
         email: formData.email.trim(),
         website_url: formData.website_url, // Honeypot field
         mouseEvents: JSON.stringify(mouseEvents),
@@ -133,7 +109,7 @@ const JoinPage = () => {
       }, 'join_us');
 
       if (result.success) {
-        setFormData({ name: '', city: '', zipCode: '', phone: '', email: '', website_url: '' });
+        setFormData({ name: '', city: '', zipCode: '', email: '', website_url: '' });
         setMouseEvents([]); // Clear mouse events
         setSubmissionMessage('Thank you for joining our campaign! Your submission has been recorded and we will be in touch soon with volunteer opportunities.');
 
@@ -148,7 +124,7 @@ const JoinPage = () => {
         setSubmissionMessage(result.error || 'There was an error submitting your information. Please try again.');
       }
     } catch (error) {
-      logger.error(error, 'Submission error');
+      console.error('Submission error:', error);
       setSubmissionMessage('There was an error submitting your information. Please try again.');
     } finally {
       setIsSubmitting(false);
@@ -156,7 +132,9 @@ const JoinPage = () => {
   };
 
   return (
-    <main style={isMobile ? styles.formPageMobile : styles.formPage}>
+    <>
+      <Header />
+      <main style={isMobile ? styles.formPageMobile : styles.formPage}>
       <div style={isMobile ? styles.formContainerMobile : styles.formContainer}>
         <h1 style={isMobile ? styles.formTitleMobile : styles.formTitle}>Join Our Campaign</h1>
         <p style={isMobile ? styles.formIntroMobile : styles.formIntro}>
@@ -205,17 +183,6 @@ const JoinPage = () => {
             />
           </div>
 
-          <div style={styles.formGroup}>
-            <label style={isMobile ? styles.formLabelMobile : styles.formLabel}>Phone Number</label>
-            <input
-              type="tel"
-              name="phone"
-              value={formData.phone}
-              onChange={handleInputChange}
-              style={isMobile ? styles.formInputMobile : styles.formInput}
-              placeholder="Enter your phone number (optional)"
-            />
-          </div>
 
           <div style={styles.formGroup}>
             <label style={isMobile ? styles.formLabelMobile : styles.formLabel}>Email Address *</label>
@@ -276,7 +243,7 @@ const JoinPage = () => {
             </div>
             <div style={isMobile ? styles.involvementItemMobile : styles.involvementItem}>
               <div style={styles.involvementIcon}>📞</div>
-              <h3 style={isMobile ? styles.involvementTitleMobile : styles.involvementTitle}>Phone Banking</h3>
+              <h3 style={isMobile ? styles.involvementTitleMobile : styles.involvementTitle}>Community Outreach</h3>
               <p style={isMobile ? styles.involvementTextMobile : styles.involvementText}>Make calls to potential voters from home</p>
             </div>
             <div style={isMobile ? styles.involvementItemMobile : styles.involvementItem}>
@@ -302,7 +269,9 @@ const JoinPage = () => {
           </div>
         </section>
       </div>
-    </main>
+      </main>
+      <Footer />
+    </>
   );
 };
 

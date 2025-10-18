@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import Layout from './components/layout/Layout';
-import Analytics from './components/Analytics';
+import './App.css';
+
+// Import components
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
-import PoliciesPage from './pages/PoliciesPage';
 import VisionPage from './pages/VisionPage';
 import MyPlanPage from './pages/MyPlanPage';
 import JoinPage from './pages/JoinPage';
-import RequestEventPage from './pages/RequestEventPage';
-import PressPage from './pages/PressPage';
 import ExpendituresPage from './pages/ExpendituresPage';
 import RoadToCongressPage from './pages/RoadToCongressPage';
+import RequestEventPage from './pages/RequestEventPage';
+import Layout from './components/Layout';
+import Breadcrumb from './components/Breadcrumb';
 
 // Component to scroll to top on route change
 const ScrollToTop = () => {
@@ -24,24 +25,108 @@ const ScrollToTop = () => {
   return null;
 };
 
+// Placeholder components for other pages
+const PageWrapper = ({ title, children }) => (
+  <Layout>
+    <Breadcrumb />
+    <div className="container-custom py-16">
+      <h1 className="text-3xl font-heading font-bold text-navy mb-6">{title}</h1>
+      {children}
+    </div>
+  </Layout>
+);
+
+const MissionPage = () => (
+  <PageWrapper title="Our Mission">
+    <p className="text-gray-700 leading-relaxed">
+      Our mission content will go here. This is a placeholder page.
+    </p>
+  </PageWrapper>
+);
+
+const LeadershipPage = () => (
+  <PageWrapper title="Leadership">
+    <p className="text-gray-700 leading-relaxed">
+      Leadership content will go here. This is a placeholder page.
+    </p>
+  </PageWrapper>
+);
+
+const ProgramsPage = () => (
+  <PageWrapper title="Programs">
+    <p className="text-gray-700 leading-relaxed">
+      Programs content will go here. This is a placeholder page.
+    </p>
+  </PageWrapper>
+);
+
+const MediaPage = () => (
+  <PageWrapper title="Media">
+    <p className="text-gray-700 leading-relaxed">
+      Media content will go here. This is a placeholder page.
+    </p>
+  </PageWrapper>
+);
+
+const ResourcesPage = () => (
+  <PageWrapper title="Resources">
+    <p className="text-gray-700 leading-relaxed">
+      Resources content will go here. This is a placeholder page.
+    </p>
+  </PageWrapper>
+);
+
+const ContactPage = () => (
+  <PageWrapper title="Contact">
+    <p className="text-gray-700 leading-relaxed">
+      Contact content will go here. This is a placeholder page.
+    </p>
+  </PageWrapper>
+);
+
 const App = () => {
   return (
     <Router>
       <ScrollToTop />
-      <Analytics />
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<HomePage />} />
-          <Route path="about" element={<AboutPage />} />
-          <Route path="policies" element={<PoliciesPage />} />
-          <Route path="vision" element={<VisionPage />} />
-          <Route path="my-plan" element={<MyPlanPage />} />
-          <Route path="expenditures" element={<ExpendituresPage />} />
-          <Route path="road-to-congress" element={<RoadToCongressPage />} />
-          <Route path="join" element={<JoinPage />} />
-          <Route path="request-event" element={<RequestEventPage />} />
-          <Route path="press" element={<PressPage />} />
-        </Route>
+        {/* Main Routes */}
+        <Route path="/" element={<HomePage />} />
+        <Route path="/about" element={
+          <Layout>
+            <Breadcrumb />
+            <AboutPage />
+          </Layout>
+        } />
+        <Route path="/vision" element={<VisionPage />} />
+        <Route path="/my-plan" element={<MyPlanPage />} />
+        <Route path="/join" element={<JoinPage />} />
+        <Route path="/expenditures" element={<ExpendituresPage />} />
+        <Route path="/road-to-congress" element={<RoadToCongressPage />} />
+        <Route path="/request-event" element={<RequestEventPage />} />
+        <Route path="/about/mission" element={<MissionPage />} />
+        <Route path="/about/leadership" element={<LeadershipPage />} />
+        <Route path="/programs" element={<ProgramsPage />} />
+        <Route path="/programs/community-support" element={<ProgramsPage />} />
+        <Route path="/programs/volunteering" element={<ProgramsPage />} />
+        <Route path="/media" element={<MediaPage />} />
+        <Route path="/media/press-releases" element={<MediaPage />} />
+        <Route path="/media/news" element={<MediaPage />} />
+        <Route path="/resources" element={<ResourcesPage />} />
+        <Route path="/resources/forms" element={<ResourcesPage />} />
+        <Route path="/resources/guides" element={<ResourcesPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+
+        {/* Catch all route */}
+        <Route path="*" element={
+          <PageWrapper title="Page Not Found">
+            <p className="text-gray-700 leading-relaxed mb-8">
+              The page you're looking for doesn't exist.
+            </p>
+            <a href="/" className="btn-primary">
+              Return Home
+            </a>
+          </PageWrapper>
+        } />
       </Routes>
     </Router>
   );

@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null);
+  const location = useLocation();
+
 
   const toggleMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -14,11 +17,14 @@ const Header = () => {
     window.scrollTo(0, 0);
   };
 
+
   // Check screen size and update mobile state
   useEffect(() => {
     const checkScreenSize = () => {
-      setIsMobile(window.innerWidth <= 1024);
-      if (window.innerWidth > 1024) {
+      const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      const isSmallScreen = window.innerWidth <= 768;
+      setIsMobile(isMobileDevice || isSmallScreen);
+      if (window.innerWidth > 768) {
         setMobileMenuOpen(false);
       }
     };
@@ -29,7 +35,7 @@ const Header = () => {
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
-  // Close menu when clicking outside
+  // Close mobile menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (mobileMenuOpen && !event.target.closest('nav')) {
@@ -39,7 +45,10 @@ const Header = () => {
 
     if (mobileMenuOpen) {
       document.addEventListener('click', handleClickOutside);
-      document.body.style.overflow = 'hidden'; // Prevent scroll when menu is open
+    }
+
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
@@ -70,12 +79,152 @@ const Header = () => {
           }
 
           .mobile-menu-link:hover {
-            background-color: #f8f9fa !important;
-            border-left-color: #d4a017 !important;
+            background-color: #F5F5F5 !important;
+            border-left-color: #2E6FB3 !important;
           }
 
           .mobile-donate-btn:hover {
-            background-color: #b8901a !important;
+            background-color: #1e5a8a !important;
+          }
+
+          /* Simplified dropdown implementation */
+          .dropdown-wrapper {
+            position: relative;
+            display: inline-block;
+            list-style: none;
+          }
+
+          .dropdown-toggle {
+            background-color: #ffffff;
+            border: 1px solid #2E6FB3;
+            border-radius: 4px;
+            color: #0E3A60;
+            cursor: pointer;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            text-align: center;
+            white-space: nowrap;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.2s ease;
+          }
+
+          /* Ensure Link elements inherit the button styling */
+          a.dropdown-toggle {
+            background-color: #ffffff;
+            border: 1px solid #2E6FB3;
+            border-radius: 4px;
+            color: #0E3A60;
+            cursor: pointer;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            text-align: center;
+            white-space: nowrap;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.2s ease;
+          }
+
+          .dropdown-toggle:hover,
+          .dropdown-toggle:focus,
+          a.dropdown-toggle:hover,
+          a.dropdown-toggle:focus {
+            background-color: #f0f4f8;
+            color: #0E3A60;
+          }
+
+          .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #ffffff;
+            border: 1px solid #2E6FB3;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            min-width: 180px;
+            z-index: 10000;
+            padding: 0.5rem 0;
+            margin-top: 2px;
+            display: none;
+          }
+
+          /* Show dropdown on hover - simplified approach */
+          .dropdown-wrapper:hover .dropdown-content {
+            display: block !important;
+          }
+
+          .dropdown-item {
+            display: block !important;
+            padding: 0.75rem 1rem !important;
+            color: #0E3A60 !important;
+            text-decoration: none !important;
+            font-size: 0.8rem !important;
+            font-family: 'Open Sans', sans-serif !important;
+            white-space: nowrap !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            transition: background-color 0.15s ease !important;
+          }
+
+          .dropdown-item:hover,
+          .dropdown-item:focus {
+            background-color: #f0f4f8 !important;
+            color: #0E3A60 !important;
+            text-decoration: none !important;
+          }
+
+          /* Standalone donate button styling */
+          .donate-btn {
+            background-color: #2E6FB3 !important;
+            color: #ffffff !important;
+            padding: 0.6rem 1.2rem !important;
+            text-decoration: none !important;
+            font-weight: 600 !important;
+            border-radius: 4px !important;
+            font-family: 'Open Sans', sans-serif !important;
+            font-size: 0.9rem !important;
+            transition: all 0.3s ease !important;
+            border: 2px solid #2E6FB3 !important;
+            display: inline-block !important;
+            white-space: nowrap !important;
+            text-align: center !important;
+          }
+
+          .donate-btn:hover,
+          .donate-btn:focus {
+            background-color: #1e5a8a !important;
+            border-color: #1e5a8a !important;
+            color: #ffffff !important;
+            text-decoration: none !important;
+            transform: translateY(-1px) !important;
+            box-shadow: 0 2px 8px rgba(46, 111, 179, 0.3) !important;
+          }
+
+          /* Mobile - dropdowns handled by mobile menu instead */
+          @media (max-width: 768px) {
+            .dropdown-wrapper {
+              display: none;
+            }
+
+            /* Ensure mobile menu doesn't overflow */
+            .mobile-menu-link {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              line-height: 1.4;
+            }
+
+            /* Fix mobile layout boundaries */
+            .mobile-dropdown {
+              width: 100% !important;
+              left: 0 !important;
+              right: 0 !important;
+              max-width: 100vw !important;
+              box-sizing: border-box !important;
+            }
           }
         `}
       </style>
@@ -83,13 +232,11 @@ const Header = () => {
         <nav style={styles.nav}>
         <div style={styles.logoContainer}>
           <div style={styles.logoIcon}>
-            <svg width="40" height="40" viewBox="0 0 40 40" style={styles.logoSvg}>
-              <rect x="0" y="0" width="40" height="40" fill="#4A90E2" rx="4"/>
-              <rect x="5" y="5" width="12" height="12" fill="#7ED321"/>
-              <rect x="23" y="5" width="12" height="12" fill="#F5A623"/>
-              <rect x="5" y="23" width="12" height="12" fill="#D0021B"/>
-              <rect x="23" y="23" width="12" height="12" fill="#50E3C2"/>
-              <polygon points="14,14 26,14 26,26 14,26" fill="#BD10E0"/>
+            <svg width="60" height="40" viewBox="0 0 60 40" style={styles.logoSvg}>
+              {/* Colorado state outline */}
+              <path d="M5 8 L55 8 L55 32 L5 32 Z" fill="#2E6FB3" stroke="#0E3A60" strokeWidth="2"/>
+              <rect x="8" y="11" width="44" height="18" fill="#0E3A60"/>
+              <text x="30" y="22" textAnchor="middle" fill="white" fontSize="8" fontFamily="Arial">CO</text>
             </svg>
           </div>
           <Link
@@ -97,53 +244,77 @@ const Header = () => {
             onClick={() => setMobileMenuOpen(false)}
             style={styles.logo}
           >
-            CINQUE <span style={{color: '#d4a017'}}>MASON</span>
+            <div style={styles.logoText}>
+              <div style={styles.logoName}>CINQUE MASON</div>
+              <div style={styles.logoTitle}>Congressional Candidate for Colorado District 2</div>
+            </div>
           </Link>
         </div>
         {/* Desktop Navigation */}
         {!isMobile && (
           <>
             <ul style={styles.navMenu}>
-              <li style={styles.navItem}>
-                <Link to="/" style={styles.navLink}>Home</Link>
+              {/* Home - only show when not on home page */}
+              {location.pathname !== '/' && (
+                <li style={styles.navItem}>
+                  <Link to="/" style={styles.navLink}>Home</Link>
+                </li>
+              )}
+
+              {/* About Me Dropdown */}
+              <li className="dropdown-wrapper"
+                  onMouseEnter={() => setActiveDropdown('about')}
+                  onMouseLeave={() => setActiveDropdown(null)}>
+                <Link to="/about" className="dropdown-toggle">
+                  About Me ▼
+                </Link>
+                <div className="dropdown-content" style={{ display: activeDropdown === 'about' ? 'block' : 'none' }}>
+                  <Link to="/about" className="dropdown-item">About Me</Link>
+                  <Link to="/my-plan" className="dropdown-item">My Plan</Link>
+                  <Link to="/vision" className="dropdown-item">Vision</Link>
+                </div>
               </li>
-              <li style={styles.navItem}>
-                <Link to="/about" style={styles.navLink}>About</Link>
+
+              {/* The Campaign Dropdown */}
+              <li className="dropdown-wrapper"
+                  onMouseEnter={() => setActiveDropdown('campaign')}
+                  onMouseLeave={() => setActiveDropdown(null)}>
+                <Link to="/expenditures" className="dropdown-toggle">
+                  The Campaign ▼
+                </Link>
+                <div className="dropdown-content" style={{ display: activeDropdown === 'campaign' ? 'block' : 'none' }}>
+                  <Link to="/expenditures" className="dropdown-item">Campaign Expenditures</Link>
+                  <a href="https://secure.actblue.com/donate/cd2merch" target="_blank" rel="noopener noreferrer" className="dropdown-item">Shop</a>
+                  <Link to="/road-to-congress" className="dropdown-item">Road to Congress</Link>
+                </div>
               </li>
-              <li style={styles.navItem}>
-                <Link to="/my-plan" style={styles.navLink}>My Plan</Link>
-              </li>
-              <li style={styles.navItem}>
-                <Link to="/vision" style={styles.navLink}>Vision</Link>
-              </li>
-              <li style={styles.navItem}>
-                <Link to="/expenditures" style={styles.navLink}>Campaign Expenditures</Link>
-              </li>
-              <li style={styles.navItem}>
-                <a
-                  href="https://secure.actblue.com/donate/cd2merch"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={styles.navLink}
-                >
-                  Shop
-                </a>
-              </li>
-              <li style={styles.navItem}>
-                <Link to="/road-to-congress" style={styles.navLink}>Road to Congress</Link>
-              </li>
-              <li style={styles.navItem}>
-                <Link to="/join" style={styles.navLink}>Join Us</Link>
+
+              {/* Get Involved Dropdown */}
+              <li className="dropdown-wrapper"
+                  onMouseEnter={() => setActiveDropdown('involved')}
+                  onMouseLeave={() => setActiveDropdown(null)}>
+                <Link to="/join" className="dropdown-toggle">
+                  Get Involved ▼
+                </Link>
+                <div className="dropdown-content" style={{ display: activeDropdown === 'involved' ? 'block' : 'none' }}>
+                  <Link to="/join" className="dropdown-item">Volunteer</Link>
+                  <a href="https://secure.actblue.com/donate/cinqueforcongress" target="_blank" rel="noopener noreferrer" className="dropdown-item">Donate</a>
+                </div>
               </li>
             </ul>
-            <a
-              href="https://secure.actblue.com/donate/cinqueforcongress"
-              style={styles.donateBtn}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              DONATE
-            </a>
+
+            {/* Standalone Donate Button - Far Right */}
+            <div style={styles.donateContainer}>
+              <a
+                href="https://secure.actblue.com/donate/cinqueforcongress"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={styles.donateBtn}
+                className="donate-btn"
+              >
+                Donate
+              </a>
+            </div>
           </>
         )}
 
@@ -164,8 +335,9 @@ const Header = () => {
 
       {/* Mobile Dropdown Menu */}
       {isMobile && mobileMenuOpen && (
-        <div style={styles.mobileDropdown}>
+        <div style={styles.mobileDropdown} className="mobile-dropdown">
           <ul style={styles.mobileMenu}>
+            {/* Home - always show in mobile */}
             <li style={styles.mobileMenuItem}>
               <Link
                 to="/"
@@ -176,6 +348,8 @@ const Header = () => {
                 Home
               </Link>
             </li>
+
+            {/* About Me Section */}
             <li style={styles.mobileMenuItem}>
               <Link
                 to="/about"
@@ -183,7 +357,7 @@ const Header = () => {
                 style={styles.mobileMenuLink}
                 className="mobile-menu-link"
               >
-                About
+                About Me
               </Link>
             </li>
             <li style={styles.mobileMenuItem}>
@@ -206,6 +380,8 @@ const Header = () => {
                 Vision
               </Link>
             </li>
+
+            {/* The Campaign Section */}
             <li style={styles.mobileMenuItem}>
               <Link
                 to="/expenditures"
@@ -238,6 +414,8 @@ const Header = () => {
                 Road to Congress
               </Link>
             </li>
+
+            {/* Get Involved Section */}
             <li style={styles.mobileMenuItem}>
               <Link
                 to="/join"
@@ -245,7 +423,7 @@ const Header = () => {
                 style={styles.mobileMenuLink}
                 className="mobile-menu-link"
               >
-                Join Us
+                Volunteer
               </Link>
             </li>
             <li style={styles.mobileMenuItem}>
@@ -257,7 +435,7 @@ const Header = () => {
                 className="mobile-donate-btn"
                 onClick={handleMobileNavClick}
               >
-                DONATE
+                Donate
               </a>
             </li>
           </ul>
@@ -274,7 +452,8 @@ const styles = {
     boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
     position: 'sticky',
     top: 0,
-    zIndex: 1000
+    zIndex: 1000,
+    borderBottom: '1px solid #D9D9D9'
   },
   nav: {
     width: '100%',
@@ -296,11 +475,27 @@ const styles = {
     display: 'block'
   },
   logo: {
-    fontSize: '1.5rem',
-    fontWeight: '700',
-    color: '#2d5016',
     textDecoration: 'none',
-    fontFamily: 'Arial, sans-serif'
+    fontFamily: 'Merriweather, serif'
+  },
+  logoText: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start'
+  },
+  logoName: {
+    fontSize: '1.8rem',
+    fontWeight: '700',
+    color: '#0E3A60',
+    lineHeight: '1.1',
+    letterSpacing: '1px'
+  },
+  logoTitle: {
+    fontSize: '0.9rem',
+    fontWeight: '600',
+    color: '#2E6FB3',
+    letterSpacing: '0.5px',
+    marginTop: '2px'
   },
   navMenu: {
     display: 'flex',
@@ -314,6 +509,12 @@ const styles = {
     flexWrap: 'nowrap',
     overflow: 'hidden'
   },
+  donateContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    flexShrink: 0,
+    marginLeft: '2rem'
+  },
   navMenuActive: {
     display: 'flex',
     position: 'absolute',
@@ -324,35 +525,85 @@ const styles = {
     flexDirection: 'column',
     padding: '1rem',
     boxShadow: '0 5px 15px rgba(0,0,0,0.1)',
-    borderTop: '2px solid #d4a017'
+    borderTop: '2px solid #2E6FB3'
   },
   navItem: {
     listStyle: 'none'
   },
+
+  // New Simple Dropdown Styles
+  dropdownWrapper: {
+    listStyle: 'none',
+    position: 'relative',
+    display: 'inline-block'
+  },
+  dropdownToggle: {
+    textDecoration: 'none',
+    color: '#0E3A60',
+    fontWeight: '500',
+    fontSize: '0.85rem',
+    fontFamily: 'Open Sans, sans-serif',
+    cursor: 'pointer',
+    padding: '0.5rem 0.8rem',
+    border: '1px solid #2E6FB3',
+    borderRadius: '4px',
+    whiteSpace: 'nowrap',
+    textAlign: 'center',
+    backgroundColor: '#ffffff',
+    transition: 'all 0.3s ease'
+  },
+  dropdownContent: {
+    position: 'absolute',
+    top: 'calc(100% + 3px)',
+    left: '0',
+    backgroundColor: '#ffffff',
+    border: '1px solid #2E6FB3',
+    borderRadius: '4px',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+    minWidth: '180px',
+    zIndex: 9999,
+    padding: '0.5rem 0',
+    display: 'block !important',
+    visibility: 'visible !important',
+    opacity: '1 !important',
+    transform: 'translateY(0)',
+    transition: 'all 0.2s ease-in-out'
+  },
+  dropdownItem: {
+    display: 'block',
+    padding: '0.5rem 1rem',
+    color: '#0E3A60',
+    textDecoration: 'none',
+    fontSize: '0.8rem',
+    fontFamily: 'Open Sans, sans-serif',
+    transition: 'background-color 0.2s ease',
+    whiteSpace: 'nowrap',
+    borderBottom: 'none'
+  },
   navLink: {
     textDecoration: 'none',
-    color: '#1a1a1a',
+    color: '#0E3A60',
     fontWeight: '500',
     fontSize: '0.85rem',
     transition: 'all 0.3s',
-    fontFamily: 'Arial, sans-serif',
+    fontFamily: 'Open Sans, sans-serif',
     cursor: 'pointer',
     padding: '0.5rem 0.8rem',
-    border: '1px solid #d4a017',
+    border: '1px solid #2E6FB3',
     borderRadius: '4px',
     display: 'inline-block',
     whiteSpace: 'nowrap',
     textAlign: 'center'
   },
   donateBtn: {
-    backgroundColor: '#d4a017',
-    color: '#1e3a5f',
+    backgroundColor: '#2E6FB3',
+    color: '#ffffff',
     padding: '0.6rem 1.2rem',
     textDecoration: 'none',
     fontWeight: '600',
     transition: 'all 0.3s',
     borderRadius: '4px',
-    fontFamily: 'Arial, sans-serif',
+    fontFamily: 'Open Sans, sans-serif',
     flexShrink: 0,
     fontSize: '0.9rem'
   },
@@ -368,7 +619,7 @@ const styles = {
   menuToggleSpan: {
     width: '25px',
     height: '3px',
-    backgroundColor: '#2d5016',
+    backgroundColor: '#0E3A60',
     margin: '3px 0',
     transition: 'all 0.3s ease',
     display: 'block',
@@ -382,16 +633,19 @@ const styles = {
     right: 0,
     backgroundColor: '#ffffff',
     boxShadow: '0 8px 25px rgba(0,0,0,0.15)',
-    borderTop: '2px solid #d4a017',
+    borderTop: '2px solid #2E6FB3',
     zIndex: 1000,
-    animation: 'slideDown 0.3s ease-out'
+    animation: 'slideDown 0.3s ease-out',
+    maxWidth: '100vw',
+    overflow: 'hidden'
   },
   mobileMenu: {
     listStyle: 'none',
     margin: 0,
     padding: '1rem 0',
-    maxHeight: 'calc(100vh - 80px)',
-    overflowY: 'auto'
+    maxHeight: 'calc(100vh - 120px)',
+    overflowY: 'auto',
+    overflowX: 'hidden'
   },
   mobileMenuItem: {
     listStyle: 'none',
@@ -401,12 +655,16 @@ const styles = {
     display: 'block',
     padding: '1rem 1.5rem',
     textDecoration: 'none',
-    color: '#1a1a1a',
+    color: '#0E3A60',
     fontWeight: '500',
     fontSize: '1rem',
-    fontFamily: 'Arial, sans-serif',
+    fontFamily: 'Open Sans, sans-serif',
     transition: 'all 0.3s ease',
-    borderLeft: '4px solid transparent'
+    borderLeft: '4px solid transparent',
+    wordWrap: 'break-word',
+    whiteSpace: 'normal',
+    maxWidth: '100%',
+    boxSizing: 'border-box'
   },
   mobileDonateBtnLink: {
     display: 'block',
@@ -415,12 +673,16 @@ const styles = {
     color: '#ffffff',
     fontWeight: '700',
     fontSize: '1rem',
-    fontFamily: 'Arial, sans-serif',
-    backgroundColor: '#d4a017',
+    fontFamily: 'Open Sans, sans-serif',
+    backgroundColor: '#2E6FB3',
     margin: '1rem 1.5rem',
     borderRadius: '6px',
     textAlign: 'center',
-    transition: 'all 0.3s ease'
+    transition: 'all 0.3s ease',
+    wordWrap: 'break-word',
+    whiteSpace: 'normal',
+    maxWidth: 'calc(100% - 3rem)',
+    boxSizing: 'border-box'
   }
 };
 

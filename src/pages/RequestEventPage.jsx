@@ -1,8 +1,12 @@
 import React from 'react';
+import Header from '../components/layout/Header';
+import Footer from '../components/layout/Footer';
 
 const RequestEventPage = () => {
   return (
-    <main style={styles.formPage}>
+    <>
+      <Header />
+      <main style={styles.formPage}>
       <div style={styles.formContainer}>
         <h1 style={styles.formTitle}>Request an Event</h1>
         <p style={styles.formIntro}>Invite Cinque Mason to speak at your event or organize a campaign gathering</p>
@@ -19,14 +23,16 @@ const RequestEventPage = () => {
             <li>Event details and special requests</li>
           </ul>
           <a
-            href="mailto:info@cinqueforcongress.com?subject=An Event Has Been Requested&body=Organizer Name:%0D%0AOrganization:%0D%0AEmail:%0D%0APhone:%0D%0AEvent Type:%0D%0AProposed Date:%0D%0AExpected Attendance:%0D%0AVenue:%0D%0AEvent Details:"
+            href="mailto:info@cinqueforcongress.com?subject=An Event Has Been Requested&body=Organizer Name:%0D%0AOrganization:%0D%0AEmail:%0D%0AEvent Type:%0D%0AProposed Date:%0D%0AExpected Attendance:%0D%0AVenue:%0D%0AEvent Details:"
             style={styles.btnPrimary}
           >
             Email Event Request
           </a>
         </div>
       </div>
-    </main>
+      </main>
+      <Footer />
+    </>
   );
 };
 
