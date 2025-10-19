@@ -53,9 +53,8 @@ const Header = () => {
   // Check screen size and update mobile state
   useEffect(() => {
     const checkScreenSize = () => {
-      const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
       const isSmallScreen = window.innerWidth <= 768;
-      setIsMobile(isMobileDevice || isSmallScreen);
+      setIsMobile(isSmallScreen);
       if (window.innerWidth > 768) {
         setMobileMenuOpen(false);
       }
