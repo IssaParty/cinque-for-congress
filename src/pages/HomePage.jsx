@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ImageSlider from '../components/ImageSlider';
-import TwitterEmbed from '../components/TwitterEmbed';
-import FacebookEmbed from '../components/FacebookEmbed';
+import SocialMediaFeed from '../components/SocialMediaFeed';
 
 const HomePage = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -196,7 +195,7 @@ const HomePage = () => {
                 <div style={styles.sidebarSection}>
                   <h3 style={styles.sidebarTitle}>Latest from Twitter</h3>
                   <div style={styles.sidebarContent}>
-                    <TwitterEmbed username="CinqueForCD2" tweetLimit={2} />
+                    <SocialMediaFeed platform="twitter" username="CinqueForCD2" postCount={2} />
                     <div style={styles.followSection}>
                       <a
                         href="https://twitter.com/CinqueForCD2"
@@ -214,10 +213,7 @@ const HomePage = () => {
                 <div style={styles.sidebarSection}>
                   <h3 style={styles.sidebarTitle}>Latest from Facebook</h3>
                   <div style={styles.sidebarContent}>
-                    <FacebookEmbed
-                      pageUrl="https://www.facebook.com/share/17P8SZ2EaP/?mibextid=wwXIfr"
-                      height={350}
-                    />
+                    <SocialMediaFeed platform="facebook" username="CinqueMasonForCongress" postCount={2} />
                     <div style={styles.followSection}>
                       <a
                         href="https://www.facebook.com/share/17P8SZ2EaP/?mibextid=wwXIfr"
