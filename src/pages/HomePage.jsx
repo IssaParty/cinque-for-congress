@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ImageSlider from '../components/ImageSlider';
-import SocialMediaFeed from '../components/SocialMediaFeed';
 
 const HomePage = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -129,50 +128,52 @@ const HomePage = () => {
                     {/* Latest Blog Posts */}
                     <div style={styles.blogPosts}>
                       <article style={styles.blogPost}>
-                        <h4 style={styles.blogPostTitle}>Fighting for Working Families in Congressional District 2</h4>
-                        <p style={styles.blogPostDate}>October 18, 2025</p>
+                        <h4 style={styles.blogPostTitle}>
+                          <a
+                            href="https://cinquemason4cd2.substack.com/p/why-im-running-to-return-power-to"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={styles.blogPostTitleLink}
+                          >
+                            Why I'm Running: To Return Power to the People
+                          </a>
+                        </h4>
+                        <p style={styles.blogPostDate}>October 06, 2025</p>
                         <p style={styles.blogPostExcerpt}>
-                          Our campaign is built on the principle that every working family deserves access to quality healthcare,
-                          affordable housing, and economic opportunities. Here's our plan to deliver real change...
+                          Cinque Mason is challenging incumbent Joe Neguse in the Democratic primary to restore democracy and challenge corporate control. His platform focuses on pro-union, pro-environment, anti-corruption policies that support workers, families, and marginalized communities while dismantling corporate monopolies.
                         </p>
                         <div style={styles.blogPostTags}>
-                          <span style={styles.blogTag}>Healthcare</span>
-                          <span style={styles.blogTag}>Economy</span>
-                          <span style={styles.blogTag}>Policy</span>
+                          <span style={styles.blogTag}>Democracy</span>
+                          <span style={styles.blogTag}>Anti-Corruption</span>
+                          <span style={styles.blogTag}>Workers Rights</span>
                         </div>
                       </article>
 
                       <article style={styles.blogPost}>
-                        <h4 style={styles.blogPostTitle}>Justice For Palestine: A Moral Imperative</h4>
-                        <p style={styles.blogPostDate}>October 15, 2025</p>
+                        <h4 style={styles.blogPostTitle}>
+                          <a
+                            href="https://cinquemason4cd2.substack.com/p/dc-is-occupied-we-must-be-the-ones"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={styles.blogPostTitleLink}
+                          >
+                            DC is occupied, we must be the ones to fight back
+                          </a>
+                        </h4>
+                        <p style={styles.blogPostDate}>October 06, 2025</p>
                         <p style={styles.blogPostExcerpt}>
-                          We stand firmly for human rights, international law, and justice for the Palestinian people.
-                          Our foreign policy must reflect our values of equality and dignity for all...
+                          A call for renewed populist movement that bridges urban and rural divides, focusing on grassroots political engagement and systemic change. The piece argues that both parties are failing the public and emphasizes the need for collective action against corporate interests and autocratic control.
                         </p>
                         <div style={styles.blogPostTags}>
-                          <span style={styles.blogTag}>Foreign Policy</span>
-                          <span style={styles.blogTag}>Human Rights</span>
-                          <span style={styles.blogTag}>Justice</span>
-                        </div>
-                      </article>
-
-                      <article style={styles.blogPost}>
-                        <h4 style={styles.blogPostTitle}>Building a Grassroots Movement for Change</h4>
-                        <p style={styles.blogPostDate}>October 12, 2025</p>
-                        <p style={styles.blogPostExcerpt}>
-                          Real change comes from the bottom up, not the top down. That's why our campaign is powered by
-                          volunteers, small donors, and community organizers who believe in a better future...
-                        </p>
-                        <div style={styles.blogPostTags}>
-                          <span style={styles.blogTag}>Organizing</span>
-                          <span style={styles.blogTag}>Community</span>
+                          <span style={styles.blogTag}>Populism</span>
                           <span style={styles.blogTag}>Grassroots</span>
+                          <span style={styles.blogTag}>Political Reform</span>
                         </div>
                       </article>
                     </div>
 
                     <div style={styles.newsletterSignup}>
-                      <p style={styles.signupText}>Want to stay updated? Subscribe to our newsletter:</p>
+                      <p style={styles.signupText}>See what's latest on our blog:</p>
                       <a
                         href="https://cinquemason4cd2.substack.com/"
                         target="_blank"
@@ -180,7 +181,7 @@ const HomePage = () => {
                         style={styles.signupButton}
                         className="signup-button"
                       >
-                        Subscribe to Newsletter →
+                        Visit Our Blog →
                       </a>
                     </div>
                   </div>
@@ -191,11 +192,23 @@ const HomePage = () => {
               {/* Sidebar Column */}
               <div style={styles.sidebarColumn} className="sidebar-column">
 
-                {/* Follow Me On Twitter Section */}
+                {/* Twitter Section */}
                 <div style={styles.sidebarSection}>
-                  <h3 style={styles.sidebarTitle}>Latest from Twitter</h3>
+                  <div style={styles.socialHeader}>
+                    <svg style={styles.twitterIcon} viewBox="0 0 24 24" fill="#000000">
+                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                    <h3 style={styles.sidebarTitle}>Follow on X (Twitter)</h3>
+                  </div>
                   <div style={styles.sidebarContent}>
-                    <SocialMediaFeed platform="twitter" username="CinqueForCD2" postCount={2} />
+                    <a
+                      className="twitter-timeline"
+                      data-height="400"
+                      data-theme="light"
+                      href="https://twitter.com/CinqueForCD2?ref_src=twsrc%5Etfw"
+                    >
+                      Follow @CinqueForCD2
+                    </a>
                     <div style={styles.followSection}>
                       <a
                         href="https://twitter.com/CinqueForCD2"
@@ -209,11 +222,30 @@ const HomePage = () => {
                   </div>
                 </div>
 
-                {/* Follow Me On Facebook Section */}
+                {/* Facebook Section */}
                 <div style={styles.sidebarSection}>
-                  <h3 style={styles.sidebarTitle}>Latest from Facebook</h3>
+                  <div style={styles.socialHeader}>
+                    <svg style={styles.facebookIcon} viewBox="0 0 24 24" fill="#1877F2">
+                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                    <h3 style={styles.sidebarTitle}>Follow on Facebook</h3>
+                  </div>
                   <div style={styles.sidebarContent}>
-                    <SocialMediaFeed platform="facebook" username="CinqueMasonForCongress" postCount={2} />
+                    <div
+                      className="fb-page"
+                      data-href="https://www.facebook.com/share/17P8SZ2EaP/"
+                      data-tabs="timeline"
+                      data-width="350"
+                      data-height="400"
+                      data-small-header="false"
+                      data-adapt-container-width="true"
+                      data-hide-cover="false"
+                      data-show-facepile="true"
+                    >
+                      <blockquote cite="https://www.facebook.com/share/17P8SZ2EaP/" className="fb-xfbml-parse-ignore">
+                        <a href="https://www.facebook.com/share/17P8SZ2EaP/">Cinque Mason for Congress</a>
+                      </blockquote>
+                    </div>
                     <div style={styles.followSection}>
                       <a
                         href="https://www.facebook.com/share/17P8SZ2EaP/?mibextid=wwXIfr"
@@ -357,6 +389,33 @@ const styles = {
     fontWeight: '600',
     fontFamily: 'Open Sans, sans-serif',
     fontStyle: 'italic'
+  },
+
+  socialHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '0.5rem',
+    backgroundColor: '#0E3A60',
+    padding: '1rem 1.5rem',
+    margin: '0'
+  },
+
+  socialIcon: {
+    width: '20px',
+    height: '20px',
+    color: '#ffffff'
+  },
+
+  twitterIcon: {
+    width: '20px',
+    height: '20px',
+    color: '#000000'
+  },
+
+  facebookIcon: {
+    width: '20px',
+    height: '20px',
+    color: '#1877F2'
   },
 
   sidebarContent: {
@@ -557,6 +616,13 @@ const styles = {
     margin: '0 0 0.5rem 0',
     fontFamily: 'Open Sans, sans-serif',
     lineHeight: '1.4'
+  },
+
+  blogPostTitleLink: {
+    color: '#0E3A60',
+    textDecoration: 'none',
+    display: 'block',
+    transition: 'color 0.3s ease'
   },
 
   blogPostDate: {

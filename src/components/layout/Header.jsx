@@ -468,191 +468,141 @@ const Header = () => {
         {/* Mobile Hamburger Menu */}
         {isMobile && (
           <button
-            style={{...styles.menuToggle, display: 'flex'}}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              cursor: 'pointer',
+              background: 'none',
+              border: 'none',
+              padding: '0.75rem',
+              zIndex: 1001,
+              position: 'relative',
+              width: '48px',
+              height: '48px'
+            }}
             className="menu-toggle"
             onClick={toggleMenu}
             aria-label="Toggle navigation menu"
             aria-expanded={mobileMenuOpen}
           >
-            <span style={{...styles.menuToggleSpan, transform: mobileMenuOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none'}}></span>
-            <span style={{...styles.menuToggleSpan, opacity: mobileMenuOpen ? '0' : '1'}}></span>
-            <span style={{...styles.menuToggleSpan, transform: mobileMenuOpen ? 'rotate(-45deg) translate(7px, -6px)' : 'none'}}></span>
+            <span style={{
+              width: '25px',
+              height: '3px',
+              backgroundColor: '#0E3A60',
+              margin: '3px 0',
+              transition: 'all 0.3s ease',
+              display: 'block',
+              borderRadius: '2px',
+              transform: mobileMenuOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none'
+            }}></span>
+            <span style={{
+              width: '25px',
+              height: '3px',
+              backgroundColor: '#0E3A60',
+              margin: '3px 0',
+              transition: 'all 0.3s ease',
+              display: 'block',
+              borderRadius: '2px',
+              opacity: mobileMenuOpen ? '0' : '1'
+            }}></span>
+            <span style={{
+              width: '25px',
+              height: '3px',
+              backgroundColor: '#0E3A60',
+              margin: '3px 0',
+              transition: 'all 0.3s ease',
+              display: 'block',
+              borderRadius: '2px',
+              transform: mobileMenuOpen ? 'rotate(-45deg) translate(7px, -6px)' : 'none'
+            }}></span>
           </button>
         )}
       </nav>
-      {/* Mobile Dropdown Menu - Using React.createElement to avoid JSX issues */}
-      {isMobile && mobileMenuOpen &&
-        React.createElement('div', {
-          style: {
-            position: 'fixed',
-            top: '60px',
-            left: 0,
-            right: 0,
-            backgroundColor: '#ffffff',
-            boxShadow: '0 8px 25px rgba(0,0,0,0.15)',
-            borderTop: '2px solid #2E6FB3',
-            borderBottom: '1px solid #E1E8ED',
-            zIndex: 999999,
-            maxWidth: '100vw',
-            width: '100%',
-            boxSizing: 'border-box',
-            maxHeight: '80vh',
-            overflowY: 'auto'
-          },
-          className: 'mobile-dropdown'
-        },
-        React.createElement('ul', {
-          style: {
+
+      {/* Mobile Dropdown Menu - Properly styled */}
+      {isMobile && mobileMenuOpen && (
+        <div style={{
+          position: 'fixed',
+          top: '60px',
+          left: 0,
+          right: 0,
+          backgroundColor: '#ffffff',
+          boxShadow: '0 8px 25px rgba(0,0,0,0.15)',
+          borderTop: '2px solid #2E6FB3',
+          borderBottom: '1px solid #E1E8ED',
+          zIndex: 9999999,
+          maxWidth: '100vw',
+          width: '100%',
+          boxSizing: 'border-box',
+          maxHeight: '80vh',
+          overflowY: 'auto'
+        }}>
+          <ul style={{
             listStyle: 'none',
             margin: 0,
             padding: '1rem 0',
             backgroundColor: '#ffffff'
-          }
-        },
-          // Home link
-          React.createElement('li', { style: { padding: '0.75rem 1.5rem', borderBottom: '1px solid #f0f0f0' } },
-            React.createElement('a', {
-              href: '/',
-              onClick: (e) => { e.preventDefault(); setMobileMenuOpen(false); window.location.href = '/'; },
-              style: {
-                color: '#0E3A60',
-                textDecoration: 'none',
-                fontSize: '1rem',
-                fontWeight: '500',
-                display: 'block',
-                fontFamily: 'Open Sans, sans-serif'
-              }
-            }, 'Home')
-          ),
-          // About link
-          React.createElement('li', { style: { padding: '0.75rem 1.5rem', borderBottom: '1px solid #f0f0f0' } },
-            React.createElement('a', {
-              href: '/about',
-              onClick: (e) => { e.preventDefault(); setMobileMenuOpen(false); window.location.href = '/about'; },
-              style: {
-                color: '#0E3A60',
-                textDecoration: 'none',
-                fontSize: '1rem',
-                fontWeight: '500',
-                display: 'block',
-                fontFamily: 'Open Sans, sans-serif'
-              }
-            }, 'About Me')
-          ),
-          // My Plan link
-          React.createElement('li', { style: { padding: '0.75rem 1.5rem', borderBottom: '1px solid #f0f0f0' } },
-            React.createElement('a', {
-              href: '/my-plan',
-              onClick: (e) => { e.preventDefault(); setMobileMenuOpen(false); window.location.href = '/my-plan'; },
-              style: {
-                color: '#0E3A60',
-                textDecoration: 'none',
-                fontSize: '1rem',
-                fontWeight: '500',
-                display: 'block',
-                fontFamily: 'Open Sans, sans-serif'
-              }
-            }, 'My Plan')
-          ),
-          // Vision link
-          React.createElement('li', { style: { padding: '0.75rem 1.5rem', borderBottom: '1px solid #f0f0f0' } },
-            React.createElement('a', {
-              href: '/vision',
-              onClick: (e) => { e.preventDefault(); setMobileMenuOpen(false); window.location.href = '/vision'; },
-              style: {
-                color: '#0E3A60',
-                textDecoration: 'none',
-                fontSize: '1rem',
-                fontWeight: '500',
-                display: 'block',
-                fontFamily: 'Open Sans, sans-serif'
-              }
-            }, 'Vision')
-          ),
-          // Road to Congress link
-          React.createElement('li', { style: { padding: '0.75rem 1.5rem', borderBottom: '1px solid #f0f0f0' } },
-            React.createElement('a', {
-              href: '/road-to-congress',
-              onClick: (e) => { e.preventDefault(); setMobileMenuOpen(false); window.location.href = '/road-to-congress'; },
-              style: {
-                color: '#0E3A60',
-                textDecoration: 'none',
-                fontSize: '1rem',
-                fontWeight: '500',
-                display: 'block',
-                fontFamily: 'Open Sans, sans-serif'
-              }
-            }, 'Road to Congress')
-          ),
-          // Join link
-          React.createElement('li', { style: { padding: '0.75rem 1.5rem', borderBottom: '1px solid #f0f0f0' } },
-            React.createElement('a', {
-              href: '/join',
-              onClick: (e) => { e.preventDefault(); setMobileMenuOpen(false); window.location.href = '/join'; },
-              style: {
-                color: '#0E3A60',
-                textDecoration: 'none',
-                fontSize: '1rem',
-                fontWeight: '500',
-                display: 'block',
-                fontFamily: 'Open Sans, sans-serif'
-              }
-            }, 'Join')
-          ),
-          // Request Event link
-          React.createElement('li', { style: { padding: '0.75rem 1.5rem', borderBottom: '1px solid #f0f0f0' } },
-            React.createElement('a', {
-              href: '/request-event',
-              onClick: (e) => { e.preventDefault(); setMobileMenuOpen(false); window.location.href = '/request-event'; },
-              style: {
-                color: '#0E3A60',
-                textDecoration: 'none',
-                fontSize: '1rem',
-                fontWeight: '500',
-                display: 'block',
-                fontFamily: 'Open Sans, sans-serif'
-              }
-            }, 'Request Event')
-          ),
-          // Expenditures link
-          React.createElement('li', { style: { padding: '0.75rem 1.5rem', borderBottom: '1px solid #f0f0f0' } },
-            React.createElement('a', {
-              href: '/expenditures',
-              onClick: (e) => { e.preventDefault(); setMobileMenuOpen(false); window.location.href = '/expenditures'; },
-              style: {
-                color: '#0E3A60',
-                textDecoration: 'none',
-                fontSize: '1rem',
-                fontWeight: '500',
-                display: 'block',
-                fontFamily: 'Open Sans, sans-serif'
-              }
-            }, 'Expenditures')
-          ),
-          // Donate button
-          React.createElement('li', { style: { padding: '1rem 1.5rem' } },
-            React.createElement('a', {
-              href: 'https://secure.actblue.com/donate/cinque-mason-for-congress-1',
-              target: '_blank',
-              rel: 'noopener noreferrer',
-              style: {
-                backgroundColor: '#2E6FB3',
-                color: '#ffffff',
-                padding: '0.8rem 1.8rem',
-                textDecoration: 'none',
-                fontWeight: '600',
-                borderRadius: '6px',
-                fontFamily: 'Open Sans, sans-serif',
-                fontSize: '1rem',
-                display: 'block',
-                textAlign: 'center',
-                border: '2px solid #2E6FB3'
-              }
-            }, 'Donate')
-          )
-        )
-        )
-      }
+          }}>
+            <li style={{ padding: '0.75rem 1.5rem', borderBottom: '1px solid #f0f0f0' }}>
+              <a href="/" onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); window.location.href = '/'; }}
+                 style={{ color: '#0E3A60', textDecoration: 'none', fontSize: '1rem', fontWeight: '500', display: 'block', fontFamily: 'Open Sans, sans-serif' }}>
+                Home
+              </a>
+            </li>
+            <li style={{ padding: '0.75rem 1.5rem', borderBottom: '1px solid #f0f0f0' }}>
+              <a href="/about" onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); window.location.href = '/about'; }}
+                 style={{ color: '#0E3A60', textDecoration: 'none', fontSize: '1rem', fontWeight: '500', display: 'block', fontFamily: 'Open Sans, sans-serif' }}>
+                About Me
+              </a>
+            </li>
+            <li style={{ padding: '0.75rem 1.5rem', borderBottom: '1px solid #f0f0f0' }}>
+              <a href="/my-plan" onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); window.location.href = '/my-plan'; }}
+                 style={{ color: '#0E3A60', textDecoration: 'none', fontSize: '1rem', fontWeight: '500', display: 'block', fontFamily: 'Open Sans, sans-serif' }}>
+                My Plan
+              </a>
+            </li>
+            <li style={{ padding: '0.75rem 1.5rem', borderBottom: '1px solid #f0f0f0' }}>
+              <a href="/vision" onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); window.location.href = '/vision'; }}
+                 style={{ color: '#0E3A60', textDecoration: 'none', fontSize: '1rem', fontWeight: '500', display: 'block', fontFamily: 'Open Sans, sans-serif' }}>
+                Vision
+              </a>
+            </li>
+            <li style={{ padding: '0.75rem 1.5rem', borderBottom: '1px solid #f0f0f0' }}>
+              <a href="/road-to-congress" onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); window.location.href = '/road-to-congress'; }}
+                 style={{ color: '#0E3A60', textDecoration: 'none', fontSize: '1rem', fontWeight: '500', display: 'block', fontFamily: 'Open Sans, sans-serif' }}>
+                Road to Congress
+              </a>
+            </li>
+            <li style={{ padding: '0.75rem 1.5rem', borderBottom: '1px solid #f0f0f0' }}>
+              <a href="/join" onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); window.location.href = '/join'; }}
+                 style={{ color: '#0E3A60', textDecoration: 'none', fontSize: '1rem', fontWeight: '500', display: 'block', fontFamily: 'Open Sans, sans-serif' }}>
+                Join
+              </a>
+            </li>
+            <li style={{ padding: '0.75rem 1.5rem', borderBottom: '1px solid #f0f0f0' }}>
+              <a href="/request-event" onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); window.location.href = '/request-event'; }}
+                 style={{ color: '#0E3A60', textDecoration: 'none', fontSize: '1rem', fontWeight: '500', display: 'block', fontFamily: 'Open Sans, sans-serif' }}>
+                Request Event
+              </a>
+            </li>
+            <li style={{ padding: '0.75rem 1.5rem', borderBottom: '1px solid #f0f0f0' }}>
+              <a href="/expenditures" onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); window.location.href = '/expenditures'; }}
+                 style={{ color: '#0E3A60', textDecoration: 'none', fontSize: '1rem', fontWeight: '500', display: 'block', fontFamily: 'Open Sans, sans-serif' }}>
+                Expenditures
+              </a>
+            </li>
+            <li style={{ padding: '1rem 1.5rem' }}>
+              <a href="https://secure.actblue.com/donate/cinqueforcongress" target="_blank" rel="noopener noreferrer"
+                 style={{ backgroundColor: '#2E6FB3', color: '#ffffff', padding: '0.8rem 1.8rem', textDecoration: 'none', fontWeight: '600', borderRadius: '6px', fontFamily: 'Open Sans, sans-serif', fontSize: '1rem', display: 'block', textAlign: 'center', border: '2px solid #2E6FB3' }}>
+                Donate
+              </a>
+            </li>
+          </ul>
+        </div>
+      )}
+
     </header>
     </>
   );
@@ -825,13 +775,14 @@ const styles = {
     fontSize: '1rem'
   },
   menuToggle: {
-    display: 'none',
+    display: 'flex',
     flexDirection: 'column',
     cursor: 'pointer',
     background: 'none',
     border: 'none',
-    padding: '0.5rem',
-    zIndex: 1001
+    padding: '0.75rem',
+    zIndex: 1001,
+    position: 'relative'
   },
   menuToggleSpan: {
     width: '25px',
