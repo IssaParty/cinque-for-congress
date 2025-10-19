@@ -10,7 +10,6 @@ const Header = () => {
 
 
   const toggleMenu = () => {
-    console.log('Toggle menu clicked. Current state:', mobileMenuOpen, 'isMobile:', isMobile);
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
@@ -483,7 +482,6 @@ const Header = () => {
       </nav>
 
       {/* Mobile Dropdown Menu */}
-      {console.log('Render check - isMobile:', isMobile, 'mobileMenuOpen:', mobileMenuOpen)}
       {isMobile && mobileMenuOpen && (
         <div style={styles.mobileDropdown} className="mobile-dropdown">
           <ul style={styles.mobileMenu}>
@@ -783,18 +781,19 @@ const styles = {
   // Mobile dropdown menu styles
   mobileDropdown: {
     position: 'fixed',
-    top: '100px',
+    top: '60px',
     left: 0,
     right: 0,
     backgroundColor: '#ffffff',
     boxShadow: '0 8px 25px rgba(0,0,0,0.15)',
     borderTop: '2px solid #2E6FB3',
+    borderBottom: '1px solid #E1E8ED',
     zIndex: 999999,
-    animation: 'slideDown 0.3s ease-out',
     maxWidth: '100vw',
     width: '100%',
     boxSizing: 'border-box',
-    border: '3px solid #FF0000'
+    maxHeight: '80vh',
+    overflowY: 'auto'
   },
   mobileMenu: {
     listStyle: 'none',
