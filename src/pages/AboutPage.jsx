@@ -23,15 +23,7 @@ const AboutPage = () => {
       alt: 'Campaign photo'
     },
     {
-      src: '/images/PHOTO-2025-09-14-17-02-49.jpeg',
-      alt: 'Campaign photo'
-    },
-    {
       src: '/images/PHOTO-2025-09-14-16-58-33.jpeg',
-      alt: 'Campaign photo'
-    },
-    {
-      src: '/images/PHOTO-2025-09-14-17-00-33.jpeg',
       alt: 'Campaign photo'
     },
     {
