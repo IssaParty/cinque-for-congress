@@ -19,20 +19,20 @@ const AboutPage = () => {
   // Selected campaign photos featuring Cinque in suits and with community members
   const sliderImages = [
     {
-      src: '/images/WhatsApp Image 2025-10-12 at 17.09.26.jpeg',
-      alt: 'Cinque Mason in professional attire at community event'
+      src: '/images/PHOTO-2025-09-14-16-58-19.jpeg',
+      alt: 'Cinque Mason speaking at podium during official event'
     },
     {
-      src: '/images/WhatsApp Image 2025-10-12 at 17.09.26 (1).jpeg',
-      alt: 'Cinque Mason in gray suit with blue shirt'
+      src: '/images/PHOTO-2025-09-14-16-58-32(1).jpeg',
+      alt: 'Cinque Mason with community member in traditional African clothing'
     },
     {
       src: '/images/WhatsApp Image 2025-10-12 at 17.09.27 (2).jpeg',
       alt: 'Cinque Mason at Boulder County building in professional attire'
     },
     {
-      src: '/images/PHOTO-2025-09-14-16-58-32(1).jpeg',
-      alt: 'Cinque Mason with community member in traditional African clothing'
+      src: '/images/WhatsApp Image 2025-10-12 at 17.09.26 (1).jpeg',
+      alt: 'Cinque Mason in gray suit with blue shirt'
     },
     {
       src: '/images/PHOTO-2025-09-14-16-58-25.jpeg',
