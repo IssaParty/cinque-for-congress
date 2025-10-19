@@ -170,7 +170,6 @@ const Header = () => {
             z-index: 10000;
             padding: 0.5rem 0;
             margin-top: 2px;
-            display: none;
           }
 
           /* Dropdown content is controlled by React state via inline styles */
@@ -311,29 +310,31 @@ const Header = () => {
                   className="dropdown-toggle"
                   onClick={(e) => handleDropdownClick('about', e)}
                 >
-                  About Me ▼ {activeDropdown === 'about' ? '(OPEN)' : '(CLOSED)'}
+                  About Me ▼
                 </button>
-                <div
-                  className="dropdown-content"
-                  style={{
-                    display: activeDropdown === 'about' ? 'block' : 'none',
-                    position: 'absolute',
-                    top: '100%',
-                    left: 0,
-                    backgroundColor: '#ffffff',
-                    border: '3px solid #FF0000',
-                    borderRadius: '4px',
-                    boxShadow: '0 8px 20px rgba(0,0,0,0.5)',
-                    minWidth: '200px',
-                    zIndex: 999999,
-                    padding: '0.75rem 0',
-                    marginTop: '4px'
-                  }}
-                >
-                  <Link to="/about" className="dropdown-item">About Me</Link>
-                  <Link to="/my-plan" className="dropdown-item">My Plan</Link>
-                  <Link to="/vision" className="dropdown-item">Vision</Link>
-                </div>
+                {activeDropdown === 'about' && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '100%',
+                      left: '0',
+                      backgroundColor: '#ffffff',
+                      color: '#0E3A60',
+                      padding: '10px 0',
+                      zIndex: 999999,
+                      border: '2px solid #2E6FB3',
+                      borderRadius: '6px',
+                      fontSize: '14px',
+                      minWidth: '180px',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                      marginTop: '4px'
+                    }}
+                  >
+                    <Link to="/about" style={{ color: '#0E3A60', display: 'block', padding: '8px 15px', textDecoration: 'none' }}>About Me</Link>
+                    <Link to="/my-plan" style={{ color: '#0E3A60', display: 'block', padding: '8px 15px', textDecoration: 'none' }}>My Plan</Link>
+                    <Link to="/vision" style={{ color: '#0E3A60', display: 'block', padding: '8px 15px', textDecoration: 'none' }}>Vision</Link>
+                  </div>
+                )}
               </li>
 
               {/* The Campaign Dropdown */}
@@ -344,27 +345,29 @@ const Header = () => {
                 >
                   The Campaign ▼
                 </button>
-                <div
-                  className="dropdown-content"
-                  style={{
-                    display: activeDropdown === 'campaign' ? 'block' : 'none',
-                    position: 'absolute',
-                    top: '100%',
-                    left: 0,
-                    backgroundColor: '#ffffff',
-                    border: '2px solid #2E6FB3',
-                    borderRadius: '4px',
-                    boxShadow: '0 8px 20px rgba(0,0,0,0.25)',
-                    minWidth: '200px',
-                    zIndex: 99999,
-                    padding: '0.75rem 0',
-                    marginTop: '4px'
-                  }}
-                >
-                  <Link to="/expenditures" className="dropdown-item">Campaign Expenditures</Link>
-                  <a href="https://secure.actblue.com/donate/cd2merch" target="_blank" rel="noopener noreferrer" className="dropdown-item">Shop</a>
-                  <Link to="/road-to-congress" className="dropdown-item">Road to Congress</Link>
-                </div>
+                {activeDropdown === 'campaign' && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '100%',
+                      left: '0',
+                      backgroundColor: '#ffffff',
+                      color: '#0E3A60',
+                      padding: '10px 0',
+                      zIndex: 999999,
+                      border: '2px solid #2E6FB3',
+                      borderRadius: '6px',
+                      fontSize: '14px',
+                      minWidth: '200px',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                      marginTop: '4px'
+                    }}
+                  >
+                    <Link to="/expenditures" style={{ color: '#0E3A60', display: 'block', padding: '8px 15px', textDecoration: 'none' }}>Campaign Expenditures</Link>
+                    <a href="https://secure.actblue.com/donate/cd2merch" target="_blank" rel="noopener noreferrer" style={{ color: '#0E3A60', display: 'block', padding: '8px 15px', textDecoration: 'none' }}>Shop</a>
+                    <Link to="/road-to-congress" style={{ color: '#0E3A60', display: 'block', padding: '8px 15px', textDecoration: 'none' }}>Road to Congress</Link>
+                  </div>
+                )}
               </li>
 
               {/* Get Involved Dropdown */}
@@ -375,26 +378,28 @@ const Header = () => {
                 >
                   Get Involved ▼
                 </button>
-                <div
-                  className="dropdown-content"
-                  style={{
-                    display: activeDropdown === 'involved' ? 'block' : 'none',
-                    position: 'absolute',
-                    top: '100%',
-                    left: 0,
-                    backgroundColor: '#ffffff',
-                    border: '2px solid #2E6FB3',
-                    borderRadius: '4px',
-                    boxShadow: '0 8px 20px rgba(0,0,0,0.25)',
-                    minWidth: '200px',
-                    zIndex: 99999,
-                    padding: '0.75rem 0',
-                    marginTop: '4px'
-                  }}
-                >
-                  <Link to="/join" className="dropdown-item">Volunteer</Link>
-                  <a href="https://secure.actblue.com/donate/cinqueforcongress" target="_blank" rel="noopener noreferrer" className="dropdown-item">Donate</a>
-                </div>
+                {activeDropdown === 'involved' && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '100%',
+                      left: '0',
+                      backgroundColor: '#ffffff',
+                      color: '#0E3A60',
+                      padding: '10px 0',
+                      zIndex: 999999,
+                      border: '2px solid #2E6FB3',
+                      borderRadius: '6px',
+                      fontSize: '14px',
+                      minWidth: '180px',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                      marginTop: '4px'
+                    }}
+                  >
+                    <Link to="/join" style={{ color: '#0E3A60', display: 'block', padding: '8px 15px', textDecoration: 'none' }}>Volunteer</Link>
+                    <a href="https://secure.actblue.com/donate/cinqueforcongress" target="_blank" rel="noopener noreferrer" style={{ color: '#0E3A60', display: 'block', padding: '8px 15px', textDecoration: 'none' }}>Donate</a>
+                  </div>
+                )}
               </li>
             </ul>
 
@@ -552,7 +557,6 @@ const styles = {
     borderBottom: '1px solid #D9D9D9',
     width: '100%',
     maxWidth: '100vw',
-    overflow: 'hidden',
     boxSizing: 'border-box'
   },
   nav: {
@@ -562,7 +566,6 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     maxWidth: '100vw',
-    overflow: 'hidden',
     boxSizing: 'border-box'
   },
   logoContainer: {
@@ -610,7 +613,6 @@ const styles = {
     flex: 1,
     justifyContent: 'flex-end',
     flexWrap: 'nowrap',
-    overflow: 'hidden',
     marginRight: '1rem'
   },
   donateContainer: {
@@ -742,7 +744,6 @@ const styles = {
     animation: 'slideDown 0.3s ease-out',
     maxWidth: '100vw',
     width: '100%',
-    overflow: 'hidden',
     boxSizing: 'border-box'
   },
   mobileMenu: {
@@ -750,8 +751,7 @@ const styles = {
     margin: 0,
     padding: '1rem 0',
     maxHeight: 'calc(100vh - 120px)',
-    overflowY: 'auto',
-    overflowX: 'hidden'
+    overflowY: 'auto'
   },
   mobileMenuItem: {
     listStyle: 'none',

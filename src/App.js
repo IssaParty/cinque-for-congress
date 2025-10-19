@@ -90,19 +90,14 @@ const App = () => {
       <ScrollToTop />
       <Routes>
         {/* Main Routes */}
-        <Route path="/" element={<HomePage />} />
-        <Route path="/about" element={
-          <Layout>
-            <Breadcrumb />
-            <AboutPage />
-          </Layout>
-        } />
-        <Route path="/vision" element={<VisionPage />} />
-        <Route path="/my-plan" element={<MyPlanPage />} />
-        <Route path="/join" element={<JoinPage />} />
-        <Route path="/expenditures" element={<ExpendituresPage />} />
-        <Route path="/road-to-congress" element={<RoadToCongressPage />} />
-        <Route path="/request-event" element={<RequestEventPage />} />
+        <Route path="/" element={<Layout><HomePage /></Layout>} />
+        <Route path="/about" element={<Layout><AboutPage /></Layout>} />
+        <Route path="/vision" element={<Layout><VisionPage /></Layout>} />
+        <Route path="/my-plan" element={<Layout><MyPlanPage /></Layout>} />
+        <Route path="/join" element={<Layout><JoinPage /></Layout>} />
+        <Route path="/expenditures" element={<Layout><ExpendituresPage /></Layout>} />
+        <Route path="/road-to-congress" element={<Layout><RoadToCongressPage /></Layout>} />
+        <Route path="/request-event" element={<Layout><RequestEventPage /></Layout>} />
         <Route path="/about/mission" element={<MissionPage />} />
         <Route path="/about/leadership" element={<LeadershipPage />} />
         <Route path="/programs" element={<ProgramsPage />} />

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ImageSlider from '../components/ImageSlider';
-import Header from '../components/layout/Header';
-import Footer from '../components/layout/Footer';
 
 const HomePage = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -82,7 +80,6 @@ const HomePage = () => {
           }
         `}
       </style>
-      <Header />
       <main>
         {/* Campaign Alert Banner */}
         <div style={styles.alertBanner}>
@@ -206,7 +203,6 @@ const HomePage = () => {
           </div>
         </div>
       </main>
-      <Footer />
     </>
   );
 };

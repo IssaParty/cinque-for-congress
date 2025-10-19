@@ -46,8 +46,8 @@ const AboutPage = () => {
 
   return (
     <main style={isMobile ? styles.contentPageMobile : styles.contentPage}>
-      <div style={isMobile ? styles.pageContainerMobile : styles.pageContainer}>
-        <h1 style={isMobile ? styles.pageTitleMobile : styles.pageTitle}>About Cinque Mason</h1>
+        <div style={isMobile ? styles.pageContainerMobile : styles.pageContainer}>
+          <h1 style={isMobile ? styles.pageTitleMobile : styles.pageTitle}>About Cinque Mason</h1>
         <div style={styles.pageContent}>
           <section style={styles.contentSection}>
             <h2 style={isMobile ? styles.contentSubtitleMobile : styles.contentSubtitle}>Roots in Colorado</h2>
