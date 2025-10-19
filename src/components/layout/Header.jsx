@@ -480,115 +480,179 @@ const Header = () => {
           </button>
         )}
       </nav>
-
-      {/* Mobile Dropdown Menu */}
-      {isMobile && mobileMenuOpen && (
-        <div style={styles.mobileDropdown} className="mobile-dropdown">
-          <ul style={styles.mobileMenu}>
-            {/* Home - always show in mobile */}
-            <li style={styles.mobileMenuItem}>
-              <Link
-                to="/"
-                onClick={handleMobileNavClick}
-                style={styles.mobileMenuLink}
-                className="mobile-menu-link"
-              >
-                Home
-              </Link>
-            </li>
-
-            {/* About Me Section */}
-            <li style={styles.mobileMenuItem}>
-              <Link
-                to="/about"
-                onClick={handleMobileNavClick}
-                style={styles.mobileMenuLink}
-                className="mobile-menu-link"
-              >
-                About Me
-              </Link>
-            </li>
-            <li style={styles.mobileMenuItem}>
-              <Link
-                to="/my-plan"
-                onClick={handleMobileNavClick}
-                style={styles.mobileMenuLink}
-                className="mobile-menu-link"
-              >
-                My Plan
-              </Link>
-            </li>
-            <li style={styles.mobileMenuItem}>
-              <Link
-                to="/vision"
-                onClick={handleMobileNavClick}
-                style={styles.mobileMenuLink}
-                className="mobile-menu-link"
-              >
-                Vision
-              </Link>
-            </li>
-
-            {/* The Campaign Section */}
-            <li style={styles.mobileMenuItem}>
-              <Link
-                to="/expenditures"
-                onClick={handleMobileNavClick}
-                style={styles.mobileMenuLink}
-                className="mobile-menu-link"
-              >
-                Campaign Expenditures
-              </Link>
-            </li>
-            <li style={styles.mobileMenuItem}>
-              <a
-                href="https://secure.actblue.com/donate/cd2merch"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={styles.mobileMenuLink}
-                className="mobile-menu-link"
-                onClick={handleMobileNavClick}
-              >
-                Shop
-              </a>
-            </li>
-            <li style={styles.mobileMenuItem}>
-              <Link
-                to="/road-to-congress"
-                onClick={handleMobileNavClick}
-                style={styles.mobileMenuLink}
-                className="mobile-menu-link"
-              >
-                Road to Congress
-              </Link>
-            </li>
-
-            {/* Get Involved Section */}
-            <li style={styles.mobileMenuItem}>
-              <Link
-                to="/join"
-                onClick={handleMobileNavClick}
-                style={styles.mobileMenuLink}
-                className="mobile-menu-link"
-              >
-                Volunteer
-              </Link>
-            </li>
-            <li style={styles.mobileMenuItem}>
-              <a
-                href="https://secure.actblue.com/donate/cinqueforcongress"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={styles.mobileDonateBtnLink}
-                className="mobile-donate-btn"
-                onClick={handleMobileNavClick}
-              >
-                Donate
-              </a>
-            </li>
-          </ul>
-        </div>
-      )}
+      {/* Mobile Dropdown Menu - Using React.createElement to avoid JSX issues */}
+      {isMobile && mobileMenuOpen &&
+        React.createElement('div', {
+          style: {
+            position: 'fixed',
+            top: '60px',
+            left: 0,
+            right: 0,
+            backgroundColor: '#ffffff',
+            boxShadow: '0 8px 25px rgba(0,0,0,0.15)',
+            borderTop: '2px solid #2E6FB3',
+            borderBottom: '1px solid #E1E8ED',
+            zIndex: 999999,
+            maxWidth: '100vw',
+            width: '100%',
+            boxSizing: 'border-box',
+            maxHeight: '80vh',
+            overflowY: 'auto'
+          },
+          className: 'mobile-dropdown'
+        },
+        React.createElement('ul', {
+          style: {
+            listStyle: 'none',
+            margin: 0,
+            padding: '1rem 0',
+            backgroundColor: '#ffffff'
+          }
+        },
+          // Home link
+          React.createElement('li', { style: { padding: '0.75rem 1.5rem', borderBottom: '1px solid #f0f0f0' } },
+            React.createElement('a', {
+              href: '/',
+              onClick: (e) => { e.preventDefault(); setMobileMenuOpen(false); window.location.href = '/'; },
+              style: {
+                color: '#0E3A60',
+                textDecoration: 'none',
+                fontSize: '1rem',
+                fontWeight: '500',
+                display: 'block',
+                fontFamily: 'Open Sans, sans-serif'
+              }
+            }, 'Home')
+          ),
+          // About link
+          React.createElement('li', { style: { padding: '0.75rem 1.5rem', borderBottom: '1px solid #f0f0f0' } },
+            React.createElement('a', {
+              href: '/about',
+              onClick: (e) => { e.preventDefault(); setMobileMenuOpen(false); window.location.href = '/about'; },
+              style: {
+                color: '#0E3A60',
+                textDecoration: 'none',
+                fontSize: '1rem',
+                fontWeight: '500',
+                display: 'block',
+                fontFamily: 'Open Sans, sans-serif'
+              }
+            }, 'About Me')
+          ),
+          // My Plan link
+          React.createElement('li', { style: { padding: '0.75rem 1.5rem', borderBottom: '1px solid #f0f0f0' } },
+            React.createElement('a', {
+              href: '/my-plan',
+              onClick: (e) => { e.preventDefault(); setMobileMenuOpen(false); window.location.href = '/my-plan'; },
+              style: {
+                color: '#0E3A60',
+                textDecoration: 'none',
+                fontSize: '1rem',
+                fontWeight: '500',
+                display: 'block',
+                fontFamily: 'Open Sans, sans-serif'
+              }
+            }, 'My Plan')
+          ),
+          // Vision link
+          React.createElement('li', { style: { padding: '0.75rem 1.5rem', borderBottom: '1px solid #f0f0f0' } },
+            React.createElement('a', {
+              href: '/vision',
+              onClick: (e) => { e.preventDefault(); setMobileMenuOpen(false); window.location.href = '/vision'; },
+              style: {
+                color: '#0E3A60',
+                textDecoration: 'none',
+                fontSize: '1rem',
+                fontWeight: '500',
+                display: 'block',
+                fontFamily: 'Open Sans, sans-serif'
+              }
+            }, 'Vision')
+          ),
+          // Road to Congress link
+          React.createElement('li', { style: { padding: '0.75rem 1.5rem', borderBottom: '1px solid #f0f0f0' } },
+            React.createElement('a', {
+              href: '/road-to-congress',
+              onClick: (e) => { e.preventDefault(); setMobileMenuOpen(false); window.location.href = '/road-to-congress'; },
+              style: {
+                color: '#0E3A60',
+                textDecoration: 'none',
+                fontSize: '1rem',
+                fontWeight: '500',
+                display: 'block',
+                fontFamily: 'Open Sans, sans-serif'
+              }
+            }, 'Road to Congress')
+          ),
+          // Join link
+          React.createElement('li', { style: { padding: '0.75rem 1.5rem', borderBottom: '1px solid #f0f0f0' } },
+            React.createElement('a', {
+              href: '/join',
+              onClick: (e) => { e.preventDefault(); setMobileMenuOpen(false); window.location.href = '/join'; },
+              style: {
+                color: '#0E3A60',
+                textDecoration: 'none',
+                fontSize: '1rem',
+                fontWeight: '500',
+                display: 'block',
+                fontFamily: 'Open Sans, sans-serif'
+              }
+            }, 'Join')
+          ),
+          // Request Event link
+          React.createElement('li', { style: { padding: '0.75rem 1.5rem', borderBottom: '1px solid #f0f0f0' } },
+            React.createElement('a', {
+              href: '/request-event',
+              onClick: (e) => { e.preventDefault(); setMobileMenuOpen(false); window.location.href = '/request-event'; },
+              style: {
+                color: '#0E3A60',
+                textDecoration: 'none',
+                fontSize: '1rem',
+                fontWeight: '500',
+                display: 'block',
+                fontFamily: 'Open Sans, sans-serif'
+              }
+            }, 'Request Event')
+          ),
+          // Expenditures link
+          React.createElement('li', { style: { padding: '0.75rem 1.5rem', borderBottom: '1px solid #f0f0f0' } },
+            React.createElement('a', {
+              href: '/expenditures',
+              onClick: (e) => { e.preventDefault(); setMobileMenuOpen(false); window.location.href = '/expenditures'; },
+              style: {
+                color: '#0E3A60',
+                textDecoration: 'none',
+                fontSize: '1rem',
+                fontWeight: '500',
+                display: 'block',
+                fontFamily: 'Open Sans, sans-serif'
+              }
+            }, 'Expenditures')
+          ),
+          // Donate button
+          React.createElement('li', { style: { padding: '1rem 1.5rem' } },
+            React.createElement('a', {
+              href: 'https://secure.actblue.com/donate/cinque-mason-for-congress-1',
+              target: '_blank',
+              rel: 'noopener noreferrer',
+              style: {
+                backgroundColor: '#2E6FB3',
+                color: '#ffffff',
+                padding: '0.8rem 1.8rem',
+                textDecoration: 'none',
+                fontWeight: '600',
+                borderRadius: '6px',
+                fontFamily: 'Open Sans, sans-serif',
+                fontSize: '1rem',
+                display: 'block',
+                textAlign: 'center',
+                border: '2px solid #2E6FB3'
+              }
+            }, 'Donate')
+          )
+        )
+        )
+      }
     </header>
     </>
   );
