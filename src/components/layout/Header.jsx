@@ -19,7 +19,6 @@ const Header = () => {
 
   const handleDropdownClick = (dropdownName, event) => {
     event.preventDefault();
-    console.log('Dropdown clicked:', dropdownName, 'Current active:', activeDropdown);
     setActiveDropdown(activeDropdown === dropdownName ? null : dropdownName);
   };
 
@@ -112,9 +111,9 @@ const Header = () => {
 
           /* Simplified dropdown implementation */
           .dropdown-wrapper {
-            position: relative;
-            display: inline-block;
-            list-style: none;
+            position: relative !important;
+            display: inline-block !important;
+            list-style: none !important;
           }
 
           .dropdown-toggle {
@@ -322,13 +321,13 @@ const Header = () => {
                     top: '100%',
                     left: 0,
                     backgroundColor: '#ffffff',
-                    border: '1px solid #2E6FB3',
+                    border: '2px solid #2E6FB3',
                     borderRadius: '4px',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                    minWidth: '180px',
-                    zIndex: 10000,
-                    padding: '0.5rem 0',
-                    marginTop: '2px'
+                    boxShadow: '0 8px 20px rgba(0,0,0,0.25)',
+                    minWidth: '200px',
+                    zIndex: 99999,
+                    padding: '0.75rem 0',
+                    marginTop: '4px'
                   }}
                 >
                   <Link to="/about" className="dropdown-item">About Me</Link>
@@ -353,13 +352,13 @@ const Header = () => {
                     top: '100%',
                     left: 0,
                     backgroundColor: '#ffffff',
-                    border: '1px solid #2E6FB3',
+                    border: '2px solid #2E6FB3',
                     borderRadius: '4px',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                    minWidth: '180px',
-                    zIndex: 10000,
-                    padding: '0.5rem 0',
-                    marginTop: '2px'
+                    boxShadow: '0 8px 20px rgba(0,0,0,0.25)',
+                    minWidth: '200px',
+                    zIndex: 99999,
+                    padding: '0.75rem 0',
+                    marginTop: '4px'
                   }}
                 >
                   <Link to="/expenditures" className="dropdown-item">Campaign Expenditures</Link>
@@ -384,13 +383,13 @@ const Header = () => {
                     top: '100%',
                     left: 0,
                     backgroundColor: '#ffffff',
-                    border: '1px solid #2E6FB3',
+                    border: '2px solid #2E6FB3',
                     borderRadius: '4px',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                    minWidth: '180px',
-                    zIndex: 10000,
-                    padding: '0.5rem 0',
-                    marginTop: '2px'
+                    boxShadow: '0 8px 20px rgba(0,0,0,0.25)',
+                    minWidth: '200px',
+                    zIndex: 99999,
+                    padding: '0.75rem 0',
+                    marginTop: '4px'
                   }}
                 >
                   <Link to="/join" className="dropdown-item">Volunteer</Link>
