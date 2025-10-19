@@ -5,6 +5,7 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [hoverTimeout, setHoverTimeout] = useState(null);
   const location = useLocation();
 
 
@@ -28,6 +29,11 @@ const Header = () => {
   const handleDropdownHover = (dropdownName) => {
     // Only handle hover on desktop
     if (!isMobile) {
+      // Clear any existing timeout
+      if (hoverTimeout) {
+        clearTimeout(hoverTimeout);
+        setHoverTimeout(null);
+      }
       setActiveDropdown(dropdownName);
     }
   };
@@ -35,7 +41,11 @@ const Header = () => {
   const handleDropdownLeave = () => {
     // Only handle hover leave on desktop
     if (!isMobile) {
-      setActiveDropdown(null);
+      // Add delay before closing dropdown
+      const timeout = setTimeout(() => {
+        setActiveDropdown(null);
+      }, 300); // 300ms delay
+      setHoverTimeout(timeout);
     }
   };
 
@@ -97,6 +107,15 @@ const Header = () => {
       document.removeEventListener('click', handleClickOutside);
     };
   }, [activeDropdown]);
+
+  // Cleanup hover timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (hoverTimeout) {
+        clearTimeout(hoverTimeout);
+      }
+    };
+  }, [hoverTimeout]);
 
   const navStyle = isMobile && mobileMenuOpen
     ? { ...styles.navMenu, ...styles.navMenuActive }
