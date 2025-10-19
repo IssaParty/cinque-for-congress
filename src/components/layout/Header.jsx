@@ -18,8 +18,25 @@ const Header = () => {
   };
 
   const handleDropdownClick = (dropdownName, event) => {
-    event.preventDefault();
-    setActiveDropdown(activeDropdown === dropdownName ? null : dropdownName);
+    // Only handle click on mobile/touch devices
+    if (isMobile) {
+      event.preventDefault();
+      setActiveDropdown(activeDropdown === dropdownName ? null : dropdownName);
+    }
+  };
+
+  const handleDropdownHover = (dropdownName) => {
+    // Only handle hover on desktop
+    if (!isMobile) {
+      setActiveDropdown(dropdownName);
+    }
+  };
+
+  const handleDropdownLeave = () => {
+    // Only handle hover leave on desktop
+    if (!isMobile) {
+      setActiveDropdown(null);
+    }
   };
 
 
@@ -305,7 +322,11 @@ const Header = () => {
               )}
 
               {/* About Me Dropdown */}
-              <li className="dropdown-wrapper">
+              <li
+                className="dropdown-wrapper"
+                onMouseEnter={() => handleDropdownHover('about')}
+                onMouseLeave={handleDropdownLeave}
+              >
                 <button
                   className="dropdown-toggle"
                   onClick={(e) => handleDropdownClick('about', e)}
@@ -338,7 +359,11 @@ const Header = () => {
               </li>
 
               {/* The Campaign Dropdown */}
-              <li className="dropdown-wrapper">
+              <li
+                className="dropdown-wrapper"
+                onMouseEnter={() => handleDropdownHover('campaign')}
+                onMouseLeave={handleDropdownLeave}
+              >
                 <button
                   className="dropdown-toggle"
                   onClick={(e) => handleDropdownClick('campaign', e)}
@@ -371,7 +396,11 @@ const Header = () => {
               </li>
 
               {/* Get Involved Dropdown */}
-              <li className="dropdown-wrapper">
+              <li
+                className="dropdown-wrapper"
+                onMouseEnter={() => handleDropdownHover('involved')}
+                onMouseLeave={handleDropdownLeave}
+              >
                 <button
                   className="dropdown-toggle"
                   onClick={(e) => handleDropdownClick('involved', e)}
