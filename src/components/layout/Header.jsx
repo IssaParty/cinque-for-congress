@@ -10,6 +10,7 @@ const Header = () => {
 
 
   const toggleMenu = () => {
+    console.log('Toggle menu clicked. Current state:', mobileMenuOpen, 'isMobile:', isMobile);
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
@@ -482,6 +483,7 @@ const Header = () => {
       </nav>
 
       {/* Mobile Dropdown Menu */}
+      {console.log('Render check - isMobile:', isMobile, 'mobileMenuOpen:', mobileMenuOpen)}
       {isMobile && mobileMenuOpen && (
         <div style={styles.mobileDropdown} className="mobile-dropdown">
           <ul style={styles.mobileMenu}>
