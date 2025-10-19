@@ -16,23 +16,31 @@ const AboutPage = () => {
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
-  // Selected campaign photos for the slider - using original images folder
+  // Selected campaign photos featuring Cinque in suits and with community members
   const sliderImages = [
     {
-      src: '/images/PHOTO-2025-09-14-16-58-19.jpeg',
-      alt: 'Campaign photo'
+      src: '/images/WhatsApp Image 2025-10-12 at 17.09.26.jpeg',
+      alt: 'Cinque Mason in professional attire at community event'
     },
     {
-      src: '/images/PHOTO-2025-09-14-16-58-33.jpeg',
-      alt: 'Campaign photo'
+      src: '/images/WhatsApp Image 2025-10-12 at 17.09.26 (1).jpeg',
+      alt: 'Cinque Mason in gray suit with blue shirt'
     },
     {
-      src: '/images/PHOTO-2025-09-14-17-03-50.jpeg',
-      alt: 'Campaign photo'
+      src: '/images/WhatsApp Image 2025-10-12 at 17.09.27 (2).jpeg',
+      alt: 'Cinque Mason at Boulder County building in professional attire'
     },
     {
-      src: '/images/PHOTO-2025-09-14-17-04-05.jpeg',
-      alt: 'Campaign photo'
+      src: '/images/PHOTO-2025-09-14-16-58-32(1).jpeg',
+      alt: 'Cinque Mason with community member in traditional African clothing'
+    },
+    {
+      src: '/images/PHOTO-2025-09-14-16-58-25.jpeg',
+      alt: 'Cinque Mason working with community group on environmental project'
+    },
+    {
+      src: '/images/PHOTO-2025-09-14-17-00-14.jpeg',
+      alt: 'Cinque Mason connecting with animals and nature in the community'
     }
   ];
 
