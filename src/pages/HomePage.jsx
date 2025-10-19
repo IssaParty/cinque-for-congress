@@ -34,6 +34,54 @@ const HomePage = () => {
 
   return (
     <>
+      <style>
+        {`
+          @media (max-width: 768px) {
+            .content-wrapper {
+              display: flex !important;
+              flex-direction: column !important;
+              gap: 1rem !important;
+            }
+
+            .main-column {
+              width: 100% !important;
+              margin-bottom: 1rem !important;
+            }
+
+            .sidebar-column {
+              width: 100% !important;
+            }
+
+            .hero-image-wrapper {
+              height: 300px !important;
+            }
+
+            .newsletter-section {
+              margin: 1rem 0 !important;
+            }
+
+            .newsletter-content {
+              padding: 1rem !important;
+            }
+
+            .newsletter-header {
+              flex-direction: column !important;
+              align-items: center !important;
+              text-align: center !important;
+              gap: 1rem !important;
+            }
+
+            .newsletter-title {
+              font-size: 1.2rem !important;
+            }
+
+            .newsletter-button {
+              padding: 0.8rem 1.5rem !important;
+              font-size: 0.9rem !important;
+            }
+          }
+        `}
+      </style>
       <Header />
       <main>
         {/* Campaign Alert Banner */}
@@ -48,15 +96,15 @@ const HomePage = () => {
         {/* Main Content Area - Sanders Two-Column Layout */}
         <div style={styles.mainContent}>
           <div style={styles.container}>
-            <div style={styles.contentWrapper}>
+            <div style={styles.contentWrapper} className="content-wrapper">
 
               {/* Main Content Column */}
-              <div style={styles.mainColumn}>
+              <div style={styles.mainColumn} className="main-column">
 
 
                 {/* Large Hero Image */}
                 <div style={styles.heroContainer}>
-                  <div style={styles.heroImageWrapper}>
+                  <div style={styles.heroImageWrapper} className="hero-image-wrapper">
                     <img
                       src={heroImages[0].src}
                       alt={heroImages[0].alt}
@@ -66,16 +114,16 @@ const HomePage = () => {
                 </div>
 
                 {/* Newsletter Section */}
-                <div style={styles.newsletterSection}>
-                  <div style={styles.newsletterContent}>
-                    <div style={styles.newsletterHeader}>
+                <div style={styles.newsletterSection} className="newsletter-section">
+                  <div style={styles.newsletterContent} className="newsletter-content">
+                    <div style={styles.newsletterHeader} className="newsletter-header">
                       <div style={styles.substackIcon}>
                         <svg width="48" height="48" viewBox="0 0 24 24" fill="#FF6719">
                           <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.539 24V10.812H1.46zM22.539 0H1.46v2.836h21.08V0z"/>
                         </svg>
                       </div>
                       <div style={styles.newsletterInfo}>
-                        <h3 style={styles.newsletterTitle}>Stay Informed with Our Newsletter</h3>
+                        <h3 style={styles.newsletterTitle} className="newsletter-title">Stay Informed with Our Newsletter</h3>
                         <p style={styles.newsletterDescription}>
                           Get exclusive insights, policy updates, and behind-the-scenes content delivered directly to your inbox.
                         </p>
@@ -86,6 +134,7 @@ const HomePage = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       style={styles.newsletterButton}
+                      className="newsletter-button"
                     >
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style={{ marginRight: '8px' }}>
                         <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.539 24V10.812H1.46zM22.539 0H1.46v2.836h21.08V0z"/>
@@ -98,7 +147,7 @@ const HomePage = () => {
               </div>
 
               {/* Sidebar Column */}
-              <div style={styles.sidebarColumn}>
+              <div style={styles.sidebarColumn} className="sidebar-column">
 
                 {/* Follow Me On Twitter Section */}
                 <div style={styles.sidebarSection}>

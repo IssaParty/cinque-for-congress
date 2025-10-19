@@ -17,6 +17,12 @@ const Header = () => {
     window.scrollTo(0, 0);
   };
 
+  const handleDropdownClick = (dropdownName, event) => {
+    event.preventDefault();
+    console.log('Dropdown clicked:', dropdownName, 'Current active:', activeDropdown);
+    setActiveDropdown(activeDropdown === dropdownName ? null : dropdownName);
+  };
+
 
   // Check screen size and update mobile state
   useEffect(() => {
@@ -58,6 +64,23 @@ const Header = () => {
       document.body.style.overflow = 'unset';
     };
   }, [mobileMenuOpen]);
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (activeDropdown && !event.target.closest('.dropdown-wrapper')) {
+        setActiveDropdown(null);
+      }
+    };
+
+    if (activeDropdown) {
+      document.addEventListener('click', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [activeDropdown]);
 
   const navStyle = isMobile && mobileMenuOpen
     ? { ...styles.navMenu, ...styles.navMenuActive }
@@ -111,8 +134,8 @@ const Header = () => {
             transition: background-color 0.2s ease;
           }
 
-          /* Ensure Link elements inherit the button styling */
-          a.dropdown-toggle {
+          /* Ensure button elements have consistent styling */
+          button.dropdown-toggle {
             background-color: #ffffff;
             border: 1px solid #2E6FB3;
             border-radius: 4px;
@@ -129,12 +152,11 @@ const Header = () => {
             transition: background-color 0.2s ease;
           }
 
-          .dropdown-toggle:hover,
           .dropdown-toggle:focus,
-          a.dropdown-toggle:hover,
-          a.dropdown-toggle:focus {
+          button.dropdown-toggle:focus {
             background-color: #f0f4f8;
             color: #0E3A60;
+            outline: none;
           }
 
           .dropdown-content {
@@ -152,10 +174,7 @@ const Header = () => {
             display: none;
           }
 
-          /* Show dropdown on hover - simplified approach */
-          .dropdown-wrapper:hover .dropdown-content {
-            display: block !important;
-          }
+          /* Dropdown content is controlled by React state via inline styles */
 
           .dropdown-item {
             display: block !important;
@@ -181,12 +200,12 @@ const Header = () => {
           .donate-btn {
             background-color: #2E6FB3 !important;
             color: #ffffff !important;
-            padding: 0.6rem 1.2rem !important;
+            padding: 0.8rem 1.8rem !important;
             text-decoration: none !important;
             font-weight: 600 !important;
-            border-radius: 4px !important;
+            border-radius: 6px !important;
             font-family: 'Open Sans', sans-serif !important;
-            font-size: 0.9rem !important;
+            font-size: 1rem !important;
             transition: all 0.3s ease !important;
             border: 2px solid #2E6FB3 !important;
             display: inline-block !important;
@@ -262,13 +281,30 @@ const Header = () => {
               )}
 
               {/* About Me Dropdown */}
-              <li className="dropdown-wrapper"
-                  onMouseEnter={() => setActiveDropdown('about')}
-                  onMouseLeave={() => setActiveDropdown(null)}>
-                <Link to="/about" className="dropdown-toggle">
+              <li className="dropdown-wrapper">
+                <button
+                  className="dropdown-toggle"
+                  onClick={(e) => handleDropdownClick('about', e)}
+                >
                   About Me ▼
-                </Link>
-                <div className="dropdown-content" style={{ display: activeDropdown === 'about' ? 'block' : 'none' }}>
+                </button>
+                <div
+                  className="dropdown-content"
+                  style={{
+                    display: activeDropdown === 'about' ? 'block' : 'none',
+                    position: 'absolute',
+                    top: '100%',
+                    left: 0,
+                    backgroundColor: '#ffffff',
+                    border: '1px solid #2E6FB3',
+                    borderRadius: '4px',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                    minWidth: '180px',
+                    zIndex: 10000,
+                    padding: '0.5rem 0',
+                    marginTop: '2px'
+                  }}
+                >
                   <Link to="/about" className="dropdown-item">About Me</Link>
                   <Link to="/my-plan" className="dropdown-item">My Plan</Link>
                   <Link to="/vision" className="dropdown-item">Vision</Link>
@@ -276,13 +312,30 @@ const Header = () => {
               </li>
 
               {/* The Campaign Dropdown */}
-              <li className="dropdown-wrapper"
-                  onMouseEnter={() => setActiveDropdown('campaign')}
-                  onMouseLeave={() => setActiveDropdown(null)}>
-                <Link to="/expenditures" className="dropdown-toggle">
+              <li className="dropdown-wrapper">
+                <button
+                  className="dropdown-toggle"
+                  onClick={(e) => handleDropdownClick('campaign', e)}
+                >
                   The Campaign ▼
-                </Link>
-                <div className="dropdown-content" style={{ display: activeDropdown === 'campaign' ? 'block' : 'none' }}>
+                </button>
+                <div
+                  className="dropdown-content"
+                  style={{
+                    display: activeDropdown === 'campaign' ? 'block' : 'none',
+                    position: 'absolute',
+                    top: '100%',
+                    left: 0,
+                    backgroundColor: '#ffffff',
+                    border: '1px solid #2E6FB3',
+                    borderRadius: '4px',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                    minWidth: '180px',
+                    zIndex: 10000,
+                    padding: '0.5rem 0',
+                    marginTop: '2px'
+                  }}
+                >
                   <Link to="/expenditures" className="dropdown-item">Campaign Expenditures</Link>
                   <a href="https://secure.actblue.com/donate/cd2merch" target="_blank" rel="noopener noreferrer" className="dropdown-item">Shop</a>
                   <Link to="/road-to-congress" className="dropdown-item">Road to Congress</Link>
@@ -290,13 +343,30 @@ const Header = () => {
               </li>
 
               {/* Get Involved Dropdown */}
-              <li className="dropdown-wrapper"
-                  onMouseEnter={() => setActiveDropdown('involved')}
-                  onMouseLeave={() => setActiveDropdown(null)}>
-                <Link to="/join" className="dropdown-toggle">
+              <li className="dropdown-wrapper">
+                <button
+                  className="dropdown-toggle"
+                  onClick={(e) => handleDropdownClick('involved', e)}
+                >
                   Get Involved ▼
-                </Link>
-                <div className="dropdown-content" style={{ display: activeDropdown === 'involved' ? 'block' : 'none' }}>
+                </button>
+                <div
+                  className="dropdown-content"
+                  style={{
+                    display: activeDropdown === 'involved' ? 'block' : 'none',
+                    position: 'absolute',
+                    top: '100%',
+                    left: 0,
+                    backgroundColor: '#ffffff',
+                    border: '1px solid #2E6FB3',
+                    borderRadius: '4px',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                    minWidth: '180px',
+                    zIndex: 10000,
+                    padding: '0.5rem 0',
+                    marginTop: '2px'
+                  }}
+                >
                   <Link to="/join" className="dropdown-item">Volunteer</Link>
                   <a href="https://secure.actblue.com/donate/cinqueforcongress" target="_blank" rel="noopener noreferrer" className="dropdown-item">Donate</a>
                 </div>
@@ -505,9 +575,10 @@ const styles = {
     margin: 0,
     padding: 0,
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     flexWrap: 'nowrap',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    marginRight: '1rem'
   },
   donateContainer: {
     display: 'flex',
@@ -598,14 +669,14 @@ const styles = {
   donateBtn: {
     backgroundColor: '#2E6FB3',
     color: '#ffffff',
-    padding: '0.6rem 1.2rem',
+    padding: '0.8rem 1.8rem',
     textDecoration: 'none',
     fontWeight: '600',
     transition: 'all 0.3s',
-    borderRadius: '4px',
+    borderRadius: '6px',
     fontFamily: 'Open Sans, sans-serif',
     flexShrink: 0,
-    fontSize: '0.9rem'
+    fontSize: '1rem'
   },
   menuToggle: {
     display: 'none',
