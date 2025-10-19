@@ -123,9 +123,9 @@ const HomePage = () => {
                         </svg>
                       </div>
                       <div style={styles.newsletterInfo}>
-                        <h3 style={styles.newsletterTitle} className="newsletter-title">Stay Informed with Our Newsletter</h3>
+                        <h3 style={styles.newsletterTitle} className="newsletter-title">Read Our Blog</h3>
                         <p style={styles.newsletterDescription}>
-                          Get exclusive insights, policy updates, and behind-the-scenes content delivered directly to your inbox.
+                          Get exclusive insights, policy updates, and behind-the-scenes content from the campaign.
                         </p>
                       </div>
                     </div>
@@ -139,7 +139,7 @@ const HomePage = () => {
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style={{ marginRight: '8px' }}>
                         <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.539 24V10.812H1.46zM22.539 0H1.46v2.836h21.08V0z"/>
                       </svg>
-                      Subscribe on Substack →
+                      Read Our Blog →
                     </a>
                   </div>
                 </div>

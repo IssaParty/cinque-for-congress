@@ -311,7 +311,7 @@ const Header = () => {
                   className="dropdown-toggle"
                   onClick={(e) => handleDropdownClick('about', e)}
                 >
-                  About Me ▼
+                  About Me ▼ {activeDropdown === 'about' ? '(OPEN)' : '(CLOSED)'}
                 </button>
                 <div
                   className="dropdown-content"
@@ -321,11 +321,11 @@ const Header = () => {
                     top: '100%',
                     left: 0,
                     backgroundColor: '#ffffff',
-                    border: '2px solid #2E6FB3',
+                    border: '3px solid #FF0000',
                     borderRadius: '4px',
-                    boxShadow: '0 8px 20px rgba(0,0,0,0.25)',
+                    boxShadow: '0 8px 20px rgba(0,0,0,0.5)',
                     minWidth: '200px',
-                    zIndex: 99999,
+                    zIndex: 999999,
                     padding: '0.75rem 0',
                     marginTop: '4px'
                   }}
