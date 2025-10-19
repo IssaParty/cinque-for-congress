@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { fetchTwitterPosts, fetchFacebookPosts } from '../utils/socialMediaAPI';
 
 // Add CSS for loading animation
 const spinKeyframes = `
@@ -26,45 +27,11 @@ const SocialMediaFeed = ({ platform, username, postCount = 2 }) => {
         setLoading(true);
 
         if (platform === 'twitter') {
-          // For Twitter, we'll use a simulated feed for now since Twitter API requires authentication
-          // In production, you'd want to use Twitter API v2 with your API keys
-          const mockTwitterPosts = [
-            {
-              id: '1',
-              text: 'Excited to meet with local healthcare workers today to discuss our plan for universal healthcare in Congressional District 2. Every person deserves quality care regardless of their ability to pay. #HealthcareForAll #CinqueForCD2',
-              created_at: '2025-10-18T14:30:00Z',
-              author_name: 'Cinque Mason',
-              author_username: 'CinqueForCD2'
-            },
-            {
-              id: '2',
-              text: 'Just wrapped up a town hall in Burlington. The energy and passion from our community is incredible. Together, we\'re building a movement for working families! Thank you to everyone who came out tonight. 🙏',
-              created_at: '2025-10-17T20:15:00Z',
-              author_name: 'Cinque Mason',
-              author_username: 'CinqueForCD2'
-            }
-          ];
-
-          setPosts(mockTwitterPosts.slice(0, postCount));
+          const posts = await fetchTwitterPosts(username, postCount);
+          setPosts(posts);
         } else if (platform === 'facebook') {
-          // For Facebook, we'll use a simulated feed for now
-          // In production, you'd want to use Facebook Graph API
-          const mockFacebookPosts = [
-            {
-              id: '1',
-              message: 'This week I had the privilege of speaking with educators across Congressional District 2. Our teachers deserve better pay, smaller class sizes, and the resources they need to help our children succeed. Education is the foundation of our democracy.',
-              created_time: '2025-10-18T16:45:00Z',
-              author_name: 'Cinque Mason for Congress'
-            },
-            {
-              id: '2',
-              message: 'Climate change is real, and it\'s happening now. Vermont is already seeing the effects - from flooding to changing seasons. We need bold action on clean energy, green jobs, and protecting our environment for future generations. The time for half-measures is over.',
-              created_time: '2025-10-17T12:30:00Z',
-              author_name: 'Cinque Mason for Congress'
-            }
-          ];
-
-          setPosts(mockFacebookPosts.slice(0, postCount));
+          const posts = await fetchFacebookPosts(username, postCount);
+          setPosts(posts);
         }
 
         setLoading(false);
