@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { formSubmission } from '../utils/formSubmission';
-import Header from '../components/layout/Header';
-import Footer from '../components/layout/Footer';
 
 const JoinPage = () => {
   const [formData, setFormData] = useState({
@@ -133,7 +131,7 @@ const JoinPage = () => {
 
   return (
     <>
-      <Header />
+      
       <main style={isMobile ? styles.formPageMobile : styles.formPage}>
       <div style={isMobile ? styles.formContainerMobile : styles.formContainer}>
         <h1 style={isMobile ? styles.formTitleMobile : styles.formTitle}>Join Our Campaign</h1>
@@ -270,7 +268,7 @@ const JoinPage = () => {
         </section>
       </div>
       </main>
-      <Footer />
+      
     </>
   );
 };

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { formSubmission } from '../utils/formSubmission';
-import Header from '../components/layout/Header';
-import Footer from '../components/layout/Footer';
 
 const RoadToCongressPage = () => {
   const [endorsements, setEndorsements] = useState([]);
@@ -158,7 +156,7 @@ const RoadToCongressPage = () => {
 
   return (
     <>
-      <Header />
+      
       <main style={isMobile ? styles.contentPageMobile : styles.contentPage}>
       <div style={isMobile ? styles.pageContainerMobile : styles.pageContainer}>
         <h1 style={isMobile ? styles.pageTitleMobile : styles.pageTitle}>Road to Congress</h1>
@@ -320,7 +318,7 @@ const RoadToCongressPage = () => {
         </div>
       </div>
       </main>
-      <Footer />
+      
     </>
   );
 };

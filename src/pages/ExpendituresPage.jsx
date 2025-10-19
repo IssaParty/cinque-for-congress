@@ -1,11 +1,9 @@
 import React from 'react';
-import Header from '../components/layout/Header';
-import Footer from '../components/layout/Footer';
 
 const ExpendituresPage = () => {
   return (
     <>
-      <Header />
+      
       <main style={styles.contentPage}>
       <div style={styles.pageContainer}>
         <h1 style={styles.pageTitle}>Campaign Expenditures</h1>
@@ -26,7 +24,7 @@ const ExpendituresPage = () => {
         </div>
       </div>
       </main>
-      <Footer />
+      
     </>
   );
 };

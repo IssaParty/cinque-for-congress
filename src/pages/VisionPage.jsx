@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../components/layout/Header';
-import Footer from '../components/layout/Footer';
 
 const VisionPage = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -19,9 +17,7 @@ const VisionPage = () => {
   }, []);
 
   return (
-    <>
-      <Header />
-      <main style={isMobile ? styles.contentPageMobile : styles.contentPage}>
+    <main style={isMobile ? styles.contentPageMobile : styles.contentPage}>
         <div style={isMobile ? styles.pageContainerMobile : styles.pageContainer}>
           <h1 style={isMobile ? styles.pageTitleMobile : styles.pageTitle}>Our Vision: A Cleaner, Safer, and Unified Republic</h1>
         <div style={styles.pageContent}>
@@ -116,8 +112,6 @@ const VisionPage = () => {
         </div>
         </div>
       </main>
-      <Footer />
-    </>
   );
 };
 

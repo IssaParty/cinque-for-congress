@@ -1,11 +1,9 @@
 import React from 'react';
-import Header from '../components/layout/Header';
-import Footer from '../components/layout/Footer';
 
 const RequestEventPage = () => {
   return (
     <>
-      <Header />
+      
       <main style={styles.formPage}>
       <div style={styles.formContainer}>
         <h1 style={styles.formTitle}>Request an Event</h1>
@@ -31,7 +29,7 @@ const RequestEventPage = () => {
         </div>
       </div>
       </main>
-      <Footer />
+      
     </>
   );
 };

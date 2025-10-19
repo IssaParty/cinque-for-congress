@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../components/layout/Header';
-import Footer from '../components/layout/Footer';
 
 const MyPlanPage = () => {
   const [selectedNode, setSelectedNode] = useState(null);
@@ -267,7 +265,7 @@ const MyPlanPage = () => {
 
   return (
     <>
-      <Header />
+      
       <div style={isMobile ? styles.myPlanPageMobile : styles.myPlanPage}>
       <style>
         {`
@@ -625,7 +623,7 @@ const MyPlanPage = () => {
       </div>
 
       </div>
-      <Footer />
+      
     </>
   );
 };
