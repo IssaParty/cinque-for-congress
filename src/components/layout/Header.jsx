@@ -782,17 +782,18 @@ const styles = {
   // Mobile dropdown menu styles
   mobileDropdown: {
     position: 'fixed',
-    top: '100%',
+    top: '100px',
     left: 0,
     right: 0,
     backgroundColor: '#ffffff',
     boxShadow: '0 8px 25px rgba(0,0,0,0.15)',
     borderTop: '2px solid #2E6FB3',
-    zIndex: 9999,
+    zIndex: 999999,
     animation: 'slideDown 0.3s ease-out',
     maxWidth: '100vw',
     width: '100%',
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
+    border: '3px solid #FF0000'
   },
   mobileMenu: {
     listStyle: 'none',
