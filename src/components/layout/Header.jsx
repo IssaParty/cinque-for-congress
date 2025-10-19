@@ -243,13 +243,39 @@ const Header = () => {
               right: 0 !important;
               max-width: 100vw !important;
               box-sizing: border-box !important;
+              overflow-x: hidden !important;
+              position: fixed !important;
+              top: 100% !important;
+              z-index: 9999 !important;
+            }
+
+            /* Ensure header doesn't overflow */
+            .header-nav {
+              width: 100% !important;
+              max-width: 100vw !important;
+              overflow: hidden !important;
+              box-sizing: border-box !important;
+            }
+
+            /* Fix logo container on mobile */
+            .logo-container {
+              flex-shrink: 1 !important;
+              min-width: 0 !important;
+              overflow: hidden !important;
+            }
+
+            /* Hamburger menu positioning */
+            .menu-toggle {
+              position: relative !important;
+              right: 0 !important;
+              flex-shrink: 0 !important;
             }
           }
         `}
       </style>
       <header style={styles.header}>
-        <nav style={styles.nav}>
-        <div style={styles.logoContainer}>
+        <nav style={styles.nav} className="header-nav">
+        <div style={styles.logoContainer} className="logo-container">
           <div style={styles.logoIcon}>
             <svg width="60" height="40" viewBox="0 0 60 40" style={styles.logoSvg}>
               {/* Colorado state outline */}
@@ -392,6 +418,7 @@ const Header = () => {
         {isMobile && (
           <button
             style={{...styles.menuToggle, display: 'flex'}}
+            className="menu-toggle"
             onClick={toggleMenu}
             aria-label="Toggle navigation menu"
             aria-expanded={mobileMenuOpen}
@@ -523,14 +550,21 @@ const styles = {
     position: 'sticky',
     top: 0,
     zIndex: 1000,
-    borderBottom: '1px solid #D9D9D9'
+    borderBottom: '1px solid #D9D9D9',
+    width: '100%',
+    maxWidth: '100vw',
+    overflow: 'hidden',
+    boxSizing: 'border-box'
   },
   nav: {
     width: '100%',
     padding: '1.2rem 1rem',
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    maxWidth: '100vw',
+    overflow: 'hidden',
+    boxSizing: 'border-box'
   },
   logoContainer: {
     display: 'flex',
@@ -698,17 +732,19 @@ const styles = {
   },
   // Mobile dropdown menu styles
   mobileDropdown: {
-    position: 'absolute',
+    position: 'fixed',
     top: '100%',
     left: 0,
     right: 0,
     backgroundColor: '#ffffff',
     boxShadow: '0 8px 25px rgba(0,0,0,0.15)',
     borderTop: '2px solid #2E6FB3',
-    zIndex: 1000,
+    zIndex: 9999,
     animation: 'slideDown 0.3s ease-out',
     maxWidth: '100vw',
-    overflow: 'hidden'
+    width: '100%',
+    overflow: 'hidden',
+    boxSizing: 'border-box'
   },
   mobileMenu: {
     listStyle: 'none',
