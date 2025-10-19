@@ -54,26 +54,31 @@ const HomePage = () => {
               height: 300px !important;
             }
 
-            .newsletter-section {
+            .blog-section {
               margin: 1rem 0 !important;
             }
 
-            .newsletter-content {
+            .blog-content {
               padding: 1rem !important;
             }
 
-            .newsletter-header {
-              flex-direction: column !important;
-              align-items: center !important;
-              text-align: center !important;
-              gap: 1rem !important;
+            .blog-header {
+              margin-bottom: 1.5rem !important;
             }
 
-            .newsletter-title {
-              font-size: 1.2rem !important;
+            .blog-title {
+              font-size: 1.4rem !important;
             }
 
-            .newsletter-button {
+            .blog-post {
+              padding: 1rem !important;
+            }
+
+            .blog-post-title {
+              font-size: 1.1rem !important;
+            }
+
+            .signup-button {
               padding: 0.8rem 1.5rem !important;
               font-size: 0.9rem !important;
             }
@@ -110,34 +115,73 @@ const HomePage = () => {
                   </div>
                 </div>
 
-                {/* Newsletter Section */}
-                <div style={styles.newsletterSection} className="newsletter-section">
-                  <div style={styles.newsletterContent} className="newsletter-content">
-                    <div style={styles.newsletterHeader} className="newsletter-header">
-                      <div style={styles.substackIcon}>
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="#FF6719">
-                          <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.539 24V10.812H1.46zM22.539 0H1.46v2.836h21.08V0z"/>
-                        </svg>
-                      </div>
-                      <div style={styles.newsletterInfo}>
-                        <h3 style={styles.newsletterTitle} className="newsletter-title">Read Our Blog</h3>
-                        <p style={styles.newsletterDescription}>
-                          Get exclusive insights, policy updates, and behind-the-scenes content from the campaign.
-                        </p>
-                      </div>
+                {/* Blog Content Section */}
+                <div style={styles.blogSection} className="blog-section">
+                  <div style={styles.blogContent} className="blog-content">
+                    <div style={styles.blogHeader} className="blog-header">
+                      <h3 style={styles.blogTitle} className="blog-title">Campaign Blog</h3>
+                      <p style={styles.blogDescription}>
+                        Stay informed with the latest updates, policy insights, and campaign news.
+                      </p>
                     </div>
-                    <a
-                      href="https://cinquemason4cd2.substack.com/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={styles.newsletterButton}
-                      className="newsletter-button"
-                    >
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style={{ marginRight: '8px' }}>
-                        <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.539 24V10.812H1.46zM22.539 0H1.46v2.836h21.08V0z"/>
-                      </svg>
-                      Read Our Blog →
-                    </a>
+
+                    {/* Latest Blog Posts */}
+                    <div style={styles.blogPosts}>
+                      <article style={styles.blogPost}>
+                        <h4 style={styles.blogPostTitle}>Fighting for Working Families in Congressional District 2</h4>
+                        <p style={styles.blogPostDate}>October 18, 2025</p>
+                        <p style={styles.blogPostExcerpt}>
+                          Our campaign is built on the principle that every working family deserves access to quality healthcare,
+                          affordable housing, and economic opportunities. Here's our plan to deliver real change...
+                        </p>
+                        <div style={styles.blogPostTags}>
+                          <span style={styles.blogTag}>Healthcare</span>
+                          <span style={styles.blogTag}>Economy</span>
+                          <span style={styles.blogTag}>Policy</span>
+                        </div>
+                      </article>
+
+                      <article style={styles.blogPost}>
+                        <h4 style={styles.blogPostTitle}>Justice For Palestine: A Moral Imperative</h4>
+                        <p style={styles.blogPostDate}>October 15, 2025</p>
+                        <p style={styles.blogPostExcerpt}>
+                          We stand firmly for human rights, international law, and justice for the Palestinian people.
+                          Our foreign policy must reflect our values of equality and dignity for all...
+                        </p>
+                        <div style={styles.blogPostTags}>
+                          <span style={styles.blogTag}>Foreign Policy</span>
+                          <span style={styles.blogTag}>Human Rights</span>
+                          <span style={styles.blogTag}>Justice</span>
+                        </div>
+                      </article>
+
+                      <article style={styles.blogPost}>
+                        <h4 style={styles.blogPostTitle}>Building a Grassroots Movement for Change</h4>
+                        <p style={styles.blogPostDate}>October 12, 2025</p>
+                        <p style={styles.blogPostExcerpt}>
+                          Real change comes from the bottom up, not the top down. That's why our campaign is powered by
+                          volunteers, small donors, and community organizers who believe in a better future...
+                        </p>
+                        <div style={styles.blogPostTags}>
+                          <span style={styles.blogTag}>Organizing</span>
+                          <span style={styles.blogTag}>Community</span>
+                          <span style={styles.blogTag}>Grassroots</span>
+                        </div>
+                      </article>
+                    </div>
+
+                    <div style={styles.newsletterSignup}>
+                      <p style={styles.signupText}>Want to stay updated? Subscribe to our newsletter:</p>
+                      <a
+                        href="https://cinquemason4cd2.substack.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={styles.signupButton}
+                        className="signup-button"
+                      >
+                        Subscribe to Newsletter →
+                      </a>
+                    </div>
                   </div>
                 </div>
 
@@ -465,46 +509,34 @@ const styles = {
     transition: 'all 0.3s ease'
   },
 
-  // Newsletter Section Styles
-  newsletterSection: {
+  // Blog Section Styles
+  blogSection: {
     backgroundColor: '#ffffff',
-    border: '2px solid #FF6719',
+    border: '1px solid #D9D9D9',
     borderRadius: '8px',
     margin: '2rem 0',
-    boxShadow: '0 4px 12px rgba(255, 103, 25, 0.1)'
+    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
   },
 
-  newsletterContent: {
+  blogContent: {
     padding: '2rem'
   },
 
-  newsletterHeader: {
-    display: 'flex',
-    alignItems: 'flex-start',
-    gap: '1.5rem',
-    marginBottom: '1.5rem'
+  blogHeader: {
+    marginBottom: '2rem',
+    borderBottom: '2px solid #0E3A60',
+    paddingBottom: '1rem'
   },
 
-  substackIcon: {
-    flexShrink: 0,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-
-  newsletterInfo: {
-    flex: 1
-  },
-
-  newsletterTitle: {
+  blogTitle: {
     color: '#0E3A60',
-    fontSize: '1.5rem',
+    fontSize: '1.75rem',
     fontWeight: '700',
     margin: '0 0 0.75rem 0',
     fontFamily: 'Open Sans, sans-serif'
   },
 
-  newsletterDescription: {
+  blogDescription: {
     color: '#333',
     fontSize: '1rem',
     lineHeight: '1.6',
@@ -512,20 +544,89 @@ const styles = {
     fontFamily: 'Open Sans, sans-serif'
   },
 
-  newsletterButton: {
-    display: 'inline-flex',
-    alignItems: 'center',
+  blogPosts: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '1.5rem',
+    marginBottom: '2rem'
+  },
+
+  blogPost: {
+    padding: '1.5rem',
+    border: '1px solid #E5E5E5',
+    borderRadius: '6px',
+    backgroundColor: '#FAFAFA'
+  },
+
+  blogPostTitle: {
+    color: '#0E3A60',
+    fontSize: '1.2rem',
+    fontWeight: '600',
+    margin: '0 0 0.5rem 0',
+    fontFamily: 'Open Sans, sans-serif',
+    lineHeight: '1.4'
+  },
+
+  blogPostDate: {
+    color: '#666',
+    fontSize: '0.85rem',
+    margin: '0 0 1rem 0',
+    fontFamily: 'Open Sans, sans-serif',
+    fontStyle: 'italic'
+  },
+
+  blogPostExcerpt: {
+    color: '#333',
+    fontSize: '0.95rem',
+    lineHeight: '1.6',
+    margin: '0 0 1rem 0',
+    fontFamily: 'Open Sans, sans-serif'
+  },
+
+  blogPostTags: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '0.5rem'
+  },
+
+  blogTag: {
+    backgroundColor: '#2E6FB3',
+    color: '#ffffff',
+    padding: '0.25rem 0.75rem',
+    borderRadius: '12px',
+    fontSize: '0.75rem',
+    fontFamily: 'Open Sans, sans-serif',
+    fontWeight: '500'
+  },
+
+  newsletterSignup: {
+    textAlign: 'center',
+    padding: '1.5rem',
+    backgroundColor: '#F0F4F8',
+    borderRadius: '6px',
+    border: '1px solid #D9D9D9'
+  },
+
+  signupText: {
+    color: '#0E3A60',
+    fontSize: '1rem',
+    margin: '0 0 1rem 0',
+    fontFamily: 'Open Sans, sans-serif',
+    fontWeight: '600'
+  },
+
+  signupButton: {
+    display: 'inline-block',
     backgroundColor: '#FF6719',
     color: '#ffffff',
-    padding: '1rem 2rem',
+    padding: '0.75rem 1.5rem',
     textDecoration: 'none',
     fontWeight: '600',
-    borderRadius: '8px',
+    borderRadius: '6px',
     fontFamily: 'Open Sans, sans-serif',
-    fontSize: '1rem',
+    fontSize: '0.9rem',
     transition: 'all 0.3s ease',
-    border: '2px solid #FF6719',
-    boxShadow: '0 2px 8px rgba(255, 103, 25, 0.2)'
+    border: '2px solid #FF6719'
   }
 };
 
